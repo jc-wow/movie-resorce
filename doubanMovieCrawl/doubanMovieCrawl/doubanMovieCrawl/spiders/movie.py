@@ -1,4 +1,3 @@
-import pymysql
 from scrapy.selector import Selector
 import json
 import re
@@ -29,10 +28,7 @@ class Movie(scrapy.Spider):
     def getDoubanLowWatchButWellMovieURL(self):
         movieURL = movieurl.URL()
         return movieURL.getDoubanLowWatchButWellMovieURL()
-
-    def getValidProxy(self):
-        pass
-
+        
     def start_requests(self):
         self.highScoreURL = self.getDoubanHighScoreMovieURL()
         self.lowWatchButWellMovieURL = self.getDoubanLowWatchButWellMovieURL()
@@ -129,19 +125,3 @@ class Movie(scrapy.Spider):
     def errback_httpbin(self, failure):
         self.logger.error(repr(failure))
 
-    def conn(self):
-        mydb = pymysql.Connect('localhost', 'root', 'password',
-                               'demo_db', autocommit=True)
-        return mydb.cursor()
-
-    def getProxyFromDatabase(self, query, c):
-        try:
-            if c.connection:
-                print("connection exists")
-                c.execute(query)
-                return c.fetchall()
-            else:
-                print("trying to reconnect")
-                c = self.conn()
-        except Exception as e:
-            return str(e)
