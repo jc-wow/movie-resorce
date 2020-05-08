@@ -29,14 +29,7 @@ class Movie(scrapy.Spider):
             'Sec-Fetch-Site': 'same-origin',
             'Cookie': self.cookie
         }
-        self.formData = {
-            'ck': '',
-            'name': 'jiuyue_09@yeah.net',
-            'password': 'wangchi6992830',
-            'remember': 'true',
-            'ticket':''
-        }
-
+        
     def getDoubanMovieURL(self):
         movieURL = movieurl.URL()
         return movieURL.getAllMovieURL()      
