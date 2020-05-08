@@ -5,8 +5,8 @@ class checkMovie(object):
         self.host = 'localhost'
         self.port = 3306
         self.user = 'root'
-        self.passwd = 'wangchi6992830'
-        self.dbName = 'doubanmovie'
+        self.passwd = '********'
+        self.dbName = '*******'
         self.charset = 'utf8mb4'
         self.db = pymysql.connect(host=self.host,
                                   port=self.port,

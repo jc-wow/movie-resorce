@@ -24,7 +24,7 @@ class DoubanHighestmoviecrawlItem(scrapy.Item):
     runtime = scrapy.Field()
     otherName = scrapy.Field()
     imdb = scrapy.Field()
-    officalSite = scrapy.Field()
+    officialSite = scrapy.Field()
     rating_sum = scrapy.Field()
     ratings_on_weight = scrapy.Field()
     summary = scrapy.Field()
