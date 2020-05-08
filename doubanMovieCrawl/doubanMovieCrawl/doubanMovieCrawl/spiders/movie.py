@@ -16,6 +16,7 @@ class Movie(scrapy.Spider):
     def __init__(self, name=None, **kwargs):
         super().__init__(name=name, **kwargs)
         self.cookie = 'll="118238"; bid=tFRyBl3qM28; __gads=ID=2faa0d99b0f90e56:T=1588318308:S=ALNI_Maya9lPl2siBOL-lGjGQgF19WV0lQ; push_noty_num=0; push_doumail_num=0; __utmv=30149280.17822; _vwo_uuid_v2=DF06579EEBD8635FF88ECF459BEDCE496|62d0e51b17c697fd780a03dad70248f5; douban-fav-remind=1; __utmc=30149280; ap_v=0,6.0; __utma=30149280.289087522.1588318292.1588750721.1588752696.12; __utmz=30149280.1588752696.12.8.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; apiKey=; _pk_ref.100001.2fad=%5B%22%22%2C%22%22%2C1588753234%2C%22https%3A%2F%2Fmovie.douban.com%2Ftag%2F%22%5D; _pk_ses.100001.2fad=*; __utmb=30149280.5.8.1588753478333; last_login_way=account; _pk_id.100001.2fad=93265dcefa7cd458.1588753234.1.1588754465.1588753234.; login_start_time=1588754470181'
+        self.startPage = '0'
         self.headers = {
             'Host': 'movie.douban.com',
             'Referer': 'https://movie.douban.com/tag/',
@@ -29,7 +30,7 @@ class Movie(scrapy.Spider):
             'Sec-Fetch-Site': 'same-origin',
             'Cookie': self.cookie
         }
-        
+
     def getDoubanMovieURL(self):
         movieURL = movieurl.URL()
         return movieURL.getAllMovieURL()      
@@ -37,7 +38,7 @@ class Movie(scrapy.Spider):
     def start_requests(self):
         self.doubanMovieURL = self.getDoubanMovieURL()
         for url in self.doubanMovieURL:
-            yield scrapy.Request(url + '8080', callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True,'handle_httpstatus_list': [302]})
+            yield scrapy.Request(url + self.startPage, callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True,'handle_httpstatus_list': [302]})
     
     def checkMovieInDatabase(self, movieID):
         return checkMovie.checkMovie().checkMovieInDatabase(movieID)
