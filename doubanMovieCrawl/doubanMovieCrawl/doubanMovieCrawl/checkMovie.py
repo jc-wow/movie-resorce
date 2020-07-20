@@ -5,8 +5,8 @@ class checkMovie(object):
         self.host = 'localhost'
         self.port = 3306
         self.user = 'root'
-        self.passwd = '********'
-        self.dbName = '*******'
+        self.passwd = 'wangchi6992830'
+        self.dbName = 'doubanmovie'
         self.charset = 'utf8mb4'
         self.db = pymysql.connect(host=self.host,
                                   port=self.port,
@@ -16,7 +16,7 @@ class checkMovie(object):
                                   charset=self.charset
                                   )
         self.cursor = self.db.cursor()
-        self.sql = 'SELECT id FROM doubanmovie.movieInfo'
+        self.sql = 'SELECT id,tag FROM doubanmovie.movieInfo'
         self.allMovieID = []
 
     def getMovieID(self):

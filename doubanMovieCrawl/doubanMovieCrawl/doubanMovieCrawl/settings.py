@@ -29,6 +29,7 @@ CONCURRENT_REQUESTS = 100
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 DOWNLOAD_DELAY = 3
+DOWNLOAD_TIMEOUT = 5
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -56,10 +57,11 @@ DOWNLOAD_DELAY = 3
 
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
-    'scrapy_fake_useragent.middleware.RetryUserAgentMiddleware': 401,
-    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
-    'doubanMovieCrawl.middlewares.RandomUserAgentMiddleware': 350,
+    # 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
+    # 'scrapy_fake_useragent.middleware.RetryUserAgentMiddleware': 401,
+    'doubanMovieCrawl.middlewares.RandomUserAgentMiddleware': 310,
+    # 'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+    'doubanMovieCrawl.middlewares.RandomProxyMiddleware': 350,
     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
     # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
     # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
@@ -97,10 +99,3 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
-
-# ROTATING_PROXY_LIST = [
-#     '211.149.252.155:8888',
-#     '111.76.168.201:8118',
-#     '101.200.57.251:80',
-#     '219.143.207.45:800'
-# ]
