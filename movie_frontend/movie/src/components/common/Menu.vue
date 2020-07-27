@@ -43,9 +43,9 @@ export default {
   height: 100%;
   width: 20%;
   background-color: #f4f7f6;
-  position: absolute;
+  position: fixed;
   top: 0;
-	z-index: 999;
+  z-index: 999;
 
   .menu-close {
     height: 5%;

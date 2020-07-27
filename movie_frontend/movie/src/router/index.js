@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import StartPage from "@/components/Body/StartPage";
-import Movie from "@/components/Body/Movie";
+import StartPage from "@/components/StartPage";
+import Movie from "@/components/Movie/MovieMain";
 
 Vue.use(VueRouter);
 
@@ -27,6 +27,11 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.path === "/" && from.path === "/") next({ path: "/startPage" });
+  else next();
 });
 
 export default router;

@@ -5,7 +5,6 @@
   </div>
 </template>
 <script>
-
 export default {
   name: "App",
   data() {
@@ -15,15 +14,11 @@ export default {
     showMenu() {
       this.$store.commit("showMenu");
     }
-  },
-  created() {
-    this.$router.push({ name: "startPage" }).catch(err => err);
   }
 };
 </script>
 
 <style lang="scss">
-
 html {
   height: 100%;
 
@@ -36,7 +31,7 @@ html {
       position: relative;
 
       .menu-logo {
-        position: absolute;
+        position: fixed;
         height: 4%;
         margin: 2% 0 0 2%;
         z-index: 999;

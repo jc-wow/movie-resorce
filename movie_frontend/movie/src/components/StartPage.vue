@@ -1,12 +1,12 @@
 <template>
   <div class="start-page">
+    <transition name="menu">
+      <Menu v-show="menu"></Menu>
+    </transition>
     <div class="video-container">
-      <transition name="menu" @before-leave="closeMenu" @before-enter="openMenu">
-        <Menu v-show="menu"></Menu>
-      </transition>
-        <video class="start-page-video" autoplay loop muted @click="closeMenuPanel">
-          <source src="../../assets/ep1.mp4" type="video/mp4" />
-        </video>
+      <video class="start-page-video" autoplay loop muted @click="closeMenuPanel">
+        <source src="../assets/ep1.mp4" type="video/mp4" />
+      </video>
     </div>
   </div>
 </template>
@@ -22,15 +22,9 @@ export default {
   },
   methods: {
     closeMenuPanel() {
-      this.$store.commit("showMenu");
-    },
-    closeMenu() {
-      document.getElementsByClassName("start-page-video")[0].style.cssText =
-        "width: 100%; margin-left: 0; transition: margin-left: 0.5";
-    },
-    openMenu() {
-      document.getElementsByClassName("start-page-video")[0].style.cssText =
-        "width: 80%; margin-left: 20%; transition: margin-left: 0.5";
+      if (this.$store.state.menuIsShowing) {
+        this.$store.commit("showMenu");
+      }
     }
   },
   computed: {
@@ -67,7 +61,7 @@ export default {
     .start-page-video {
       position: absolute;
       height: 100%;
-			width: 100%;
+      width: 100%;
     }
   }
 }
