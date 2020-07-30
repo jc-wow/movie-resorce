@@ -10,8 +10,10 @@ class UserController extends Controller {
       itemsPerPage: parseInt(itemsPerPage),
       page: parseInt(page),
     };
-    const movieInfo = await service.movieInfoService.getMovieInfo(passParam);
-    this.success(movieInfo);
+    ctx.body = await ctx.model.Movie.findAll();
+    // console.log(ctx.body);
+    // const movieInfo = await service.movieInfoService.getMovieInfo(passParam);
+    this.success(ctx.body);
   }
 }
 

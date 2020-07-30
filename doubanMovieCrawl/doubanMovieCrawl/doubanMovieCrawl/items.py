@@ -30,5 +30,5 @@ class DoubanHighestmoviecrawlItem(scrapy.Item):
     summary = scrapy.Field()
     award = scrapy.Field()
     shortComment = scrapy.Field()
-    tag = scrapy.Field()
+    # tag = scrapy.Field()
     pass

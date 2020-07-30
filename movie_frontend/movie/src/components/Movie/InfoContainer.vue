@@ -1,7 +1,7 @@
 <template>
   <div class="info-container">
     <div class="page-icon">
-      <div class="catagory"></div>
+      <div class="category">{{ category }}</div>
       <div class="pagnation">
         <i
           class="el-icon-arrow-left"
@@ -11,22 +11,22 @@
         <i class="el-icon-arrow-right" @click="downPage"></i>
       </div>
     </div>
-      <div class="image-container">
-        <div
-          class="image-info"
-          :id="'image-info_' + index"
-          v-for="(item, index) in info"
-          :key="'container_' + index"
-        >
-          <el-image
-            class="image-info-container"
-            :src="item.cover"
-            referrerpolicy="no-referrer"
-            fit="cover"
-          ></el-image>
-          <a>{{ item.title }}</a>
-        </div>
+    <div class="image-container">
+      <div
+        class="image-info"
+        :id="'image-info_' + index"
+        v-for="(item, index) in info"
+        :key="'container_' + index"
+      >
+        <el-image
+          class="image-info-container"
+          :src="item.cover"
+          referrerpolicy="no-referrer"
+          fit="cover"
+        ></el-image>
+        <a>{{ item.title }}</a>
       </div>
+    </div>
   </div>
 </template>
 
@@ -36,6 +36,7 @@ export default {
   props: {
     info: Array,
     curPage: Number,
+    category: String,
   },
   data() {
     return {
@@ -69,11 +70,16 @@ export default {
   overflow-x: hidden;
 
   .page-icon {
-    height: 20%;
+    height: 15%;
     width: 97%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    .category {
+      color: #fff;
+      margin-left: 1%;
+    }
 
     .pagnation {
       font-size: 1.3rem;
@@ -91,14 +97,14 @@ export default {
     }
   }
   .image-container {
-    height: 80%;
+    height: 85%;
     display: flex;
     transition: transform 0.8s;
-
+	
     .image-info {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: space-around;
       margin: 0 1%;
 
       .image-info-container {

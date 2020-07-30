@@ -32,8 +32,8 @@ html {
 
       .menu-logo {
         position: fixed;
-        height: 4%;
-        margin: 2% 0 0 2%;
+        height: 3.5%;
+        margin: 1.5% 0 0 2%;
         z-index: 999;
         top: 0;
       }

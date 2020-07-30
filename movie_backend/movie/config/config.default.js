@@ -35,6 +35,14 @@ module.exports = (appInfo) => {
     allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS",
   };
 
+  config.sequelize = {
+    dialect: "mysql",
+    host: "39.97.177.60",
+    port: "3306",
+    database: "doubanmovie",
+    password: "12345678",
+  };
+
   return {
     ...config,
     ...userConfig,

@@ -34,17 +34,14 @@ class Movie(scrapy.Spider):
     def start_requests(self):
         for tag in self.tags:
             doubanMovieURL = self.getDoubanMovieURL(tag)
-            yield scrapy.Request(doubanMovieURL + self.startPage, callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True, 'handle_httpstatus_list': [302], 'item': tag})
-
-    def checkMovieInDatabase(self, movieID):
-        return checkMovie.checkMovie().checkMovieInDatabase(movieID)
+            yield scrapy.Request(doubanMovieURL + self.startPage, callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True, 'handle_httpstatus_list': [302]})
 
     def parseMovie(self, response):
         print(response.url)
         print(response.status)
         responseBody = response.text
         responseDict = json.loads(responseBody)
-        tag = response.meta['item']
+        # tag = response.meta['item']
         if 'r' in responseDict and responseDict['r'] == 1:
             print('spider encounter some trouble')
             print(responseDict)
@@ -56,13 +53,12 @@ class Movie(scrapy.Spider):
                 item['url'] = eachMovieInfo['url']
                 item['cover'] = eachMovieInfo['cover']
                 item['id'] = eachMovieInfo['id']
-                item['tag'] = tag
-                # if self.checkMovieInDatabase(item['id']): continue
+                # item['tag'] = tag
                 yield scrapy.Request(item['url'], callback=self.parseSinglePageMovieInfo, headers=self.headers, errback=self.errback_httpbin, meta={'item': item, 'dont_redirect': True, 'handle_httpstatus_list': [302]}, dont_filter=True,)
         responseSplitList = response.url.rsplit('=', 1)
         nextPage = int(responseSplitList[1]) + 20
         nextRequestURL = responseSplitList[0] + '=' + str(nextPage)
-        yield scrapy.Request(nextRequestURL, callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True, 'handle_httpstatus_list': [302], 'item': tag})
+        yield scrapy.Request(nextRequestURL, callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True, 'handle_httpstatus_list': [302]})
 
     def parseSinglePageMovieInfo(self, response):
         print('start parsing movieInfo')

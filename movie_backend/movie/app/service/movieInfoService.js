@@ -16,4 +16,4 @@ class MovieInfoService extends Service {
   }
 }
 
-module.exports = MovieInfoService;
+// module.exports = MovieInfoService;

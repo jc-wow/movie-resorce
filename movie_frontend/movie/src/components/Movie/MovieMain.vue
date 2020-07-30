@@ -3,8 +3,20 @@
     <transition name="menu">
       <Menu v-show="menu"></Menu>
     </transition>
-    <div class="movie-container">
-      <InfoContainer :info="movieInfo" :curPage="requestParam.page" @paging="paging"></InfoContainer>
+    <div class="movie-main-header"></div>
+    <div class="movie-main-body">
+      <!-- <div class="zoom-container">
+        <el-slider class="zoom" v-model="slideValue" :show-tooltip="false"></el-slider>
+        <i class="el-icon-s-grid"></i>
+      </div> -->
+      <div class="movie-container">
+        <InfoContainer
+          :info="movieInfo"
+          :curPage="requestParam.page"
+          :category="category"
+          @paging="paging"
+        ></InfoContainer>
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +37,8 @@ export default {
       movieInfo: [],
       dripPicInfo: [],
       imageContainerHeight: 0,
+      category: "电影",
+      slideValue: 50,
       requestParam: {
         page: 1,
         itemsPerPage: 15,
@@ -38,20 +52,25 @@ export default {
       });
     },
     paging(direction, transDistance) {
-			this.direction = direction;
+      this.direction = direction;
       this.imgContainerEle = document.getElementsByClassName(
         "image-container"
-			)[0];
+      )[0];
       this.imgContainerEle.style.cssText = `transform: translatex(${transDistance}px)`;
       this.removeTransEvent();
-      this.imgContainerEle.addEventListener("transitionend", this.ifReqAPI, false);
-    },
-    removeTransEvent() {
-      this.imgContainerEle.removeEventListener(
+      this.imgContainerEle.addEventListener(
         "transitionend",
         this.ifReqAPI,
         false
       );
+    },
+    removeTransEvent() {
+      this.imgContainerEle &&
+        this.imgContainerEle.removeEventListener(
+          "transitionend",
+          this.ifReqAPI,
+          false
+        );
     },
     ifReqAPI() {
       const lastEle = $(".image-container div:last");
@@ -102,7 +121,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @keyframes menu-slidein {
   from {
     transform: translateX(-100%);
@@ -119,24 +138,69 @@ export default {
   height: 100%;
   overflow-y: auto;
 
-  .menu-enter-active {
-    animation: 0.5s menu-slidein;
-  }
-  .menu-leave-active {
-    animation: 0.5s menu-slidein reverse;
+  .movie-main-header {
+    height: 9%;
   }
 
-  .movieInfo-menuLogo {
-    position: absolute;
-    height: 4%;
-    margin: 2% 0 0 2%;
-    z-index: 999;
-  }
+  .movie-main-body {
+    height: 91%;
 
-  .movie-container {
-    margin-left: 6%;
-    height: 35%;
-    margin-top: 5%;
+    // .zoom-container {
+    //   display: flex;
+    //   flex-direction: row;
+    //   align-items: center;
+    //   width: 9%;
+    //   margin-left: 90%;
+
+    //   .zoom {
+    //     width: 50%;
+
+    //     .el-slider__runway {
+    //       height: 2px;
+    //       background-color: rgba(255, 255, 255, 0.5);
+
+    //       .el-slider__bar {
+    //         background-color: transparent;
+    //       }
+
+    //       .el-slider__button-wrapper {
+    //         top: -17px;
+
+    //         .el-slider__button {
+    //           border: 0;
+    //           width: 13px;
+    //           height: 13px;
+    //         }
+    //       }
+    //     }
+    //   }
+
+    //   .el-icon-s-grid {
+    //     color: #9e9797;
+    //     margin-left: 5%;
+    //     font-size: 1.4rem;
+    //   }
+    // }
+
+    .menu-enter-active {
+      animation: 0.5s menu-slidein;
+    }
+    .menu-leave-active {
+      animation: 0.5s menu-slidein reverse;
+    }
+
+    .movieInfo-menuLogo {
+      position: absolute;
+      height: 4%;
+      margin: 2% 0 0 2%;
+      z-index: 999;
+    }
+
+    .movie-container {
+      margin-left: 6%;
+      height: 32%;
+      margin-top: 2%;
+    }
   }
 }
 </style>
