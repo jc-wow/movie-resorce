@@ -17,14 +17,15 @@ class Movie(scrapy.Spider):
     def __init__(self, name=None, **kwargs):
         super().__init__(name=name, **kwargs)
         self.startPage = '4100'
-        self.tags = ['电影', '电视剧', '综艺', '动漫', '纪录片', '短片']
+        # self.tags = ['电影', '电视剧', '综艺', '动漫', '纪录片', '短片']
         self.headers = {
             'Host': 'movie.douban.com',
-            'Referer': 'https://movie.douban.com/tag/',
+            'Referer': 'https://movie.douban.com/',
             'X-Requested-With': 'XMLHttpRequest',
             'Accept': '*/*',
             'Accept-Encoding': 'utf8',
-            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8'
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'
         }
 
     def getDoubanMovieURL(self, tag):

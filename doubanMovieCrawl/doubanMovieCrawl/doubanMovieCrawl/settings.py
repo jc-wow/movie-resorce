@@ -56,15 +56,10 @@ DOWNLOAD_TIMEOUT = 5
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 
 DOWNLOADER_MIDDLEWARES = {
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    # 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
-    # 'scrapy_fake_useragent.middleware.RetryUserAgentMiddleware': 401,
-    'doubanMovieCrawl.middlewares.RandomUserAgentMiddleware': 310,
-    # 'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
-    'doubanMovieCrawl.middlewares.RandomProxyMiddleware': 350,
-    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
-    # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-    # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+    # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    # 'doubanMovieCrawl.middlewares.RandomUserAgentMiddleware': 310,
+    # 'doubanMovieCrawl.middlewares.RandomProxyMiddleware': 350,
+    # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
 }
 
 # Enable or disable extensions
@@ -76,7 +71,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'doubanMovieCrawl.pipelines.DoubanmoviecrawlPipeline': 300
+    # 'doubanMovieCrawl.pipelines.DoubanmoviecrawlPipeline': 300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

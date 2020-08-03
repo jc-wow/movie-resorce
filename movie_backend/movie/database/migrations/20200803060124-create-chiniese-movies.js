@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("high_score_movies", {
+    await queryInterface.createTable("chiniese_movies", {
       id: {
         type: Sequelize.STRING,
         allowNull: false,  
@@ -72,6 +72,7 @@ module.exports = {
       },
       created_at: {
         type: Sequelize.DATE,
+        defaultValue: CURRENT_TIMESTAMP,
       },
       updated_at: {
         type: Sequelize.DATE,
@@ -79,6 +80,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("high_score_movies");
+    await queryInterface.dropTable("chiniese_movies");
   },
 };
