@@ -9,6 +9,7 @@ import pymysql
 import logging
 from DBUtils.PooledDB import PooledDB
 
+
 class DoubanmoviecrawlPipeline(object):
     __pool = None
 
@@ -45,7 +46,7 @@ class DoubanmoviecrawlPipeline(object):
                 print('start to insert into database......')
             else:
                 print('retry to reconnect......')
-                self.cursor = self.db.cursor()
+                self.cursor= self.db.cursor()
         except:
             self.db.rollback()
         finally:
@@ -57,7 +58,7 @@ class DoubanmoviecrawlPipeline(object):
 
     def checkPool(self):
         if not self.__pool:
-            self.buildPool = PooledDB(
+            self.buildPool= PooledDB(
                 creator = pymysql,
                 mincached = 1,
                 maxcached = 20,
@@ -68,5 +69,3 @@ class DoubanmoviecrawlPipeline(object):
                 passwd = self.passwd,
                 charset = self.charset
             )
-            self.
-
