@@ -72,7 +72,6 @@ module.exports = {
       },
       created_at: {
         type: Sequelize.DATE,
-        defaultValue: CURRENT_TIMESTAMP,
       },
       updated_at: {
         type: Sequelize.DATE,
