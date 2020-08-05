@@ -20,17 +20,24 @@ class DoubanmoviecrawlPipeline(object):
         self.passwd = 'wangchi6992830'
         self.dbName = 'doubanmovie'
         self.charset = 'utf8mb4'
-        # self.db = pymysql.connect(host=self.host,
-        #                           port=self.port,
-        #                           user=self.user,
-        #                           password=self.passwd,
-        #                           db=self.dbName,
-        #                           charset=self.charset
-        #                           )
-        # self.cursor = self.db.cursor()
-        # self.allMovieID = []
-        # self.allID_sql = 'SELECT id FROM doubanmovie.movieInfo'
-        # self.fetchAllID(self.allID_sql)
+        self.__conn = DoubanmoviecrawlPipeline.get_conn()
+        self.__cursor = self.__conn.cursor()
+
+    @staticmethod
+    def get_conn():
+        if not DoubanmoviecrawlPipeline.__pool:
+            __pool = PooledDB(
+                creator = pymysql,
+                mincached = 1,
+                maxcached = 20,
+                host = self.host,
+                port = self.port,
+                db = self.dbName,
+                user = self.user,
+                passwd = self.passwd,
+                charset = self.charset
+            )
+            return __pool.connection()
 
     def process_item(self, item, spider):
         insert_data_sql = 'INSERT INTO doubanmovie.movieInfo (id, title, rate, url, cover, director, actor, genre, produceArea, language, releaseDate, runtime, otherName, imdb, officialSite, rating_sum, ratings_on_weight, summary, award, shortComment, tag) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
@@ -55,17 +62,3 @@ class DoubanmoviecrawlPipeline(object):
             self.db.commit()
             self.cursor.close()
             print('insert done')
-
-    def checkPool(self):
-        if not self.__pool:
-            self.buildPool= PooledDB(
-                creator = pymysql,
-                mincached = 1,
-                maxcached = 20,
-                host = self.host,
-                port = self.port,
-                db = self.dbName,
-                user = self.user,
-                passwd = self.passwd,
-                charset = self.charset
-            )
