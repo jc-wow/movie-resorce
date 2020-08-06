@@ -40,8 +40,7 @@ class DoubanmoviecrawlPipeline(object):
             return __pool.connection()
 
     def process_item(self, item, spider):
-        insert_data_sql = 'INSERT INTO doubanmovie.movieInfo (id, title, rate, url, cover, director, actor, genre, produceArea, language, releaseDate, runtime, otherName, imdb, officialSite, rating_sum, ratings_on_weight, summary, award, shortComment, tag) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
-            'id']
+        insert_data_sql = 'INSERT INTO doubanmovie.high_score_movies (id, title, rate, url, cover, director, actor, genre, produceArea, language, releaseDate, runtime, otherName, imdb, officialSite, rating_sum, ratings_on_weight, summary, award, shortComment, original_photo, similar_like, tag, ost) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
         try:
             self.insert(item, insert_data_sql)
         except Exception as e:
@@ -49,16 +48,10 @@ class DoubanmoviecrawlPipeline(object):
 
     def insert(self, item, sql):
         try:
-            if self.cursor.connection:
+            self.__cursor:
                 print('start to insert into database......')
-            else:
-                print('retry to reconnect......')
-                self.cursor= self.db.cursor()
+                movieData = self.__cursor.execute(sql, (item['id'], item['title'], item['rate'], item['url'], item['cover'], item['director'], item['actor'], item['genre'], item['produceArea'], item['language'], item['releaseDate'],
+                                      item['runtime'], item['otherName'], item['imdb'], item['officialSite'], item['rating_sum'], item['ratings_on_weight'], item['summary'], item['award'], item['shortComment'], item['original_photo'], item['similar_like'], item['tag'], item['ost']))
         except:
             self.db.rollback()
-        finally:
-            self.cursor.execute(sql, (item['id'], item['title'], item['rate'], item['url'], item['cover'], item['director'], item['actor'], item['genre'], item['produceArea'], item['language'], item['releaseDate'],
-                                      item['runtime'], item['otherName'], item['imdb'], item['officialSite'], item['rating_sum'], item['ratings_on_weight'], item['summary'], item['award'], item['shortComment'], item['tag']))
-            self.db.commit()
-            self.cursor.close()
-            print('insert done')
+       

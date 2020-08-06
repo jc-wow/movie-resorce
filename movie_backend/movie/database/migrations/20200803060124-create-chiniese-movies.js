@@ -70,6 +70,12 @@ module.exports = {
       similer_like: {
         type: Sequelize.TEXT,
       },
+      tag: {
+        type: Sequelize.STRING(500),
+      },
+      ost: {
+        type: Sequelize.STRING(2000),
+      },
       created_at: {
         type: Sequelize.DATE,
       },

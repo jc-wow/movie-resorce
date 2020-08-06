@@ -1,9 +1,8 @@
 from scrapy.selector import Selector
 import json
 import re
-from doubanMovieCrawl import movieurl
 from doubanMovieCrawl import items
-from doubanMovieCrawl import checkMovie
+from doubanMovieCrawl import settings
 from scrapy import FormRequest
 import scrapy
 import sys
@@ -16,45 +15,26 @@ class Movie(scrapy.Spider):
 
     def __init__(self, name=None, **kwargs):
         super().__init__(name=name, **kwargs)
-        self.startPage = '4100'
-        # self.tags = ['电影', '电视剧', '综艺', '动漫', '纪录片', '短片']
-        self.headers = {
-            'Host': 'movie.douban.com',
-            'Referer': 'https://movie.douban.com/',
-            'X-Requested-With': 'XMLHttpRequest',
-            'Accept': '*/*',
-            'Accept-Encoding': 'utf8',
-            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'
-        }
-
-    def getDoubanMovieURL(self, tag):
-        movieURL = movieurl.URL()
-        return movieURL.getAllMovieURL(tag)
+        self.startPage = '0'
+        self.headers = settings.Headers
 
     def start_requests(self):
-        for tag in self.tags:
-            doubanMovieURL = self.getDoubanMovieURL(tag)
-            yield scrapy.Request(doubanMovieURL + self.startPage, callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True, 'handle_httpstatus_list': [302]})
+        doubanMovieURL = settings.MovieURL['classicMovie']
+        yield scrapy.Request(doubanMovieURL + self.startPage, callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True, 'handle_httpstatus_list': [302]})
 
     def parseMovie(self, response):
         print(response.url)
         print(response.status)
         responseBody = response.text
         responseDict = json.loads(responseBody)
-        # tag = response.meta['item']
-        if 'r' in responseDict and responseDict['r'] == 1:
-            print('spider encounter some trouble')
-            print(responseDict)
-        if responseDict and 'data' in responseDict:
-            for eachMovieInfo in responseDict['data']:
+        if 'subjects' in responseDict and len(responseDict['subjects']) != 0:
+            for eachMovieInfo in responseDict['subjects']:
                 item = items.DoubanHighestmoviecrawlItem()
                 item['rate'] = eachMovieInfo['rate']
                 item['title'] = eachMovieInfo['title']
                 item['url'] = eachMovieInfo['url']
                 item['cover'] = eachMovieInfo['cover']
                 item['id'] = eachMovieInfo['id']
-                # item['tag'] = tag
                 yield scrapy.Request(item['url'], callback=self.parseSinglePageMovieInfo, headers=self.headers, errback=self.errback_httpbin, meta={'item': item, 'dont_redirect': True, 'handle_httpstatus_list': [302]}, dont_filter=True,)
         responseSplitList = response.url.rsplit('=', 1)
         nextPage = int(responseSplitList[1]) + 20
@@ -62,7 +42,6 @@ class Movie(scrapy.Spider):
         yield scrapy.Request(nextRequestURL, callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True, 'handle_httpstatus_list': [302]})
 
     def parseSinglePageMovieInfo(self, response):
-        print('start parsing movieInfo')
         item = response.meta['item']
         selector = response.selector
         item['director'] = '.'.join(selector.xpath(

@@ -94,3 +94,17 @@ ITEM_PIPELINES = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+Headers = {
+    'Host': 'movie.douban.com',
+    'Referer': 'https://movie.douban.com/',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Accept': '*/*',
+    'Accept-Encoding': 'utf8',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'
+}
+
+MovieURL = {
+    'classicMovie': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%BB%8F%E5%85%B8&sort=recommend&page_limit=20&page_start='
+} 

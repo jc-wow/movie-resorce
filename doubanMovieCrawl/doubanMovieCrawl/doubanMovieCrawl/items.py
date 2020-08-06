@@ -32,5 +32,7 @@ class DoubanHighestmoviecrawlItem(scrapy.Item):
     shortComment = scrapy.Field()
     original_photo = scrapy.Field()
     similar_like = scrapy.Field()
+    tag = scrapy.Field()
+    ost = scrapy.Field()
     
     pass
