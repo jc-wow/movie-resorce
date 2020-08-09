@@ -1,17 +1,23 @@
 from scrapy.selector import Selector
 import json
 import re
-from doubanMovieCrawl import items
-from doubanMovieCrawl import settings
+import items
+import settings
 from scrapy import FormRequest
 import scrapy
-import sys
-sys.path.append('..')
 
 
-class Movie(scrapy.Spider):
-    name = 'doubanMovieCrawl'
+class HighScoreMovie(scrapy.Spider):
+    name = 'highScoreMovie'
     allowed_domains = ['douban.com']
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'doubanMovieCrawl.pipelines.HighScoreMovie': 400
+        },
+        'CONCURRENT_REQUESTS': 100,
+        'DOWNLOAD_DELAY': 3,
+        'DOWNLOAD_TIMEOUT': 5
+    }
 
     def __init__(self, name=None, **kwargs):
         super().__init__(name=name, **kwargs)
@@ -83,8 +89,13 @@ class Movie(scrapy.Spider):
             '//span[@property="v:votes"]/text()').get()
         item['ratings_on_weight'] = '/'.join(selector.xpath(
             '//div[@class="ratings-on-weight"]//span[@class="rating_per"]/text()').getall())
-        item['summary'] = ''.join(selector.xpath('//div[@class="indent"]//span[@property="v:summary"]/text()').getall()
-                                  ).strip().replace('<br />', '').replace(u'\u3000', u'').replace('\n', '')
+        if len(selector.xpath(
+                '//div[@class="indent"]//span[@class="all hidden"]/text()')) != 0:
+            item['summary'] = ''.join(selector.xpath(
+                '//div[@class="indent"]//span[@class="all hidden"]/text()').getall()).strip().replace('<br />', '').replace(u'\u3000', u'').replace('\n', '')
+        else:
+            item['summary'] = ''.join(selector.xpath('//div[@class="indent"]//span[@property="v:summary"]/text()').getall()
+                                      ).strip().replace('<br />', '').replace(u'\u3000', u'').replace('\n', '')
         awardsGroup = selector.xpath(
             '//div[@class="mod"]//ul[@class="award"]').getall()
         item['award'] = ''
@@ -102,6 +113,25 @@ class Movie(scrapy.Spider):
             item['award'] += eachAward + '/'
         item['shortComment'] = '/'.join(selector.xpath(
             '//span[@class="short"]/text()').getall()).strip().replace('\n', '').replace(u'\u3000', u'')
+        if len(selector.xpath('//div[@class="tags-body"]')) != 0:
+            item['tag'] = '/'.join(selector.xpath(
+                '//div[@class="tags-body"]//a/text()').getall())
+        similarLike = []
+        similarLikeGroups = selector.xpath(
+            '//div[@class="recommendations-bd"]//dl').getall()
+        for dt in similarLikeGroups:
+            group = {}
+            group['title'] = Selector(text=dt).xpath('//dd//a/text()').get()
+            group['href'] = Selector(text=dt).xpath('//dt//a/@href').get()
+            group['img_href'] = Selector(text=dt).xpath('//dt//img/@src').get()
+            similarLike.append(group)
+        item['similar_like'] = similarLike
+        ostFinder = selector.xpath('//div[@class="gray_ad"]//h2/text()').get()
+        if '原声' in ostFinder:
+            item['ost'] = selector.xpath(
+                '//div[@class="gray_ad"]//a/@href').get()
+        item['original_photo'] = selector.xpath(
+            '//a[@class="nbgnbg"]/@href').get()
         yield item
 
     def errback_httpbin(self, failure):
