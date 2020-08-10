@@ -67,7 +67,7 @@ module.exports = {
       original_photo: {
         type: Sequelize.STRING(2000),
       },
-      similer_like: {
+      similar_like: {
         type: Sequelize.TEXT,
       },
       tag: {

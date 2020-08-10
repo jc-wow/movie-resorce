@@ -55,12 +55,12 @@ DOWNLOAD_TIMEOUT = 5
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 
-DOWNLOADER_MIDDLEWARES = {
-    # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    # 'doubanMovieCrawl.middlewares.RandomUserAgentMiddleware': 310,
-    # 'doubanMovieCrawl.middlewares.RandomProxyMiddleware': 350,
-    # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
-}
+# DOWNLOADER_MIDDLEWARES = {
+#     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+#     'doubanMovieCrawl.middlewares.RandomUserAgentMiddleware': 310,
+#     'doubanMovieCrawl.middlewares.RandomProxyMiddleware': 350,
+#     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
+# }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html

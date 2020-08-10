@@ -56,7 +56,7 @@ class RandomProxyMiddleware(object):
             return request
 
     def getProxyFromDatabase(self):
-        res = requests.get("http://127.0.0.1:5011/get/", timeout=5).json()
+        res = requests.get("http://localhost:5010/get/", timeout=5).json()
         time.sleep(2)
         try:
             if 'code' in res and res['code'] == 0:
@@ -140,7 +140,7 @@ class RandomProxyMiddleware(object):
         return request
 
     def delete_proxy(self, proxy):
-        requests.get("http://127.0.0.1:5011/delete/?proxy={}".format(proxy))
+        requests.get("http://localhost:5010/delete/?proxy={}".format(proxy))
 
 
 class DoubanmoviecrawlSpiderMiddleware(object):
