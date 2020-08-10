@@ -15,10 +15,10 @@ class ChinieseMovie(scrapy.Spider):
         	'pipelines.ChinieseMovie': 401
         },
         'DOWNLOADER_MIDDLEWARES': {
-        	'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-        	'middlewares.RandomUserAgentMiddleware': 310,
-        	'middlewares.RandomProxyMiddleware': 350,
-        	'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
+        	# 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+        	# 'middlewares.RandomUserAgentMiddleware': 310,
+        	# 'middlewares.RandomProxyMiddleware': 350,
+        	# 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
         },
         'CONCURRENT_REQUESTS': 100,
         'DOWNLOAD_DELAY': 3,
