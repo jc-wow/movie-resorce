@@ -15,10 +15,10 @@ class HighScoreMovie(scrapy.Spider):
 			'pipelines.HighScoreMovie': 400
 		},
 		'DOWNLOADER_MIDDLEWARES': {
-			# 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-			# 'middlewares.RandomUserAgentMiddleware': 310,
-			# 'middlewares.RandomProxyMiddleware': 350,
-			# 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
+			'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+			'middlewares.RandomUserAgentMiddleware': 310,
+			'middlewares.RandomProxyMiddleware': 350,
+			'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
 		},
 		'CONCURRENT_REQUESTS': 100,
 		'DOWNLOAD_DELAY': 3,
@@ -30,7 +30,7 @@ class HighScoreMovie(scrapy.Spider):
 		self.headers = settings.Headers
 
 	def start_requests(self):
-		startPage = '0'
+		startPage = '50'
 		doubanMovieURL = settings.MovieURL['classicMovie']
 		yield scrapy.Request(doubanMovieURL + startPage, callback=self.parseMovie, headers=self.headers, errback=self.errback_httpbin, dont_filter=True, meta={'dont_redirect': True, 'handle_httpstatus_list': [302]})
 
@@ -134,10 +134,9 @@ class HighScoreMovie(scrapy.Spider):
 			group['img_href'] = Selector(text=dt).xpath('//dt//img/@src').get()
 			similarLike.append(group)
 		item['similar_like'] = similarLike
-		ostFinder = selector.xpath('//div[@class="gray_ad"]//h2/text()').get()
-		if '原声' in ostFinder:
-			item['ost'] = selector.xpath(
-				'//div[@class="gray_ad"]//a/@href').get()
+		ostFinder = selector.xpath('//div[@class="gray_ad"]').getall()
+		if len(ostFinder) == 2:
+			item['ost'] = Selector(text=ostFinder[1]).xpath('//a/@href').get()   
 		else:
 			item['ost'] = ''
 		item['original_photo'] = selector.xpath(

@@ -12,13 +12,13 @@ class ChinieseMovie(scrapy.Spider):
     allowed_domains = ['douban.com']
     custom_settings = {
         'ITEM_PIPELINES': {
-        	'pipelines.ChinieseMovie': 401
+            'pipelines.ChinieseMovie': 401
         },
         'DOWNLOADER_MIDDLEWARES': {
-        	# 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-        	# 'middlewares.RandomUserAgentMiddleware': 310,
-        	# 'middlewares.RandomProxyMiddleware': 350,
-        	# 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
+            'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+            'middlewares.RandomUserAgentMiddleware': 310,
+            'middlewares.RandomProxyMiddleware': 350,
+            'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 380
         },
         'CONCURRENT_REQUESTS': 100,
         'DOWNLOAD_DELAY': 3,
@@ -27,7 +27,7 @@ class ChinieseMovie(scrapy.Spider):
 
     def __init__(self, name=None, **kwargs):
         super().__init__(name=name, **kwargs)
-        self.startPage = '0'
+        self.startPage = '70'
         self.headers = settings.Headers
 
     def start_requests(self):
@@ -134,10 +134,10 @@ class ChinieseMovie(scrapy.Spider):
             group['img_href'] = Selector(text=dt).xpath('//dt//img/@src').get()
             similarLike.append(group)
         item['similar_like'] = similarLike
-        ostFinder = selector.xpath('//div[@class="gray_ad"]//h2/text()').get()
-        if '原声' in ostFinder:
-            item['ost'] = selector.xpath(
-                '//div[@class="gray_ad"]//a/@href').get()
+        ostFinder = selector.xpath('//div[@class="gray_ad"]').getall()
+        if len(ostFinder) == 2:
+            item['ost'] = Selector(
+                text=ostFinder[1]).xpath('//a/@href').get()
         else:
             item['ost'] = ''
         item['original_photo'] = selector.xpath(
