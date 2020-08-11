@@ -64,6 +64,7 @@ class HighScoreMovie(Pool):
 
 
 class ChinieseMovie(Pool):
+	
 	def __init__(self):
 		self.__conn = Pool.get_conn()
 		self.__cursor = self.__conn.cursor()
@@ -74,7 +75,7 @@ class ChinieseMovie(Pool):
 			self.insert(item, insert_data_sql)
 		except Exception as e:
 			logging.error(e)
-			
+
 	def insert(self, item, sql):
 		try:
 			if self.__cursor:
