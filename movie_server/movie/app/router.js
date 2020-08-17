@@ -5,5 +5,5 @@
  */
 module.exports = (app) => {
   const { router, controller } = app;
-  router.resources("movieInfo", "/movieInfo", controller.movieInfo);
+  router.resources("chiniesemovies", "/chiniesemovies", controller.chiniesemovie);
 };

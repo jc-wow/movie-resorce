@@ -1,21 +1,20 @@
 "use strict";
 
-
 module.exports = (app) => {
-  const { STRING, TEXT, JSONB } = app.Sequelize;
+  const { STRING } = app.Sequelize;
 
-  const highScoreMovies = app.model.define(
-    "highScoreMovies",
+  const ChinieseMovie = app.model.define(
+    "chiniesemovie",
     {
       id: { type: STRING, primaryKey: true },
       title: STRING,
       rate: STRING,
     },
     {
-      tableName: "high_score_movies",
+      tableName: "chiniese_movies",
       timestamps: false,
     }
   );
 
-  return highScoreMovies;
+  return ChinieseMovie;
 };

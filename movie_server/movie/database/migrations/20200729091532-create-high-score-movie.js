@@ -4,7 +4,7 @@ module.exports = {
     await queryInterface.createTable("high_score_movies", {
       id: {
         type: Sequelize.STRING,
-        allowNull: false,  
+        allowNull: false,
         primaryKey: true,
       },
       title: {

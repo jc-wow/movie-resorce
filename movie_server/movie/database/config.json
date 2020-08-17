@@ -9,17 +9,21 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "host": "39.97.177.60",
+    "port": "3306",
+    "username": "jcwang",
+    "password": "12345678",
+    "database": "doubanmovie",
+    "charset": "utf8mb4",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "host": "39.97.177.60",
+    "port": "3306",
+    "username": "jcwang",
+    "password": "12345678",
+    "database": "doubanmovie",
+    "charset": "utf8mb4",
     "dialect": "mysql"
   }
 }
