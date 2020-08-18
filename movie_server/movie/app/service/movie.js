@@ -3,13 +3,15 @@
 const Service = require("egg").Service;
 
 class MovieInfo extends Service {
-  async getMovieInfo(param) {
-    const { itemsPerPage, page } = param;
-    const offsetOfItem = itemsPerPage * (page - 1);
-    const option = {
-      attributes: ["id", "title", "cover"],
-    };
-    return MovieInfo;
+  async list(param) {
+    const { limit, page } = param;
+		const offset = limit * (page - 1);
+		const options = {
+			offset: offset,
+			limit: limit,
+			order: [['rate', 'DESC']]
+		}
+    return this.ctx.model.Chiniesemovie.findAll(options);
   }
 }
 
