@@ -9,6 +9,7 @@ module.exports = (app) => {
       id: { type: STRING, primaryKey: true },
       title: STRING,
       rate: STRING,
+      cover: STRING,
     },
     {
       tableName: "chiniese_movies",

@@ -16,6 +16,8 @@ class Parse(object):
         print(response.status)
         responseBody = response.text
         responseDict = json.loads(responseBody)
+        if len(responseDict['subjects']) == 0:
+            return
         if 'subjects' in responseDict and len(responseDict['subjects']) != 0:
             for eachMovieInfo in responseDict['subjects']:
                 item = items.DoubanHighestmoviecrawlItem()

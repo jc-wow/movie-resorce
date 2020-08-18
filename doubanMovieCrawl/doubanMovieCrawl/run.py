@@ -1,10 +1,12 @@
 import scrapy
 from scrapy.crawler import CrawlerProcess
-from spiders.high_score_movie import HighScoreMovie
-from spiders.chiniese_movie import ChinieseMovie
+from spiders.europe_movie import EuropeMovie
+from spiders.japan_movie import JapanMovie
+from spiders.korea_movie import KoreaMovie
 
 if __name__ == "__main__":
     process = CrawlerProcess()
-    process.crawl(HighScoreMovie)
-    process.crawl(ChinieseMovie)
+    process.crawl(EuropeMovie)
+    process.crawl(JapanMovie)
+    process.crawl(KoreaMovie)
     process.start()
