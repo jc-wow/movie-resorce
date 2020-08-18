@@ -8,7 +8,7 @@ class JapanMovie(scrapy.Spider):
 	allowed_domains = ['douban.com']
 	custom_settings = {
 		'ITEM_PIPELINES': {
-			'pipelines.ChinieseMovie': 401
+			'pipelines.JapanMovie': 401
 		},
 		'DOWNLOADER_MIDDLEWARES': {
 			'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
