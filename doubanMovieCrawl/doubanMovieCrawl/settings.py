@@ -108,7 +108,7 @@ Headers = {
 MovieURL = {
     'classicMovie': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E7%BB%8F%E5%85%B8&sort=recommend&page_limit=20&page_start=',
 		'chinieseMovie': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E5%8D%8E%E8%AF%AD&sort=recommend&page_limit=20&page_start=',
-		'europeMovie': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E6%AC%A7%E7%BE%8E&sort=recommend&page_limit=20&page_start=',
+		'europeMovie': 'https://movie.douban.com/j/new_search_subjects?sort=U&range=0,10&tags=&start=6000&countries=%E6%AC%A7%E7%BE%8E',
 		'koreaMovie': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E9%9F%A9%E5%9B%BD&sort=recommend&page_limit=20&page_start=',
 		'japanMovie': 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E6%97%A5%E6%9C%AC&sort=recommend&page_limit=20&page_start=',
 } 

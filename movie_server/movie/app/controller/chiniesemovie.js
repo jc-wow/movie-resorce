@@ -9,7 +9,7 @@ class ChinieseMovieController extends Controller {
     const query = {
       limit: parseInt(limit),
       page: parseInt(page),
-		};
+    };
     ctx.body = await ctx.service.movie.list(query);
     this.success(ctx.body);
   }
