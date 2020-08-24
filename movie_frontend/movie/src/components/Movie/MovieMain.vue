@@ -41,7 +41,7 @@ export default {
       slideValue: 50,
       requestParam: {
         page: 1,
-        itemsPerPage: 15,
+        limit: 15,
       },
     };
   },
