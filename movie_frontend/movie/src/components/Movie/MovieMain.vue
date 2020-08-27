@@ -5,16 +5,9 @@
     </transition>
     <div class="movie-main-header"></div>
     <div class="movie-main-body">
-      <!-- <div class="zoom-container">
-        <el-slider class="zoom" v-model="slideValue" :show-tooltip="false"></el-slider>
-        <i class="el-icon-s-grid"></i>
-      </div> -->
       <div class="movie-container">
         <InfoContainer
-          :info="movieInfo"
-          :curPage="requestParam.page"
           :category="category"
-          @paging="paging"
         ></InfoContainer>
       </div>
     </div>
@@ -22,7 +15,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import Menu from "../common/Menu";
 import InfoContainer from "./InfoContainer";
 
@@ -34,52 +26,10 @@ export default {
   },
   data() {
     return {
-      movieInfo: [],
-      dripPicInfo: [],
-      imageContainerHeight: 0,
-      category: "电影",
-      slideValue: 50,
-      requestParam: {
-        page: 1,
-        limit: 15,
-      },
+      category: "华语"
     };
   },
   methods: {
-    getMoveInfo() {
-      this.$store.dispatch("getMovieInfo", this.requestParam).then(() => {
-        this.getHighestScoreMovie;
-      });
-    },
-    paging(direction, transDistance) {
-      this.direction = direction;
-      this.imgContainerEle = document.getElementsByClassName(
-        "image-container"
-      )[0];
-      this.imgContainerEle.style.cssText = `transform: translatex(${transDistance}px)`;
-      this.removeTransEvent();
-      this.imgContainerEle.addEventListener(
-        "transitionend",
-        this.ifReqAPI,
-        false
-      );
-    },
-    removeTransEvent() {
-      this.imgContainerEle &&
-        this.imgContainerEle.removeEventListener(
-          "transitionend",
-          this.ifReqAPI,
-          false
-        );
-    },
-    ifReqAPI() {
-      const lastEle = $(".image-container div:last");
-      const disToRLeftDoc = lastEle.offset().left;
-      if (this.direction === "down" && disToRLeftDoc < $(window).width()) {
-        this.requestParam.page++;
-        this.getMoveInfo();
-      }
-    },
     /**
      * request API when the distance between scroll and
      * bottom of the page less than twenty percent.
@@ -103,21 +53,10 @@ export default {
     },
   },
   computed: {
-    ...mapState({
-      getHighestScoreMovie(status) {
-        this.movieInfo.push(...status.movieInfo);
-      },
-    }),
     menu() {
       return this.$store.state.menuIsShowing;
     },
-  },
-  mounted() {
-    this.getMoveInfo();
-  },
-  destroyed() {
-    this.removeTransEvent();
-  },
+  }
 };
 </script>
 
@@ -144,43 +83,6 @@ export default {
 
   .movie-main-body {
     height: 91%;
-
-    // .zoom-container {
-    //   display: flex;
-    //   flex-direction: row;
-    //   align-items: center;
-    //   width: 9%;
-    //   margin-left: 90%;
-
-    //   .zoom {
-    //     width: 50%;
-
-    //     .el-slider__runway {
-    //       height: 2px;
-    //       background-color: rgba(255, 255, 255, 0.5);
-
-    //       .el-slider__bar {
-    //         background-color: transparent;
-    //       }
-
-    //       .el-slider__button-wrapper {
-    //         top: -17px;
-
-    //         .el-slider__button {
-    //           border: 0;
-    //           width: 13px;
-    //           height: 13px;
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   .el-icon-s-grid {
-    //     color: #9e9797;
-    //     margin-left: 5%;
-    //     font-size: 1.4rem;
-    //   }
-    // }
 
     .menu-enter-active {
       animation: 0.5s menu-slidein;

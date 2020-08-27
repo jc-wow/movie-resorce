@@ -4,7 +4,7 @@ const actions = {
       this._vm.get("chiniesemovies", param).then(res => {
         if (res.success) {
           commit("getMovieInfo", res.data);
-          resolve();
+          resolve(res);
         }
       });
     });

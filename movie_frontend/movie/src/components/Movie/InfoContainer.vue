@@ -8,14 +8,14 @@
           @click="upPage"
           :style="{ opacity: transDistance === 0 ? 0.2 : 1 }"
         ></i>
-        <i class="el-icon-arrow-right" @click="downPage"></i>
+        <i class="el-icon-arrow-right" @click="downPage" :style="{ opacity: isEnd ? 0.2 : 1 }"></i>
       </div>
     </div>
     <div class="image-container">
       <div
         class="image-info"
         :id="'image-info_' + index"
-        v-for="(item, index) in info"
+        v-for="(item, index) in movieInfo"
         :key="'container_' + index"
       >
         <el-image
@@ -31,32 +31,90 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "MovieInfo",
   props: {
-    info: Array,
-    curPage: Number,
+    // info: Array,
+    // curPage: Number,
     category: String,
   },
   data() {
     return {
+      movieInfo: [],
       imageInfoContainerWidth: 0,
       transDistance: 0,
+      isEnd: false,
+      requestParam: {
+        page: 1,
+        limit: 15,
+      },
     };
   },
   methods: {
     upPage() {
       if (this.transDistance === 0) return;
       this.transDistance += 0.5 * this.pageWidth;
-      this.$emit("paging", "up", this.transDistance);
+      this.paging("up", this.transDistance);
     },
     downPage() {
+      if (this.isEnd) return;
       this.transDistance -= 0.5 * this.pageWidth;
-      this.$emit("paging", "down", this.transDistance);
+      this.paging("down", this.transDistance);
+    },
+    getMoveInfo() {
+      this.$store.dispatch("getMovieInfo", this.requestParam).then((res) => {
+        this.stopReqAPI(res);
+        this.getHighestScoreMovie;
+      });
+    },
+    paging(direction, transDistance) {
+      this.direction = direction;
+      this.imgContainerEle = document.getElementsByClassName(
+        "image-container"
+      )[0];
+      this.imgContainerEle.style.cssText = `transform: translatex(${transDistance}px)`;
+      this.removeTransEvent();
+      this.imgContainerEle.addEventListener(
+        "transitionend",
+        this.ifReqAPI,
+        false
+      );
+    },
+    removeTransEvent() {
+      this.imgContainerEle &&
+        this.imgContainerEle.removeEventListener(
+          "transitionend",
+          this.ifReqAPI,
+          false
+        );
+    },
+    ifReqAPI() {
+      const lastEle = $(".image-container div:last");
+      const disToRLeftDoc = lastEle.offset().left;
+      if (this.direction === "down" && disToRLeftDoc < $(window).width()) {
+        this.requestParam.page++;
+        this.getMoveInfo();
+      }
+    },
+    stopReqAPI(res) {
+      if (res && res.success && res.data.length === 0) this.isEnd = true;
     },
   },
+  computed: {
+    ...mapState({
+      getHighestScoreMovie(status) {
+        this.movieInfo.push(...status.movieInfo);
+      },
+    }),
+  },
   mounted() {
+    this.getMoveInfo();
     this.pageWidth = document.body.clientWidth;
+  },
+  destroyed() {
+    this.removeTransEvent();
   },
 };
 </script>
@@ -100,7 +158,7 @@ export default {
     height: 85%;
     display: flex;
     transition: transform 0.8s;
-	
+
     .image-info {
       display: flex;
       flex-direction: column;
