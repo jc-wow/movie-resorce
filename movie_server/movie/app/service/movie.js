@@ -3,7 +3,7 @@
 const Service = require("egg").Service;
 
 class MovieInfo extends Service {
-  async list(param) {
+  async list(param, model) {
     const { limit, page } = param;
     const offset = limit * (page - 1);
     const options = {
@@ -14,7 +14,7 @@ class MovieInfo extends Service {
         ["id", "DESC"],
       ],
     };
-    return this.ctx.model.Chiniesemovie.findAll(options);
+    return this.ctx.model[model].findAll(options);
   }
 }
 
