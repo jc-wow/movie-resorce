@@ -1,7 +1,7 @@
 <template>
   <div class="info-container">
     <div class="page-icon">
-      <div class="category">{{ category }}</div>
+      <div class="category">{{ category.title }}</div>
       <div class="pagnation">
         <i
           class="el-icon-arrow-left"
@@ -11,7 +11,7 @@
         <i class="el-icon-arrow-right" @click="downPage" :style="{ opacity: isEnd ? 0.2 : 1 }"></i>
       </div>
     </div>
-    <div class="image-container">
+    <div :class="['image-container', 'image-container-' + category.key]">
       <div
         class="image-info"
         :id="'image-info_' + index"
@@ -36,9 +36,7 @@ import { mapState } from "vuex";
 export default {
   name: "MovieInfo",
   props: {
-    // info: Array,
-    // curPage: Number,
-    category: String,
+    category: Object,
   },
   data() {
     return {
@@ -46,6 +44,7 @@ export default {
       imageInfoContainerWidth: 0,
       transDistance: 0,
       isEnd: false,
+      reqAPIing: false,
       requestParam: {
         page: 1,
         limit: 15,
@@ -59,23 +58,26 @@ export default {
       this.paging("up", this.transDistance);
     },
     downPage() {
-      if (this.isEnd) return;
+      if (this.isEnd || this.reqAPIing) return;
       this.transDistance -= 0.5 * this.pageWidth;
       this.paging("down", this.transDistance);
     },
     getMoveInfo() {
+      this.reqAPIing = true;
       this.$store.dispatch("getMovieInfo", this.requestParam).then((res) => {
         this.stopReqAPI(res);
         this.getHighestScoreMovie;
+        this.reqAPIing = false;
       });
     },
     paging(direction, transDistance) {
       this.direction = direction;
-      this.imgContainerEle = document.getElementsByClassName(
-        "image-container"
-      )[0];
       this.imgContainerEle.style.cssText = `transform: translatex(${transDistance}px)`;
-      this.removeTransEvent();
+    },
+    listenImgTrans() {
+      this.imgContainerEle = document.getElementsByClassName(
+        `image-container-${this.category.key}`
+      )[0];
       this.imgContainerEle.addEventListener(
         "transitionend",
         this.ifReqAPI,
@@ -91,7 +93,7 @@ export default {
         );
     },
     ifReqAPI() {
-      const lastEle = $(".image-container div:last");
+      const lastEle = $(`.image-container-${this.category.key} div:last`);
       const disToRLeftDoc = lastEle.offset().left;
       if (this.direction === "down" && disToRLeftDoc < $(window).width()) {
         this.requestParam.page++;
@@ -111,6 +113,7 @@ export default {
   },
   mounted() {
     this.getMoveInfo();
+    this.listenImgTrans();
     this.pageWidth = document.body.clientWidth;
   },
   destroyed() {
@@ -128,7 +131,7 @@ export default {
   overflow-x: hidden;
 
   .page-icon {
-    height: 15%;
+    height: 11%;
     width: 97%;
     display: flex;
     flex-direction: row;
@@ -137,6 +140,7 @@ export default {
     .category {
       color: #fff;
       margin-left: 1%;
+			font-size: 1.2rem;
     }
 
     .pagnation {
@@ -155,7 +159,7 @@ export default {
     }
   }
   .image-container {
-    height: 85%;
+    height: 89%;
     display: flex;
     transition: transform 0.8s;
 
@@ -166,27 +170,18 @@ export default {
       margin: 0 1%;
 
       .image-info-container {
-        height: 150px;
-        width: 100px;
+        height: 200px;
+        width: 150px;
         margin: 1%;
         border-radius: 4px;
       }
 
       a {
-        width: 90px;
         font-size: 0.9rem;
         color: #fff;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+				text-align: center;
         display: block;
-        overflow: hidden;
         margin: 0 2%;
-      }
-
-      a:hover {
-        text-overflow: clip;
-        white-space: normal;
-        word-break: break-all;
       }
     }
   }

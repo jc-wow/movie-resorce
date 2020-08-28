@@ -5,10 +5,8 @@
     </transition>
     <div class="movie-main-header"></div>
     <div class="movie-main-body">
-      <div class="movie-container">
-        <InfoContainer
-          :category="category"
-        ></InfoContainer>
+      <div class="movie-container" v-for="(item, index) in category" :key="item.key">
+        <InfoContainer :category="item"></InfoContainer>
       </div>
     </div>
   </div>
@@ -26,7 +24,25 @@ export default {
   },
   data() {
     return {
-      category: "华语"
+      category: [
+        {
+          title: "经典",
+					key: "classical",
+					api: ''
+				},
+					// {
+					// 	title: "华语",
+					//   key: "chiniese",
+					// },
+					// {
+					// 	title: "韩国",
+					//   key: "korea",
+					// },
+					// {
+					// 	title: "日本",
+					//   key: "japan",
+					// }
+      ],
     };
   },
   methods: {
@@ -56,7 +72,7 @@ export default {
     menu() {
       return this.$store.state.menuIsShowing;
     },
-  }
+  },
 };
 </script>
 
@@ -100,7 +116,7 @@ export default {
 
     .movie-container {
       margin-left: 6%;
-      height: 32%;
+      height: 43%;
       margin-top: 2%;
     }
   }
