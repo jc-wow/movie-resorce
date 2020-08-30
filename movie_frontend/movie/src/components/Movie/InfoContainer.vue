@@ -8,7 +8,13 @@
           @click="upPage"
           :style="{ opacity: transDistance === 0 ? 0.2 : 1 }"
         ></i>
-        <i class="el-icon-arrow-right" @click="downPage" :style="{ opacity: isEnd ? 0.2 : 1 }"></i>
+        <i
+          class="el-icon-arrow-right"
+          v-show="!reqAPIing"
+          @click="downPage"
+          :style="{ opacity: isEnd ? 0.2 : 1 }"
+        ></i>
+        <i class="el-icon-loading" v-show="reqAPIing" />
       </div>
     </div>
     <div :class="['image-container', 'image-container-' + category.key]">
@@ -58,17 +64,22 @@ export default {
       this.paging("up", this.transDistance);
     },
     downPage() {
-      if (this.isEnd || this.reqAPIing) return;
+      if (this.isEnd) return;
       this.transDistance -= 0.5 * this.pageWidth;
       this.paging("down", this.transDistance);
     },
     getMoveInfo() {
       this.reqAPIing = true;
-      this.$store.dispatch("getMovieInfo", this.requestParam).then((res) => {
-        this.stopReqAPI(res);
-        this.getHighestScoreMovie;
-        this.reqAPIing = false;
-      });
+      this.$store
+        .dispatch("getMovieInfo", {
+          reqParam: this.requestParam,
+          api: this.category.api,
+        })
+        .then((res) => {
+          this.stopReqAPI(res);
+          this.getHighestScoreMovie;
+          this.reqAPIing = false;
+        });
     },
     paging(direction, transDistance) {
       this.direction = direction;
@@ -140,7 +151,7 @@ export default {
     .category {
       color: #fff;
       margin-left: 1%;
-			font-size: 1.2rem;
+      font-size: 1.2rem;
     }
 
     .pagnation {
@@ -156,6 +167,11 @@ export default {
       .el-icon-arrow-right {
         color: #fff;
       }
+
+      .el-icon-loading {
+        color: #fff;
+        height: fit-content;
+      }
     }
   }
   .image-container {
@@ -170,6 +186,10 @@ export default {
       margin: 0 1%;
 
       .image-info-container {
+        @media screen and (min-width: 1920px) {
+          height: 230px;
+          width: 180px;
+        }
         height: 200px;
         width: 150px;
         margin: 1%;
@@ -179,7 +199,7 @@ export default {
       a {
         font-size: 0.9rem;
         color: #fff;
-				text-align: center;
+        text-align: center;
         display: block;
         margin: 0 2%;
       }

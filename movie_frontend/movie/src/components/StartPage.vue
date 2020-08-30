@@ -25,13 +25,13 @@ export default {
       if (this.$store.state.menuIsShowing) {
         this.$store.commit("showMenu");
       }
-    }
+		}
   },
   computed: {
     menu() {
       return this.$store.state.menuIsShowing;
     }
-  }
+	}
 };
 </script>
 

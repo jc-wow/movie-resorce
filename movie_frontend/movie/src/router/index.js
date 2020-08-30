@@ -10,12 +10,12 @@ const routes = [
     path: "/movie",
     name: "movie",
     component: Movie
-  },
-  {
-    path: "/startPage",
-    name: "startPage",
-    component: StartPage
   }
+  // {
+  // path: "/startPage",
+  // name: "startPage",
+  // component: StartPage
+  // }
 
   // route level code-splitting
   // this generates a separate chunk (about.[hash].js) for this route
@@ -23,14 +23,19 @@ const routes = [
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
 ];
 
+const scrollBehavior = function (to, from, savedPosition) {
+	// ...
+}
+
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
-  routes
+	base: process.env.BASE_URL,
+	routes,
+	scrollBehavior
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === "/" && from.path === "/") next({ path: "/startPage" });
+  if (to.path === "/" && from.path === "/") next({ path: "/movie" });
   else next();
 });
 

@@ -1,10 +1,13 @@
 <template>
   <div class="movie-main">
+    <!-- <transition name="startpage"> -->
+    <StartPage class="movie-main-startpage" v-show="showStartpage" @scroll.native="scrollCallback"></StartPage>
+    <!-- </transition> -->
     <transition name="menu">
       <Menu v-show="menu"></Menu>
     </transition>
     <div class="movie-main-header"></div>
-    <div class="movie-main-body">
+    <div class="movie-main-body" @click="showStartpage = !showStartpage">
       <div class="movie-container" v-for="(item, index) in category" :key="item.key">
         <InfoContainer :category="item"></InfoContainer>
       </div>
@@ -15,33 +18,41 @@
 <script>
 import Menu from "../common/Menu";
 import InfoContainer from "./InfoContainer";
+import StartPage from "../StartPage";
+import { debug } from "console";
 
 export default {
   name: "Movie",
   components: {
     InfoContainer,
     Menu,
+    StartPage,
   },
   data() {
     return {
+      showStartpage: true,
+      prev: window.scrollY,
       category: [
         {
           title: "经典",
-					key: "classical",
-					api: ''
-				},
-					// {
-					// 	title: "华语",
-					//   key: "chiniese",
-					// },
-					// {
-					// 	title: "韩国",
-					//   key: "korea",
-					// },
-					// {
-					// 	title: "日本",
-					//   key: "japan",
-					// }
+          key: "classical",
+          api: "classicalmovies",
+        },
+        {
+          title: "华语",
+          key: "chiniese",
+          api: "chiniesemovies",
+        },
+        {
+          title: "韩国",
+          key: "korea",
+          api: "koreamovies",
+        },
+        {
+          title: "日本",
+          key: "japan",
+          api: "japanmovies",
+        },
       ],
     };
   },
@@ -73,6 +84,9 @@ export default {
       return this.$store.state.menuIsShowing;
     },
   },
+  created() {
+    this.listenCompScroll();
+  },
 };
 </script>
 
@@ -86,6 +100,7 @@ export default {
   }
 }
 
+
 .movie-main {
   background-color: #000;
   position: relative;
@@ -97,15 +112,15 @@ export default {
     height: 9%;
   }
 
+  .menu-enter-active {
+    animation: 0.5s menu-slidein;
+  }
+  .menu-leave-active {
+    animation: 0.5s menu-slidein reverse;
+  }
+
   .movie-main-body {
     height: 91%;
-
-    .menu-enter-active {
-      animation: 0.5s menu-slidein;
-    }
-    .menu-leave-active {
-      animation: 0.5s menu-slidein reverse;
-    }
 
     .movieInfo-menuLogo {
       position: absolute;
