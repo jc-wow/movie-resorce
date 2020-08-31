@@ -4,7 +4,10 @@ const mutations = {
   },
   showMenu(state) {
     state.menuIsShowing = !state.menuIsShowing;
-  }
+	},
+	getCurPage(state, val) {
+		state.curPage = val;
+	}
 };
 
 export default mutations;

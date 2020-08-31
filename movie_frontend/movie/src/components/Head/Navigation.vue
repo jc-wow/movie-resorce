@@ -1,12 +1,19 @@
 <template>
   <div class="title">
-		一九九四
+    <span>一九九四</span>
+    <span @click="changePage($event)">首页</span>
+    <span @click="changePage">电影</span>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Navigation"
+	name: "Navigation",
+	methods: {
+		changePage(val) {
+			this.$store.commit('getCurPage', val.target.textContent)
+		}
+	},
 };
 </script>
 
@@ -16,9 +23,13 @@ export default {
   height: 8%;
   background-color: black;
   display: flex;
-	color: #fff;
-	font-size: 1.5rem;
-	position: fixed;
-	z-index: 999;
+  color: #fff;
+  font-size: 1.5rem;
+  position: fixed;
+  z-index: 999;
+
+	span {
+		margin-left: 20%;
+	}
 }
 </style>

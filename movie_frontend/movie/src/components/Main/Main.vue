@@ -13,6 +13,12 @@ import Navigation from "../Head/Navigation";
 
 export default {
   name: "Main",
+  data() {
+    return {
+      direction: "down",
+      prePos: 0,
+    };
+  },
   components: {
     StartPage,
     MovieMain,
@@ -23,15 +29,32 @@ export default {
       window.addEventListener("scroll", () => this.scrollHandler());
     },
     scrollHandler() {
-      const top = document.documentElement.scrollTop;
-      console.log(top);
+      this.top = document.documentElement.scrollTop;
+      if (this.top > this.prePos) {
+        this.direction = "down";
+      } else {
+        this.direction = "up";
+      }
+      this.prePos = this.top;
+      if (this.direction === "down") {
+        this.scrollDownHandler();
+      }
+    },
+    scrollDownHandler() {
+      if (this.top > 0 && this.top < this.heightOfst) {
+				window.scrollTo(1, this.heightOfst);
+      }
     },
     getHeightOfComp() {
       this.heightOfst = document.getElementsByClassName("st")[0].clientHeight;
       this.heightOfmv = document.getElementsByClassName(
         "mv-main"
       )[0].clientHeight;
-      console.log(this.heightOfst, this.heightOfmv);
+    },
+  },
+  watch: {
+    "$store.state.curPage": function (val) {
+      console.log(val);
     },
   },
   mounted() {
