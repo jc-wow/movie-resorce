@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <div class="logo"></div>
+		一九九四
   </div>
 </template>
 
@@ -16,10 +16,9 @@ export default {
   height: 8%;
   background-color: black;
   display: flex;
-
-  .logo {
-    width: 10%;
-    height: 100%;
-  }
+	color: #fff;
+	font-size: 1.5rem;
+	position: fixed;
+	z-index: 999;
 }
 </style>

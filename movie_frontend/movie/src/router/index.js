@@ -1,15 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import StartPage from "@/components/StartPage";
-import Movie from "@/components/Movie/MovieMain";
+import Main from "@/components/Main/Main";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/movie",
-    name: "movie",
-    component: Movie
+    path: "/main",
+    name: "main",
+    component: Main
   }
   // {
   // path: "/startPage",
@@ -35,7 +34,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === "/" && from.path === "/") next({ path: "/movie" });
+  if (to.path === "/" && from.path === "/") next({ path: "/main" });
   else next();
 });
 

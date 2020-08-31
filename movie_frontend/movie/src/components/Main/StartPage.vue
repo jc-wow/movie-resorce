@@ -1,11 +1,8 @@
 <template>
   <div class="start-page">
-    <transition name="menu">
-      <Menu v-show="menu"></Menu>
-    </transition>
     <div class="video-container">
       <video class="start-page-video" autoplay loop muted @click="closeMenuPanel">
-        <source src="../assets/ep1.mp4" type="video/mp4" />
+        <source src="../../assets/ep1.mp4" type="video/mp4" />
       </video>
     </div>
   </div>
