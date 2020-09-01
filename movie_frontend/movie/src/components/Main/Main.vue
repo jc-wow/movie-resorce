@@ -18,6 +18,7 @@ export default {
       direction: "down",
       prePos: 0,
       scrolling: false,
+      mvTo: null,
     };
   },
   components: {
@@ -27,11 +28,14 @@ export default {
   },
   methods: {
     scroll() {
-      window.addEventListener("scroll", () => this.scrollHandler());
+      window.addEventListener("scroll", this.debounce(this.scrollHandler, 100));
     },
     scrollHandler() {
-			this.top = document.documentElement.scrollTop;
-			console.log(this.top)
+      this.top = document.documentElement.scrollTop;
+      if (this.top === this.mvTo || this.top === 1) {
+        this.scrolling = false;
+        return;
+      }
       if (this.top > this.prePos) {
         this.direction = "down";
       } else {
@@ -42,32 +46,39 @@ export default {
     },
     scrollEvent() {
       if (this.direction === "down") {
-        if (this.top > 0 && this.top < 100 && !this.scrolling) {
-          window.scrollBy({
+        if (this.top < 200 && !this.scrolling) {
+          this.scrolling = true;
+          this.mvTo = this.heightOfst;
+          window.scrollTo({
             top: this.heightOfst,
             left: 0,
             behavior: "smooth",
           });
         }
       } else {
-				
-			}
-
-      // check scrolling
-      if (this.scroll) window.clearTimeout(this.scroll);
-      this.checkScrolling();
-      this.scrolling = true;
-    },
-    checkScrolling() {
-      this.scroll = window.setTimeout(() => {
-        this.scrolling = false;
-      }, 100);
+        if (this.top < this.heightOfst + 200 && !this.scrolling) {
+          this.scrolling = true;
+          this.mvTo = 0;
+          window.scrollTo({
+            top: 1,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+      }
     },
     getHeightOfComp() {
       this.heightOfst = document.getElementsByClassName("st")[0].clientHeight;
       this.heightOfmv = document.getElementsByClassName(
         "mv-main"
       )[0].clientHeight;
+    },
+    debounce(fn, wait) {
+      let timeout = null;
+      return function () {
+        if (!timeout) window.clearTimeout(timeout);
+        timeout = window.setTimeout(fn, wait);
+      };
     },
   },
   watch: {
@@ -80,7 +91,10 @@ export default {
     this.getHeightOfComp();
   },
   destroyed() {
-    window.removeEventListener("scroll", () => this.scrollHandler());
+    window.removeEventListener(
+      "scroll",
+      this.debounce(this.scrollHandler, 100)
+    );
   },
 };
 </script>
