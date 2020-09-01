@@ -17,6 +17,7 @@ export default {
     return {
       direction: "down",
       prePos: 0,
+      scrolling: false,
     };
   },
   components: {
@@ -29,21 +30,38 @@ export default {
       window.addEventListener("scroll", () => this.scrollHandler());
     },
     scrollHandler() {
-      this.top = document.documentElement.scrollTop;
+			this.top = document.documentElement.scrollTop;
+			console.log(this.top)
       if (this.top > this.prePos) {
         this.direction = "down";
       } else {
         this.direction = "up";
       }
       this.prePos = this.top;
-      if (this.direction === "down") {
-        this.scrollDownHandler();
-      }
+      this.scrollEvent();
     },
-    scrollDownHandler() {
-      if (this.top > 0 && this.top < this.heightOfst) {
-				window.scrollTo(1, this.heightOfst);
-      }
+    scrollEvent() {
+      if (this.direction === "down") {
+        if (this.top > 0 && this.top < 100 && !this.scrolling) {
+          window.scrollBy({
+            top: this.heightOfst,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+      } else {
+				
+			}
+
+      // check scrolling
+      if (this.scroll) window.clearTimeout(this.scroll);
+      this.checkScrolling();
+      this.scrolling = true;
+    },
+    checkScrolling() {
+      this.scroll = window.setTimeout(() => {
+        this.scrolling = false;
+      }, 100);
     },
     getHeightOfComp() {
       this.heightOfst = document.getElementsByClassName("st")[0].clientHeight;
