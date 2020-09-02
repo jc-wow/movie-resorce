@@ -21,7 +21,6 @@ export default {
 .title {
   width: 100%;
   height: 8%;
-  background-color: black;
   display: flex;
   color: #fff;
   font-size: 1.5rem;

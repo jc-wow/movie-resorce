@@ -10,7 +10,6 @@ export default {
 
 <style lang="scss" scoped>
 .discuss {
-  height: 100%;
-	// background-color: rgb(12, 12, 12);
+  height: 100vh;
 }
 </style>

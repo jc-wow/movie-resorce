@@ -22,12 +22,12 @@ html {
 
   body {
     margin: 0;
-    height: 100%;
+    height: 400%;
 
     #app {
       position: relative;
       height: 100%;
-			background-image: linear-gradient(to bottom right, red, yellow);
+      background-color: #000;
     }
   }
 }
