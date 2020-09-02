@@ -27,6 +27,7 @@ html {
     #app {
       position: relative;
       height: 100%;
+			background-image: linear-gradient(to bottom right, red, yellow);
     }
   }
 }

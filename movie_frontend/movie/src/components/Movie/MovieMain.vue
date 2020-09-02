@@ -78,7 +78,7 @@ export default {
 
 <style lang="scss">
 .movie-main {
-  background-color: #000;
+  // background-color: #000;
   position: relative;
   width: 100%;
   height: auto;

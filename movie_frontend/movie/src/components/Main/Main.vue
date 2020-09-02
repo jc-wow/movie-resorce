@@ -3,6 +3,7 @@
     <Navigation class="nav"></Navigation>
     <StartPage class="st"></StartPage>
     <MovieMain class="mv-main"></MovieMain>
+		<Discuss class="dics"></Discuss>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import StartPage from "./StartPage";
 import MovieMain from "../Movie/MovieMain";
 import Navigation from "../Head/Navigation";
+import Discuss from "../Discuss/Discuss"
 
 export default {
   name: "Main",
@@ -18,54 +20,41 @@ export default {
       direction: "down",
       prePos: 0,
       scrolling: false,
-      mvTo: null,
+      index: 0,
     };
   },
   components: {
     StartPage,
     MovieMain,
-    Navigation,
+		Navigation,
+		Discuss
   },
   methods: {
-    scroll() {
-      window.addEventListener("scroll", this.debounce(this.scrollHandler, 100));
-    },
-    scrollHandler() {
-      this.top = document.documentElement.scrollTop;
-      if (this.top === this.mvTo || this.top === 1) {
-        this.scrolling = false;
-        return;
-      }
-      if (this.top > this.prePos) {
-        this.direction = "down";
-      } else {
-        this.direction = "up";
-      }
-      this.prePos = this.top;
-      this.scrollEvent();
-    },
+    // scroll() {
+    //   window.addEventListener("scroll", this.debounce(this.scrollHandler, 100));
+    // },
+    // scrollHandler() {
+    //   this.top = document.documentElement.scrollTop;
+    //   console.log(this.mvTo, this.top);
+    //   if (this.mvTo && this.top >= this.mvTo) {
+    //     this.scrolling = false;
+    //     return;
+    //   }
+    //   if (this.top > this.prePos) {
+    //     this.direction = "down";
+    //   } else {
+    //     this.direction = "up";
+    //   }
+    //   this.prePos = this.top;
+    //   this.scrollEvent();
+    // },
     scrollEvent() {
-      if (this.direction === "down") {
-        if (this.top < 200 && !this.scrolling) {
-          this.scrolling = true;
-          this.mvTo = this.heightOfst;
-          window.scrollTo({
-            top: this.heightOfst,
-            left: 0,
-            behavior: "smooth",
-          });
-        }
-      } else {
-        if (this.top < this.heightOfst + 200 && !this.scrolling) {
-          this.scrolling = true;
-          this.mvTo = 0;
-          window.scrollTo({
-            top: 1,
-            left: 0,
-            behavior: "smooth",
-          });
-        }
-      }
+			console.log(this.height)
+      window.scrollTo({
+        top: this.height,
+        left: 0,
+        behavior: "smooth",
+      });
     },
     getHeightOfComp() {
       this.heightOfst = document.getElementsByClassName("st")[0].clientHeight;
@@ -80,21 +69,35 @@ export default {
         timeout = window.setTimeout(fn, wait);
       };
     },
+    jumpToPage(val) {
+      this.height = 0;
+      switch (val) {
+        case "首页":
+          this.index = 1;
+          this.height = 0;
+          break;
+        case "电影":
+          this.index = 2;
+          this.height = this.heightOfst;
+          break;
+			}
+			this.scrollEvent();
+    },
   },
   watch: {
     "$store.state.curPage": function (val) {
-      console.log(val);
+      this.jumpToPage(val);
     },
   },
   mounted() {
-    this.scroll();
+    // this.scroll();
     this.getHeightOfComp();
   },
   destroyed() {
-    window.removeEventListener(
-      "scroll",
-      this.debounce(this.scrollHandler, 100)
-    );
+    // window.removeEventListener(
+    //   "scroll",
+    //   this.debounce(this.scrollHandler, 100)
+    // );
   },
 };
 </script>
