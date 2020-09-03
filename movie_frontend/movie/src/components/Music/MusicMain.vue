@@ -1,15 +1,16 @@
 <template>
-  <div class="discuss"></div>
+<div class="music"></div>	
 </template>
 
 <script>
 export default {
-  name: "discuss",
-};
+name: 'Music'
+
+}
 </script>
 
 <style lang="scss" scoped>
-.discuss {
-  height: auto;
+.music {
+	height: 100vh;
 }
 </style>

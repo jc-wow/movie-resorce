@@ -1,5 +1,6 @@
 <template>
   <div class="start-page">
+    <div class="video-head"></div>
     <div class="video-container">
       <video class="start-page-video" autoplay loop muted @click="closeMenuPanel">
         <source src="../../assets/ep1.mp4" type="video/mp4" />
@@ -22,13 +23,13 @@ export default {
       if (this.$store.state.menuIsShowing) {
         this.$store.commit("showMenu");
       }
-		}
+    },
   },
   computed: {
     menu() {
       return this.$store.state.menuIsShowing;
-    }
-	}
+    },
+  },
 };
 </script>
 
@@ -53,12 +54,18 @@ export default {
   .menu-leave-active {
     animation: 0.5s menu-slidein reverse;
   }
+
+  .video-head {
+    height: 8%;
+  }
+
   .video-container {
     .start-page-video {
       position: absolute;
-      height: 100%;
+      height: 92%;
       width: 100%;
     }
   }
 }
+
 </style>
