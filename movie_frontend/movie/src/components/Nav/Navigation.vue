@@ -52,7 +52,7 @@ export default {
   }
 
   80% {
-    transform: translate(2%, 2%);
+    transform: translate(2%, 1%);
   }
 
   90% {
@@ -78,7 +78,7 @@ export default {
 .title::after {
   content: "";
   width: 110%;
-  height: 100%;
+  height: 110%;
   position: absolute;
   top: -5%;
   left: -5%;
