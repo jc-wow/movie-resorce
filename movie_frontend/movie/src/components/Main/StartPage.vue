@@ -56,13 +56,13 @@ export default {
   }
 
   .video-head {
-    height: 8%;
+    height: 6%;
   }
 
   .video-container {
     .start-page-video {
       position: absolute;
-      height: 92%;
+      height: 94%;
       width: 100%;
     }
   }

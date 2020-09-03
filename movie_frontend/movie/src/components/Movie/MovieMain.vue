@@ -83,7 +83,7 @@ export default {
   height: auto;
 
   .movie-main-head {
-    height: 8vh;
+    height: 6vh;
   }
 
   .movie-main-body {

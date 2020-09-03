@@ -1,11 +1,12 @@
 <template>
   <div class="main">
     <Navigation class="nav"></Navigation>
-		<SideBar class="sbar"></SideBar>
+    <SideBar class="sbar"></SideBar>
     <StartPage class="st"></StartPage>
     <MovieMain class="mv-main"></MovieMain>
     <Music class="mu-main"></Music>
     <Discuss class="dics"></Discuss>
+		<Detail class="dt"></Detail>
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import Navigation from "../Nav/Navigation";
 import Discuss from "../Discuss/Discuss";
 import Music from "../Music/MusicMain";
 import SideBar from "../Nav/SideBar";
+import Detail from "./Detail";
 
 export default {
   name: "Main",
@@ -29,10 +31,11 @@ export default {
   components: {
     StartPage,
     MovieMain,
-		Navigation,
-		Music,
-		Discuss,
-		SideBar
+    Navigation,
+    Music,
+    Discuss,
+    SideBar,
+    Detail,
   },
   methods: {
     scrollEvent() {
@@ -51,14 +54,6 @@ export default {
         "dics"
       )[0].clientHeight;
     },
-    // trigger fn at the end of scroll event
-    debounce(fn, wait) {
-      let timeout = null;
-      return function () {
-        if (!timeout) window.clearTimeout(timeout);
-        timeout = window.setTimeout(fn, wait);
-      };
-    },
     jumpToPage(val) {
       this.height = 0;
       switch (val) {
@@ -71,14 +66,33 @@ export default {
       }
       this.scrollEvent();
     },
+    checkCurScrollPosition() {
+      if (this.checkScroll) window.clearInterval(this.checkScroll);
+      this.checkScroll = setInterval(() => {
+        this.$store.commit("getCurPage", null);
+      }, 500);
+    },
+    // trigger fn at the end of scroll event
+    debounce(fn, wait) {
+      let timeout = null;
+      return function () {
+        if (!timeout) window.clearTimeout(timeout);
+        timeout = window.setTimeout(fn, wait);
+      };
+    },
   },
   watch: {
     "$store.state.curPage": function (val) {
+      if (!val) return;
       this.jumpToPage(val);
     },
   },
   mounted() {
     this.getHeightOfComp();
+    this.checkCurScrollPosition();
+  },
+  destroyed() {
+    window.clearInterval(this.checkScroll);
   },
 };
 </script>

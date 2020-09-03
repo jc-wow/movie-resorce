@@ -24,45 +24,45 @@ export default {
   }
 
   10% {
-    transform: translate(-1%, -1%);
+    transform: translate(-1%, 0%);
   }
 
   20% {
-    transform: translate(1%, 1%);
+    transform: translate(1%, 0%);
   }
 
   30% {
-    transform: translate(-2%, -1%);
+    transform: translate(-2%, 0%);
   }
 
   40% {
-    transform: translate(3%, 1%);
+    transform: translate(3%, 0%);
   }
 
   50% {
-    transform: translate(-3%, -1%);
+    transform: translate(-3%, 0%);
   }
 
   60% {
-    transform: translate(4%, 1%);
+    transform: translate(4%, 0%);
   }
 
   70% {
-    transform: translate(-4%, -1%);
+    transform: translate(-4%, 0%);
   }
 
   80% {
-    transform: translate(2%, 1%);
+    transform: translate(2%, 0%);
   }
 
   90% {
-    transform: translate(-3%, -1%);
+    transform: translate(-3%, 0%);
   }
 }
 
 .title {
   width: 100%;
-  height: 8vh;
+  height: 6vh;
   display: flex;
   color: #fff;
   font-size: 1.5rem;
@@ -82,7 +82,7 @@ export default {
   position: absolute;
   top: -5%;
   left: -5%;
-  opacity: 0.25;
+  opacity: 0.2;
   background-image: url("../../assets/grain.jpg");
   -webkit-animation: grain 0.8s steps(1) infinite;
   animation: grain 0.8s steps(1) infinite;
