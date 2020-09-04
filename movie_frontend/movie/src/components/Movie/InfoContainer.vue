@@ -23,6 +23,7 @@
         :id="'image-info_' + index"
         v-for="(item, index) in movieInfo"
         :key="'container_' + index"
+        @click="selectMovie(item.id)"
       >
         <el-image
           class="image-info-container"
@@ -114,6 +115,9 @@ export default {
     stopReqAPI(res) {
       if (res && res.success && res.data.length === 0) this.isEnd = true;
     },
+    selectMovie(id) {
+      this.$store.commit("getSelectedMovieId", id);
+    },
   },
   computed: {
     ...mapState({
@@ -184,6 +188,7 @@ export default {
       flex-direction: column;
       justify-content: space-around;
       margin: 0 1%;
+      cursor: pointer;
 
       .image-info-container {
         @media screen and (min-width: 1920px) {

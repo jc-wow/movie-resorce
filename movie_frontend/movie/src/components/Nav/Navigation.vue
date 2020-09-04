@@ -62,7 +62,7 @@ export default {
 
 .title {
   width: 100%;
-  height: 6vh;
+  height: 8vh;
   display: flex;
   color: #fff;
   font-size: 1.5rem;

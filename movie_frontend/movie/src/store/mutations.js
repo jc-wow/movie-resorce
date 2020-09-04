@@ -7,6 +7,9 @@ const mutations = {
 	},
 	getCurPage(state, val) {
 		state.curPage = val;
+	},
+	getSelectedMovieId(state, val) {
+		state.selectedMovieId = val;
 	}
 };
 

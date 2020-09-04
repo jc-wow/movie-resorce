@@ -7,11 +7,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-		movieInfo: [],
-		menuIsShowing: false,
-		curPage: ''
-	},
-	mutations,
-	actions,
+    movieInfo: [], // movie data array
+    menuIsShowing: false, // menu show flag
+    curPage: "", // current menu
+    selectedMovieId: "" // current selected movie id
+  },
+  mutations,
+  actions,
   modules: {}
 });
