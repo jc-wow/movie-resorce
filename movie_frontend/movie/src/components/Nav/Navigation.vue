@@ -19,7 +19,8 @@ export default {
 
 <style lang="scss" scoped>
 @keyframes grain {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0, 0);
   }
 
@@ -68,6 +69,8 @@ export default {
   font-size: 1.5rem;
   position: fixed;
   z-index: 999;
+  display: flex;
+  align-items: center;
 
   span {
     cursor: pointer;
@@ -86,6 +89,6 @@ export default {
   background-image: url("../../assets/grain.jpg");
   -webkit-animation: grain 0.8s steps(1) infinite;
   animation: grain 0.8s steps(1) infinite;
-	z-index: -1;
+  z-index: -1;
 }
 </style>

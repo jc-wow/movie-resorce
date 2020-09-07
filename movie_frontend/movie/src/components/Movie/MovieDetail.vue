@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "Detail",
+  name: "MovieDetail",
   data() {
     return {
       showDetail: false,
@@ -27,5 +27,13 @@ export default {
 	position: absolute;
 	top: 8vh;
 	background-color: #000;
+}
+
+.detail-enter-active {
+	transition: height 1s linear;
+}
+
+.detail-leave-active {
+	transition: height 1s linear
 }
 </style>

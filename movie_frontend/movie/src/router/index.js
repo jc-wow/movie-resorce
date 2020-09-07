@@ -1,14 +1,22 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "@/components/Main/Main";
+import MovieMain from "@/components/Movie/MovieMain"
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/main",
+    path: "/main/:id",
     name: "main",
-    component: Main
+		component: Main,
+		children: [
+			{
+				path: 'movie-detail',
+				component: MovieMain,
+				path: 'movie-detail'
+			}
+		]
   },
 
   // route level code-splitting

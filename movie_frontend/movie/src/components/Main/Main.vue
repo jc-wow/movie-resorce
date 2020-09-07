@@ -6,7 +6,8 @@
     <MovieMain class="mv-main"></MovieMain>
     <Music class="mu-main"></Music>
     <Discuss class="dics"></Discuss>
-		<Detail class="dt"></Detail>
+		<MovieDetail class="dt"></MovieDetail>
+		<router-view></router-view>
   </div>
 </template>
 
@@ -17,7 +18,7 @@ import Navigation from "../Nav/Navigation";
 import Discuss from "../Discuss/Discuss";
 import Music from "../Music/MusicMain";
 import SideBar from "../Nav/SideBar";
-import Detail from "./Detail";
+import MovieDetail from "../Movie/MovieDetail";
 
 export default {
   name: "Main",
@@ -35,7 +36,7 @@ export default {
     Music,
     Discuss,
     SideBar,
-    Detail,
+    MovieDetail,
   },
   methods: {
     scrollEvent() {
