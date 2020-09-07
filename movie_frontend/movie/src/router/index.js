@@ -1,22 +1,22 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "@/components/Main/Main";
-import MovieMain from "@/components/Movie/MovieMain"
+import MovieMain from "@/components/Movie/MovieMain";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/main/:id",
+    path: "/main",
     name: "main",
-		component: Main,
-		children: [
-			{
-				path: 'movie-detail',
-				component: MovieMain,
-				path: 'movie-detail'
-			}
-		]
+    component: Main,
+    children: [
+    	{
+    		path: 'movie',
+    		component: MovieMain,
+    		name: 'movie-detail'
+    	}
+    ]
   },
 
   // route level code-splitting
@@ -37,7 +37,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === "/" && from.path === "/") next({ path: "/main" });
+  if (to.path === "/" && from.path === "/") next({ path: "main" });
   else next();
 });
 

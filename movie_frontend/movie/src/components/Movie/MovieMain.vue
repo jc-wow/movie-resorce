@@ -6,6 +6,7 @@
         <InfoContainer :category="item"></InfoContainer>
       </div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 

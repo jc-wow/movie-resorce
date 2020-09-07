@@ -116,7 +116,9 @@ export default {
       if (res && res.success && res.data.length === 0) this.isEnd = true;
     },
     selectMovie(id) {
-      this.$store.commit("getSelectedMovieId", id);
+			debugger
+			this.$store.commit("getSelectedMovieId", id);
+			this.$router.push('{}')
     },
   },
   computed: {

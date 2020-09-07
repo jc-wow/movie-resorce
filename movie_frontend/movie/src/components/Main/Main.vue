@@ -7,7 +7,6 @@
     <Music class="mu-main"></Music>
     <Discuss class="dics"></Discuss>
 		<MovieDetail class="dt"></MovieDetail>
-		<router-view></router-view>
   </div>
 </template>
 
@@ -86,10 +85,10 @@ export default {
     "$store.state.curPage": function (val) {
       if (!val) return;
       this.jumpToPage(val);
-    },
+		},
   },
   mounted() {
-    this.getHeightOfComp();
+		this.getHeightOfComp();
     this.checkCurScrollPosition();
   },
   destroyed() {
