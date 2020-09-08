@@ -41,7 +41,7 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "MovieInfo",
+	name: "MovieInfo",
   props: {
     category: Object,
   },
@@ -116,9 +116,7 @@ export default {
       if (res && res.success && res.data.length === 0) this.isEnd = true;
     },
     selectMovie(id) {
-			debugger
 			this.$store.commit("getSelectedMovieId", id);
-			this.$router.push('{}')
     },
   },
   computed: {

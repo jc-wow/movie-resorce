@@ -1,12 +1,14 @@
 <template>
   <div class="main">
     <Navigation class="nav"></Navigation>
-    <SideBar class="sbar"></SideBar>
-    <StartPage class="st"></StartPage>
-    <MovieMain class="mv-main"></MovieMain>
-    <Music class="mu-main"></Music>
-    <Discuss class="dics"></Discuss>
-		<MovieDetail class="dt"></MovieDetail>
+    <div v-show="!showDetail">
+      <SideBar class="sbar"></SideBar>
+      <StartPage class="st"></StartPage>
+      <MovieMain class="mv-main"></MovieMain>
+      <Music class="mu-main"></Music>
+      <Discuss class="dics"></Discuss>
+    </div>
+    <router-view v-show="showDetail"></router-view>
   </div>
 </template>
 
@@ -17,7 +19,6 @@ import Navigation from "../Nav/Navigation";
 import Discuss from "../Discuss/Discuss";
 import Music from "../Music/MusicMain";
 import SideBar from "../Nav/SideBar";
-import MovieDetail from "../Movie/MovieDetail";
 
 export default {
   name: "Main",
@@ -26,6 +27,7 @@ export default {
       direction: "down",
       prePos: 0,
       scrolling: false,
+      showDetail: false,
     };
   },
   components: {
@@ -35,7 +37,6 @@ export default {
     Music,
     Discuss,
     SideBar,
-    MovieDetail,
   },
   methods: {
     scrollEvent() {
@@ -80,15 +81,22 @@ export default {
         timeout = window.setTimeout(fn, wait);
       };
     },
+    routeToDetail() {
+      this.$router.push({ path: "/movie" }).catch((err) => err);
+      this.showDetail = true;
+    },
   },
   watch: {
     "$store.state.curPage": function (val) {
       if (!val) return;
       this.jumpToPage(val);
-		},
+    },
+    "$store.state.selectedMovieId": function (val) {
+      this.routeToDetail();
+    },
   },
   mounted() {
-		this.getHeightOfComp();
+    this.getHeightOfComp();
     this.checkCurScrollPosition();
   },
   destroyed() {

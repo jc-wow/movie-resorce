@@ -1,20 +1,20 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "@/components/Main/Main";
-import MovieMain from "@/components/Movie/MovieMain";
+import MovieDetail from "@/components/Movie/MovieDetail";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/main",
+    path: "/",
     name: "main",
     component: Main,
     children: [
     	{
     		path: 'movie',
-    		component: MovieMain,
-    		name: 'movie-detail'
+    		component: MovieDetail,
+    		name: 'movie'
     	}
     ]
   },
@@ -37,7 +37,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path === "/" && from.path === "/") next({ path: "main" });
+  if (to.name === "" && from.name === "") next({ name: "main" });
   else next();
 });
 

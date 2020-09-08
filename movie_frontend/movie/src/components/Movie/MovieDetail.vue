@@ -1,7 +1,5 @@
 <template>
-  <transition name="detail">
-    <div class="detail" v-show="showDetail"></div>
-  </transition>
+  <div class="detail"></div>
 </template>
 
 <script>
@@ -12,28 +10,24 @@ export default {
       showDetail: false,
     };
   },
-  watch: {
-    "$store.state.selectedMovieId": function (val) {
-      this.showDetail = true;
-    },
-  },
+  mounted() {},
 };
 </script>
 
 <style lang="scss" scoped>
 .detail {
-  height: 100vh;
+  height: 92vh;
   width: 100%;
-	position: absolute;
-	top: 8vh;
-	background-color: #000;
+  position: absolute;
+  top: 8vh;
+  background-color: #000;
 }
 
 .detail-enter-active {
-	transition: height 1s linear;
+  transition: height 1s linear;
 }
 
 .detail-leave-active {
-	transition: height 1s linear
+  transition: height 1s linear;
 }
 </style>

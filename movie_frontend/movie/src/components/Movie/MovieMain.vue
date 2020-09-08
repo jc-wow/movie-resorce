@@ -6,7 +6,6 @@
         <InfoContainer :category="item"></InfoContainer>
       </div>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -16,7 +15,7 @@ import InfoContainer from "./InfoContainer";
 export default {
   name: "Movie",
   components: {
-    InfoContainer,
+    InfoContainer
   },
   data() {
     return {
@@ -73,7 +72,7 @@ export default {
     menu() {
       return this.$store.state.menuIsShowing;
     },
-  },
+  }
 };
 </script>
 
