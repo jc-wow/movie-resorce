@@ -81,6 +81,7 @@ export default {
   position: relative;
   width: 100%;
   height: auto;
+	background-color: #000;
 
   .movie-main-head {
     height: 8vh;

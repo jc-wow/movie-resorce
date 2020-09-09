@@ -11,5 +11,6 @@ export default {
 <style lang="scss" scoped>
 .discuss {
   height: auto;
+  background-color: #000;
 }
 </style>

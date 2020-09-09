@@ -22,7 +22,7 @@ html {
 
   body {
     margin: 0;
-    height: 400%;
+    height: 100%;
 
     #app {
       position: relative;

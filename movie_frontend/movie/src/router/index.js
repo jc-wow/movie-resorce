@@ -15,7 +15,7 @@ const routes = [
     		path: 'movie',
     		component: MovieDetail,
     		name: 'movie'
-    	}
+			}
     ]
   },
 

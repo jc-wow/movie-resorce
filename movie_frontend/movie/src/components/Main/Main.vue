@@ -1,14 +1,14 @@
 <template>
   <div class="main">
     <Navigation class="nav"></Navigation>
-    <div v-show="!showDetail">
+    <div v-show="!isShowDetail">
       <SideBar class="sbar"></SideBar>
       <StartPage class="st"></StartPage>
       <MovieMain class="mv-main"></MovieMain>
       <Music class="mu-main"></Music>
       <Discuss class="dics"></Discuss>
     </div>
-    <router-view v-show="showDetail"></router-view>
+    <router-view v-show="isShowDetail"></router-view>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
       direction: "down",
       prePos: 0,
       scrolling: false,
-      showDetail: false,
+      isShowDetail: false,
     };
   },
   components: {
@@ -83,16 +83,25 @@ export default {
     },
     routeToDetail() {
       this.$router.push({ path: "/movie" }).catch((err) => err);
-      this.showDetail = true;
+    },
+    showDetail() {
+			this.isShowDetail = true;
+			
+    },
+    returnMainPage() {
+      this.isShowDetail = false;
+      this.$router.push({ path: "/" }).catch((err) => err);
     },
   },
   watch: {
-    "$store.state.curPage": function (val) {
-      if (!val) return;
-      this.jumpToPage(val);
+    "$store.state.curPage": function (newVal, oldVal) {
+      if (!newVal) return;
+      this.returnMainPage();
+      this.jumpToPage(newVal);
     },
     "$store.state.selectedMovieId": function (val) {
       this.routeToDetail();
+      this.showDetail();
     },
   },
   mounted() {
