@@ -23,7 +23,7 @@
         :id="'image-info_' + index"
         v-for="(item, index) in movieInfo"
         :key="'container_' + index"
-        @click="selectMovie(item.id)"
+        @click="selectMovie(item.title)"
       >
         <el-image
           class="image-info-container"
@@ -115,8 +115,8 @@ export default {
     stopReqAPI(res) {
       if (res && res.success && res.data.length === 0) this.isEnd = true;
     },
-    selectMovie(id) {
-			this.$store.commit("getSelectedMovieId", id);
+    selectMovie(title) {
+			this.$store.commit("getSelectedMovie", title);
     },
   },
   computed: {

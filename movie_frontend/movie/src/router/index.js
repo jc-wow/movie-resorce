@@ -12,7 +12,7 @@ const routes = [
     component: Main,
     children: [
     	{
-    		path: 'movie',
+    		path: 'movie/:id',
     		component: MovieDetail,
     		name: 'movie'
 			}
@@ -25,15 +25,10 @@ const routes = [
   // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
 ];
 
-const scrollBehavior = function(to, from, savedPosition) {
-  // ...
-};
-
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
-  scrollBehavior,
 });
 
 router.beforeEach((to, from, next) => {

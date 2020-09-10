@@ -82,7 +82,7 @@ export default {
       };
     },
     routeToDetail() {
-      this.$router.push({ path: "/movie" }).catch((err) => err);
+      this.$router.push({ path: `/movie/${this.$store.state.selectedMovie}` }).catch((err) => err);
     },
     showDetail() {
 			this.isShowDetail = true;
@@ -99,7 +99,7 @@ export default {
       this.returnMainPage();
       this.jumpToPage(newVal);
     },
-    "$store.state.selectedMovieId": function (val) {
+    "$store.state.selectedMovie": function (val) {
       this.routeToDetail();
       this.showDetail();
     },
