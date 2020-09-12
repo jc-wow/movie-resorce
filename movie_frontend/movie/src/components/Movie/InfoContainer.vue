@@ -23,7 +23,7 @@
         :id="'image-info_' + index"
         v-for="(item, index) in movieInfo"
         :key="'container_' + index"
-        @click="selectMovie(item.title)"
+        @click="selectMovie(item)"
       >
         <el-image
           class="image-info-container"
@@ -41,7 +41,7 @@
 import { mapState } from "vuex";
 
 export default {
-	name: "MovieInfo",
+  name: "MovieInfo",
   props: {
     category: Object,
   },
@@ -116,7 +116,7 @@ export default {
       if (res && res.success && res.data.length === 0) this.isEnd = true;
     },
     selectMovie(title) {
-			this.$store.commit("getSelectedMovie", title);
+      this.$store.commit("getSelectedMovie", title);
     },
   },
   computed: {
@@ -166,10 +166,12 @@ export default {
 
       .el-icon-arrow-left {
         color: #fff;
+        cursor: pointer;
       }
 
       .el-icon-arrow-right {
         color: #fff;
+        cursor: pointer;
       }
 
       .el-icon-loading {

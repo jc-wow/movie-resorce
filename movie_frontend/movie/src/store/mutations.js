@@ -10,7 +10,7 @@ const mutations = {
 	},
 	getSelectedMovie(state, val) {
 		state.selectedMovie = val;
-	}
+	},
 };
 
 export default mutations;

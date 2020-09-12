@@ -1,21 +1,16 @@
 <template>
   <div class="main">
-    <Navigation class="nav"></Navigation>
-    <div v-show="!isShowDetail">
-      <SideBar class="sbar"></SideBar>
-      <StartPage class="st"></StartPage>
-      <MovieMain class="mv-main"></MovieMain>
-      <Music class="mu-main"></Music>
-      <Discuss class="dics"></Discuss>
-    </div>
-    <router-view v-show="isShowDetail"></router-view>
+    <SideBar class="sbar"></SideBar>
+    <StartPage class="st"></StartPage>
+    <MovieMain class="mv-main"></MovieMain>
+    <Music class="mu-main"></Music>
+    <Discuss class="dics"></Discuss>
   </div>
 </template>
 
 <script>
 import StartPage from "./StartPage";
 import MovieMain from "../Movie/MovieMain";
-import Navigation from "../Nav/Navigation";
 import Discuss from "../Discuss/Discuss";
 import Music from "../Music/MusicMain";
 import SideBar from "../Nav/SideBar";
@@ -27,13 +22,11 @@ export default {
       direction: "down",
       prePos: 0,
       scrolling: false,
-      isShowDetail: false,
     };
   },
   components: {
     StartPage,
     MovieMain,
-    Navigation,
     Music,
     Discuss,
     SideBar,
@@ -65,7 +58,7 @@ export default {
           this.height = this.heightOfst;
           break;
       }
-      this.scrollEvent();
+      this.$nextTick(() => this.scrollEvent());
     },
     checkCurScrollPosition() {
       if (this.checkScroll) window.clearInterval(this.checkScroll);
@@ -81,27 +74,16 @@ export default {
         timeout = window.setTimeout(fn, wait);
       };
     },
-    routeToDetail() {
-      this.$router.push({ path: `/movie/${this.$store.state.selectedMovie}` }).catch((err) => err);
-    },
-    showDetail() {
-			this.isShowDetail = true;
-			
-    },
-    returnMainPage() {
-      this.isShowDetail = false;
-      this.$router.push({ path: "/" }).catch((err) => err);
-    },
   },
   watch: {
-    "$store.state.curPage": function (newVal, oldVal) {
-      if (!newVal) return;
-      this.returnMainPage();
-      this.jumpToPage(newVal);
-    },
-    "$store.state.selectedMovie": function (val) {
-      this.routeToDetail();
-      this.showDetail();
+    "$store.state.curPage": {
+      handler: function (newVal, oldVal) {
+        {
+          if (!newVal) return;
+          this.$nextTick(() => this.jumpToPage(newVal));
+        }
+      },
+      immediate: true,
     },
   },
   mounted() {

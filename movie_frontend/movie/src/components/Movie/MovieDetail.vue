@@ -1,5 +1,7 @@
 <template>
-  <div class="detail"></div>
+  <div class="detail">
+		{{ $store.state.selectedMovie.id }}
+	</div>
 </template>
 
 <script>
@@ -7,7 +9,6 @@ export default {
   name: "MovieDetail",
   data() {
     return {
-      showDetail: false,
     };
   },
   mounted() {},
@@ -21,13 +22,6 @@ export default {
   position: absolute;
   top: 8vh;
   background-color: #000;
-}
-
-.detail-enter-active {
-  transition: height 1s linear;
-}
-
-.detail-leave-active {
-  transition: height 1s linear;
+	color: #fff;
 }
 </style>

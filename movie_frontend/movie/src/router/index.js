@@ -9,15 +9,13 @@ const routes = [
   {
     path: "/",
     name: "main",
-    component: Main,
-    children: [
-    	{
-    		path: 'movie/:id',
-    		component: MovieDetail,
-    		name: 'movie'
-			}
-    ]
+    component: Main
   },
+  {
+    path: "/movie/:id",
+    component: MovieDetail,
+    name: "movie"
+  }
 
   // route level code-splitting
   // this generates a separate chunk (about.[hash].js) for this route
@@ -27,8 +25,8 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
-  routes,
+	base: process.env.BASE_URL,
+  routes
 });
 
 router.beforeEach((to, from, next) => {

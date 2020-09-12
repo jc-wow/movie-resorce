@@ -1,15 +1,39 @@
 <template>
   <div id="app">
+    <Navigation></Navigation>
     <router-view></router-view>
   </div>
 </template>
 <script>
+import Navigation from "./components/Nav/Navigation";
+
 export default {
   name: "App",
+  components: { Navigation },
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    routeToDetail() {
+      this.$router
+        .push({ path: `/movie/${this.$store.state.selectedMovie.title}` })
+        .catch((err) => err);
+    },
+    returnMainPage() {
+			this.$router.push({ path: "/" }).catch((err) => err);
+			this.$store.commit("getSelectedMovie", '');
+    },
+  },
+  watch: {
+    "$store.state.selectedMovie.title": function (newVal, oldVal) {
+			if (newVal.length === 0) return;
+      this.routeToDetail();
+    },
+    "$store.state.curPage": function (newVal, oldVal) {
+      if (!newVal) return;
+      this.returnMainPage();
+    },
+  },
 };
 </script>
 
