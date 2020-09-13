@@ -3,8 +3,8 @@
 module.exports = (app) => {
   const { STRING } = app.Sequelize;
 
-  const ChinieseMovie = app.model.define(
-    "chiniesemovie",
+  const Movie = app.model.define(
+    "movies",
     {
       id: { type: STRING, primaryKey: true },
       title: STRING,
@@ -12,10 +12,10 @@ module.exports = (app) => {
       cover: STRING,
     },
     {
-      tableName: "chiniese_movies",
+      tableName: "movies",
       timestamps: false,
     }
   );
 
-  return ChinieseMovie;
+  return Movie;
 };

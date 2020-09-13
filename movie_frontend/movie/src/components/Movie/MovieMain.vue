@@ -25,22 +25,22 @@ export default {
         {
           title: "经典",
           key: "classical",
-          api: "classicalmovies",
+          api: "highscoreMovie",
         },
         {
           title: "华语",
           key: "chiniese",
-          api: "chiniesemovies",
+          api: "chinieseMovie",
         },
         {
           title: "韩国",
           key: "korea",
-          api: "koreamovies",
+          api: "koreaMovie",
         },
         {
           title: "日本",
           key: "japan",
-          api: "japanmovies",
+          api: "japanMovie",
         },
       ],
     };

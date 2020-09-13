@@ -54,7 +54,8 @@ export default {
       reqAPIing: false,
       requestParam: {
         page: 1,
-        limit: 15,
+				limit: 15,
+				category: this.category.api
       },
     };
   },
@@ -70,12 +71,9 @@ export default {
       this.paging("down", this.transDistance);
     },
     getMoveInfo() {
-      this.reqAPIing = true;
+			this.reqAPIing = true;
       this.$store
-        .dispatch("getMovieInfo", {
-          reqParam: this.requestParam,
-          api: this.category.api,
-        })
+        .dispatch("getMovieInfo", this.requestParam)
         .then((res) => {
           this.stopReqAPI(res);
           this.getHighestScoreMovie;
