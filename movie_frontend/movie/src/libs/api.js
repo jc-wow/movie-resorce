@@ -8,7 +8,7 @@ const instance = Axios.create({
 });
 
 if (process.env.NODE_ENV === "development") {
-  instance.defaults.baseURL = "http://127.0.0.1:7003/";
+  instance.defaults.baseURL = "http://127.0.0.1:7001/";
 } else if (process.env.NODE_ENV === "debug") {
   instance.defaults.baseURL = "";
 } else if (process.env.NODE_ENV === "production") {

@@ -5,17 +5,9 @@
       <video class="start-page-video" autoplay loop muted @click="closeMenuPanel">
         <source src="../../assets/ep1.mp4" type="video/mp4" />
       </video>
-      <!-- <div class="start-page-about">
-        <p>关于首页</p>
-        <i class="el-icon-d-arrow-right"></i>
-      </div>-->
     </div>
     <div class="start-page-sidebar">
-      <img
-        src="../../assets/projector.svg"
-        class="start-page-projector"
-        @load="getProjectPosition"
-      />
+      <img src="../../assets/projector.svg" class="start-page-projector" @load="getProjectPosition" />
     </div>
     <Light :position="projectorPosition"></Light>
   </div>
@@ -30,11 +22,13 @@ export default {
   components: { Menu, Light },
   data() {
     return {
-			movies: ["天堂电影院"],
-			projectorPosition: {
-				x: 0,
-				y: 0
-			}
+      movies: ["天堂电影院"],
+      projectorPosition: {
+        x: 0,
+        y: 0,
+				left: 0,
+				top: 0
+      },
     };
   },
   methods: {
@@ -47,9 +41,15 @@ export default {
       const projectObj = document.getElementsByClassName(
         "start-page-projector"
       )[0];
+      const headerObj = document.getElementsByClassName("video-head")[0];
+      const headerObjHeight = headerObj.getBoundingClientRect().height;
       const projectObjClient = projectObj.getBoundingClientRect();
-			this.projectorPosition.x = projectObjClient.left + projectObjClient.width / 2;
-			this.projectorPosition.y = projectObjClient.top + projectObjClient.height / 2;
+			this.projectorPosition.left = projectObjClient.left;
+			this.projectorPosition.top = projectObjClient.top;
+      this.projectorPosition.x =
+        projectObjClient.right - projectObjClient.width / 2;
+      this.projectorPosition.y =
+        projectObjClient.bottom - headerObjHeight - projectObjClient.height / 5;
     },
   },
   computed: {
@@ -101,18 +101,6 @@ export default {
       position: absolute;
       top: 42%;
       left: 92%;
-
-      p {
-        writing-mode: vertical-rl;
-        color: #fff;
-        font-size: 1.3rem;
-        letter-spacing: 0.2rem;
-        display: none;
-      }
-      .el-icon-d-arrow-right {
-        color: #fff;
-        font-size: 1.3rem;
-      }
     }
   }
 

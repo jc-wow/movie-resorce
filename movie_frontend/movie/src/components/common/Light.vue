@@ -1,18 +1,11 @@
 <template>
-  <svg>
-    <line
-      :x1="position.x"
-      :y1="position.y"
-      :x2="position.x - 20"
-      :y2="position.y + 50"
-      style="stroke:rgb(255,0,0);stroke-width:2"
-    />
-    <line
-      :x1="position.x"
-      :y1="position.y"
-      :x2="position.x + 20"
-      :y2="position.y + 50"
-      style="stroke:rgb(255,0,0);stroke-width:2"
+  <svg class="light">
+    <polygon
+      class="light-blink"
+      :points="`${this.position.x},${this.position.y} ${this.position.x + 1.1 * this.position.left},
+        ${this.position.y + 1.5 * this.position.top} ${this.position.x - 1.1 * this.position.left},
+        ${this.position.y + 1.5 * this.position.top}`"
+      style="fill: rgb(255, 255, 255, 0.1)"
     />
   </svg>
 </template>
@@ -29,4 +22,18 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.light {
+  height: 100%;
+  width: 100%;
+
+  .light-blink {
+    animation: blink 8s linear infinite;
+  }
+}
 </style>
