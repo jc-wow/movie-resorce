@@ -10,9 +10,15 @@ class MovieController extends Controller {
       limit: parseInt(limit),
       page: parseInt(page),
       category: category,
-		};
-    ctx.body = await ctx.service.movie.list(query);
+    };
+    ctx.body = await ctx.service.movie.listAll(query);
     this.success(ctx.body);
+  }
+
+  async show() {
+    const ctx = this.ctx;
+    const { id } = ctx.query;
+    ctx.body = await ctx.service.movie.listOne(id);
   }
 }
 

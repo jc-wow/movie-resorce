@@ -54,8 +54,8 @@ export default {
       reqAPIing: false,
       requestParam: {
         page: 1,
-				limit: 15,
-				category: this.category.api
+        limit: 15,
+        category: this.category.api,
       },
     };
   },
@@ -71,14 +71,12 @@ export default {
       this.paging("down", this.transDistance);
     },
     getMoveInfo() {
-			this.reqAPIing = true;
-      this.$store
-        .dispatch("getMovieInfo", this.requestParam)
-        .then((res) => {
-          this.stopReqAPI(res);
-          this.getHighestScoreMovie;
-          this.reqAPIing = false;
-        });
+      this.reqAPIing = true;
+      this.$store.dispatch("getMovieInfo", this.requestParam).then((res) => {
+        this.stopReqAPI(res);
+        this.getHighestScoreMovie;
+        this.reqAPIing = false;
+      });
     },
     paging(direction, transDistance) {
       this.direction = direction;
@@ -113,8 +111,9 @@ export default {
     stopReqAPI(res) {
       if (res && res.success && res.data.length === 0) this.isEnd = true;
     },
-    selectMovie(title) {
-      this.$store.commit("getSelectedMovie", title);
+    selectMovie(val) {
+      this.$store.commit("getSelectedMovie", val);
+      this.$store.dispatch("getResSelectedMovie", val);
     },
   },
   computed: {

@@ -10,7 +10,8 @@ export default new Vuex.Store({
     movieInfo: [], // movie data array
     menuIsShowing: false, // menu show flag
     curPage: "", // current menu
-		selectedMovie: {} // current selected movie
+    selectedMovie: {}, // current selected movie
+    resSelectedMovie: {} // current selected movie which request from api
   },
   mutations,
   actions,

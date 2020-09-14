@@ -11,6 +11,9 @@ const mutations = {
 	getSelectedMovie(state, val) {
 		state.selectedMovie = val;
 	},
+	getResSelectedMovie(state, val) {
+		state.resSelectedMovie = val;
+	}
 };
 
 export default mutations;

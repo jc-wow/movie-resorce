@@ -21,12 +21,12 @@ export default {
     },
     returnMainPage() {
 			this.$router.push({ path: "/" }).catch((err) => err);
-			this.$store.commit("getSelectedMovie", '');
+			this.$store.commit("getSelectedMovie", {});
     },
   },
   watch: {
     "$store.state.selectedMovie.title": function (newVal, oldVal) {
-			if (newVal.length === 0) return;
+			if (!newVal) return;
       this.routeToDetail();
     },
     "$store.state.curPage": function (newVal, oldVal) {

@@ -3,10 +3,11 @@
 const Service = require("egg").Service;
 
 class MovieInfo extends Service {
-  async list(param) {
+  async listAll(param) {
     const { limit, page, category } = param;
     const offset = limit * (page - 1);
     const options = {
+      attributes: ["id", "rate", "title", "cover"],
       offset: offset,
       limit: limit,
       order: [
@@ -18,6 +19,10 @@ class MovieInfo extends Service {
       },
     };
     return this.ctx.model.Movie.findAll(options);
+  }
+
+  async listOne(param) {
+    return this.ctx.model.Movie.findByPk(param);
   }
 }
 
