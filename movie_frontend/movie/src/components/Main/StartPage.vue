@@ -6,10 +6,16 @@
         <source src="../../assets/ep1.mp4" type="video/mp4" />
       </video>
     </div>
-    <div class="start-page-sidebar">
-      <img src="../../assets/projector.svg" class="start-page-projector" @load="getProjectPosition" />
+    <div class="start-page-sidebar-container">
+      <div class="start-page-sidebar">
+        <img
+          src="../../assets/projector.svg"
+          class="start-page-projector"
+          @load="getProjectPosition"
+        />
+      </div>
+      <Light :position="projectorPosition" :content="menuContent"></Light>
     </div>
-    <Light :position="projectorPosition" :content="menuContent"></Light>
   </div>
 </template>
 
@@ -115,13 +121,18 @@ export default {
     }
   }
 
-  .start-page-sidebar {
-    position: absolute;
-    left: 5%;
-    top: 25%;
+  .start-page-sidebar-container {
+    width: 100%;
+    height: 100%;
 
-    .start-page-projector {
-      width: 17%;
+    .start-page-sidebar {
+      position: absolute;
+      left: 5%;
+      top: 25%;
+
+      .start-page-projector {
+        width: 17%;
+      }
     }
   }
 }

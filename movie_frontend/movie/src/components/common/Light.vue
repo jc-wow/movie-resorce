@@ -15,9 +15,6 @@
         fill="#fff"
       >{{ value }}</text>
     </svg>
-    <!-- <div class="light-content">
-      <p v-for="(value, index) in content" :key="'lightMenu' + index">{{ value }}</p>
-    </div>-->
   </div>
 </template>
 
@@ -31,26 +28,34 @@ export default {
     content: Array,
   },
   methods: {
-		setTextPosition() {
-			d3.selectAll('text')
-				.attr((d, i) => {
-					debugger
+    setTextPosition() {
+      d3.selectAll("text")
+        .attr("x", (d, i) => {
+          return this.getTextXpoint(i);
+        })
+        .attr("y", (d, i) => {
+          return this.getTextYpoint(i);
 				})
-		},
+				.style('hover', 'blue')
+    },
     getTextXpoint(index) {
-      this.textObj = document.getElementsByClassName("light-text-" + index)[0];
-      this.textObjClient = textObj.getBoundingClientRect();
-      return (
-        position.x1 - (this.textObjClient.right - this.textObjClient.left) / 2
-      );
+      this.textObj = document.getElementsByClassName(`light-text-${index}`)[0];
+      this.textObjBox = this.textObj.getBBox();
+      return this.position.x1 - this.textObjBox.width / 2;
     },
     getTextYpoint(index) {
-      return position.y1;
+      return (
+        this.position.y1 +
+        this.position.y3 / 4 +
+        (this.position.y3 * (index + 1)) / 13
+      );
     },
-	},
-	mounted() {
-		this.setTextPosition();
-	},
+  },
+  watch: {
+    "position.x1": function () {
+      this.setTextPosition();
+    },
+  },
 };
 </script>
 
