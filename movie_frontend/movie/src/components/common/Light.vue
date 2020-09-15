@@ -35,8 +35,7 @@ export default {
         })
         .attr("y", (d, i) => {
           return this.getTextYpoint(i);
-				})
-				.style('hover', 'blue')
+        })
     },
     getTextXpoint(index) {
       this.textObj = document.getElementsByClassName(`light-text-${index}`)[0];
