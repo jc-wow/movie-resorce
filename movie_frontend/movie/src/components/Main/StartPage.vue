@@ -9,7 +9,7 @@
     <div class="start-page-sidebar">
       <img src="../../assets/projector.svg" class="start-page-projector" @load="getProjectPosition" />
     </div>
-    <Light :position="projectorPosition"></Light>
+    <Light :position="projectorPosition" :content="menuContent"></Light>
   </div>
 </template>
 
@@ -24,11 +24,14 @@ export default {
     return {
       movies: ["天堂电影院"],
       projectorPosition: {
-        x: 0,
-        y: 0,
-				left: 0,
-				top: 0
+        x1: 0,
+        y1: 0,
+        x2: 0,
+        y2: 0,
+        x3: 0,
+        y3: 0,
       },
+      menuContent: ["换一个", "关于首页"],
     };
   },
   methods: {
@@ -44,12 +47,20 @@ export default {
       const headerObj = document.getElementsByClassName("video-head")[0];
       const headerObjHeight = headerObj.getBoundingClientRect().height;
       const projectObjClient = projectObj.getBoundingClientRect();
-			this.projectorPosition.left = projectObjClient.left;
-			this.projectorPosition.top = projectObjClient.top;
-      this.projectorPosition.x =
+      this.projectorPosition.left = projectObjClient.left;
+      this.projectorPosition.top = projectObjClient.top;
+      // get line x,y coordinate as clockwise
+      this.projectorPosition.x1 =
         projectObjClient.right - projectObjClient.width / 2;
-      this.projectorPosition.y =
-        projectObjClient.bottom - headerObjHeight - projectObjClient.height / 5;
+      this.projectorPosition.y1 = projectObjClient.bottom - headerObjHeight;
+      this.projectorPosition.x2 =
+        this.projectorPosition.x1 + 1.2 * projectObjClient.left;
+      this.projectorPosition.y2 =
+        projectObjClient.bottom + 1.5 * projectObjClient.top;
+      this.projectorPosition.x3 =
+        this.projectorPosition.x1 - 1.2 * projectObjClient.left;
+      this.projectorPosition.y3 =
+        projectObjClient.bottom + 1.5 * projectObjClient.top;
     },
   },
   computed: {
@@ -106,7 +117,7 @@ export default {
 
   .start-page-sidebar {
     position: absolute;
-    left: 4%;
+    left: 5%;
     top: 25%;
 
     .start-page-projector {
