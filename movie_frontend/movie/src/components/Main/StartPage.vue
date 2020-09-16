@@ -2,7 +2,7 @@
   <div class="start-page">
     <div class="video-head"></div>
     <div class="video-container">
-      <video class="start-page-video" autoplay loop muted @click="closeMenuPanel">
+      <video class="start-page-video" autoplay loop muted>
         <source src="../../assets/ep1.mp4" type="video/mp4" />
       </video>
     </div>
@@ -20,32 +20,26 @@
 </template>
 
 <script>
-import Menu from "@/components/common/Menu";
 import Light from "@/components/common/Light";
 
 export default {
   name: "startPage",
-  components: { Menu, Light },
+  components: { Light },
   data() {
     return {
-      movies: ["天堂电影院"],
+      movies: [
+        {
+          title: "天堂电影院",
+          cover: "../../assets/ep1.mp4",
+        },
+      ],
       projectorPosition: {
         x1: 0,
-        y1: 0,
-        x2: 0,
-        y2: 0,
-        x3: 0,
-        y3: 0,
       },
-      menuContent: ["换一个", "关于首页"],
+      menuContent: ["切换首页", "关于首页"],
     };
   },
   methods: {
-    closeMenuPanel() {
-      if (this.$store.state.menuIsShowing) {
-        this.$store.commit("showMenu");
-      }
-    },
     getProjectPosition() {
       const projectObj = document.getElementsByClassName(
         "start-page-projector"
@@ -53,51 +47,19 @@ export default {
       const headerObj = document.getElementsByClassName("video-head")[0];
       const headerObjHeight = headerObj.getBoundingClientRect().height;
       const projectObjClient = projectObj.getBoundingClientRect();
-      this.projectorPosition.left = projectObjClient.left;
-      this.projectorPosition.top = projectObjClient.top;
-      // get line x,y coordinate as clockwise
       this.projectorPosition.x1 =
-        projectObjClient.right - projectObjClient.width / 2;
-      this.projectorPosition.y1 = projectObjClient.bottom - headerObjHeight;
-      this.projectorPosition.x2 =
-        this.projectorPosition.x1 + 1.2 * projectObjClient.left;
-      this.projectorPosition.y2 =
-        projectObjClient.bottom + 1.5 * projectObjClient.top;
-      this.projectorPosition.x3 =
-        this.projectorPosition.x1 - 1.2 * projectObjClient.left;
-      this.projectorPosition.y3 =
-        projectObjClient.bottom + 1.5 * projectObjClient.top;
-    },
-  },
-  computed: {
-    menu() {
-      return this.$store.state.menuIsShowing;
+        projectObjClient.right -
+        (projectObjClient.right - projectObjClient.left) / 2;
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-@keyframes menu-slidein {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
 .start-page {
   width: 100%;
   height: 100vh;
   position: relative;
-
-  .menu-enter-active {
-    animation: 0.5s menu-slidein;
-  }
-  .menu-leave-active {
-    animation: 0.5s menu-slidein reverse;
-  }
 
   .video-head {
     height: 8%;
@@ -111,7 +73,7 @@ export default {
     .start-page-video {
       position: absolute;
       height: 92%;
-      width: 90%;
+      width: 79%;
     }
 
     .start-page-about {
@@ -122,16 +84,16 @@ export default {
   }
 
   .start-page-sidebar-container {
-    width: 100%;
-    height: 100%;
+    width: 13%;
+    height: 90%;
 
     .start-page-sidebar {
-      position: absolute;
-      left: 5%;
-      top: 25%;
+      margin-left: 45%;
+      margin-top: 51%;
 
       .start-page-projector {
-        width: 17%;
+        width: 21%;
+        opacity: 0.8;
       }
     }
   }

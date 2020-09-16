@@ -3,14 +3,13 @@
     <svg class="light-svgcontainer">
       <polygon
         class="light-blink"
-        :points="`${this.position.x1},${this.position.y1} 
-			${this.position.x2},${this.position.y2} 
-			${this.position.x3},${this.position.y3}`"
+        :points="`${position.x1},0 0,${coor.leftY} ${coor.rightX},${coor.rightY}`"
         style="fill: rgb(255, 255, 255, 0.1)"
       />
       <text
         v-for="(value, index) in content"
-        :class="'light-text-' + index"
+        :id="'light-text-' + index"
+        class="light-text"
         :key="'light-text' + index"
         fill="#fff"
       >{{ value }}</text>
@@ -27,6 +26,15 @@ export default {
     position: Object,
     content: Array,
   },
+  data() {
+    return {
+      coor: {
+        leftY: 0,
+        rightX: 0,
+        rightY: 0,
+      },
+    };
+  },
   methods: {
     setTextPosition() {
       d3.selectAll("text")
@@ -36,22 +44,34 @@ export default {
         .attr("y", (d, i) => {
           return this.getTextYpoint(i);
         })
+        .style("cursor", "pointer")
+        .on("mouseover", function() {
+          d3.select(this).style("opacity", 1);
+        })
+        .on("mouseout", function() {
+          d3.select(this).style("opacity", 0.6);
+        });
+    },
+    getLightXCoor() {
+      const lightClientObj = document
+        .getElementsByClassName("light")[0]
+        .getBoundingClientRect();
+      this.coor.leftY = (lightClientObj.bottom - lightClientObj.top) / 1.5;
+      this.coor.rightX = lightClientObj.right - lightClientObj.left;
+      this.coor.rightY = this.coor.leftY;
     },
     getTextXpoint(index) {
-      this.textObj = document.getElementsByClassName(`light-text-${index}`)[0];
+      this.textObj = document.getElementById(`light-text-${index}`);
       this.textObjBox = this.textObj.getBBox();
       return this.position.x1 - this.textObjBox.width / 2;
     },
     getTextYpoint(index) {
-      return (
-        this.position.y1 +
-        this.position.y3 / 4 +
-        (this.position.y3 * (index + 1)) / 13
-      );
+      return this.coor.rightY / 3 + (this.coor.rightY * (index + 1)) / 8;
     },
   },
   watch: {
     "position.x1": function () {
+      this.getLightXCoor();
       this.setTextPosition();
     },
   },
@@ -66,7 +86,7 @@ export default {
 }
 
 .light {
-  height: 100%;
+  height: 90%;
   width: 100%;
 
   .light-svgcontainer {
@@ -75,6 +95,11 @@ export default {
 
     .light-blink {
       animation: blink 8s linear infinite;
+    }
+
+    .light-text {
+      font-size: 1.1rem;
+      opacity: 0.6;
     }
   }
 
