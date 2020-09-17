@@ -97,11 +97,11 @@ export default {
   }
 
   .start-page-sidebar-container {
-    width: 13%;
+    width: 11%;
     height: 90%;
 
     .start-page-sidebar {
-      margin-left: 45%;
+      margin-left: 40%;
       margin-top: 51%;
 
       .start-page-projector {

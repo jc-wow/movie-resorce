@@ -30,6 +30,8 @@
           :src="item.cover"
           referrerpolicy="no-referrer"
           fit="cover"
+          @mousemove="hangoverImg($event)"
+          @mouseout="mouseoutImg($event)"
         ></el-image>
         <a>{{ item.title }}</a>
       </div>
@@ -69,6 +71,18 @@ export default {
       if (this.isEnd) return;
       this.transDistance -= 0.5 * this.pageWidth;
       this.paging("down", this.transDistance);
+    },
+    hangoverImg(e) {
+      $(e.currentTarget.parentElement).css({
+        transform: "translateY(-10px)",
+        transition: "0.2s linear",
+      });
+    },
+    mouseoutImg(e) {
+      $(e.currentTarget.parentElement).css({
+				transform: "translateY(0px)",
+				transition: "0s linear",
+      });
     },
     getMoveInfo() {
       this.reqAPIing = true;

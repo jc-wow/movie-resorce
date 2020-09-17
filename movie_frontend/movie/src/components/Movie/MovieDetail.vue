@@ -18,11 +18,11 @@ export default {
   data() {
     return {
       movieInfo: {},
+      isrefresh: false,
     };
   },
   methods: {
     saveMovieInfo() {
-			debugger
       sessionStorage.setItem("movieInfo", JSON.stringify(this.movieInfo));
     },
   },
@@ -32,13 +32,15 @@ export default {
     },
   },
   mounted() {
-    const movieInfo = JSON.parse(sessionStorage.getItem("movieInfo"));
+    this.savedMovieInfo = JSON.parse(sessionStorage.getItem("movieInfo"));
+    debugger;
     if (
-      movieInfo &&
-      Object.keys(movieInfo).length > 0 &&
-      this.$store.state.resSelectedMovie.id !== movieInfo.id
+      this.savedMovieInfo &&
+      Object.keys(this.savedMovieInfo).length > 0 &&
+      (!this.$store.state.resSelectedMovie.id ||
+        this.$store.state.resSelectedMovie.id === this.savedMovieInfo.id)
     ) {
-      this.movieInfo = movieInfo;
+      this.movieInfo = this.savedMovieInfo;
     }
     // set movie detail in sessionstorage data
     // in case disappear when refresh page

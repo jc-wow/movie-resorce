@@ -54,7 +54,7 @@ export default {
         });
     },
     selectText(val) {
-			const selectedText = val.target.innerHTML;
+      const selectedText = val.target.innerHTML;
       if (selectedText === "关于首页") this.$emit("getCurMoviedetail");
     },
     getLightXCoor() {
@@ -71,7 +71,7 @@ export default {
       return this.position.x1 - this.textObjBox.width / 2;
     },
     getTextYpoint(index) {
-      return this.coor.rightY / 3 + (this.coor.rightY * (index + 1)) / 6;
+      return this.coor.rightY / 2.2 + (this.coor.rightY * (index + 1)) / 7;
     },
   },
   watch: {
@@ -97,13 +97,15 @@ export default {
   .light-svgcontainer {
     height: 100%;
     width: 100%;
+    z-index: 999;
+    position: relative;
 
     .light-blink {
       animation: blink 8s linear infinite;
     }
 
     .light-text {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       opacity: 0.6;
     }
   }
