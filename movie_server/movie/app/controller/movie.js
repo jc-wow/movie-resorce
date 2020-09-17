@@ -19,6 +19,7 @@ class MovieController extends Controller {
     const ctx = this.ctx;
     const { id } = ctx.query;
     ctx.body = await ctx.service.movie.listOne(id);
+    this.success(ctx.body);
   }
 }
 

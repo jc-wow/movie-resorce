@@ -25,7 +25,7 @@ export default {
     },
   },
   watch: {
-    "$store.state.selectedMovie.title": function (newVal, oldVal) {
+    "$store.state.selectedMovie.id": function (newVal, oldVal) {
 			if (!newVal) return;
       this.routeToDetail();
     },

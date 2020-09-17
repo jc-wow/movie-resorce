@@ -45,12 +45,17 @@ export default {
           return this.getTextYpoint(i);
         })
         .style("cursor", "pointer")
-        .on("mouseover", function() {
+        .on("click", (d, i) => this.selectText(d))
+        .on("mouseover", function () {
           d3.select(this).style("opacity", 1);
         })
-        .on("mouseout", function() {
+        .on("mouseout", function () {
           d3.select(this).style("opacity", 0.6);
         });
+    },
+    selectText(val) {
+			const selectedText = val.target.innerHTML;
+      if (selectedText === "关于首页") this.$emit("getCurMoviedetail");
     },
     getLightXCoor() {
       const lightClientObj = document
@@ -66,7 +71,7 @@ export default {
       return this.position.x1 - this.textObjBox.width / 2;
     },
     getTextYpoint(index) {
-      return this.coor.rightY / 3 + (this.coor.rightY * (index + 1)) / 8;
+      return this.coor.rightY / 3 + (this.coor.rightY * (index + 1)) / 6;
     },
   },
   watch: {
@@ -98,7 +103,7 @@ export default {
     }
 
     .light-text {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       opacity: 0.6;
     }
   }

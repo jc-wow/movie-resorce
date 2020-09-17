@@ -113,7 +113,7 @@ export default {
     },
     selectMovie(val) {
       this.$store.commit("getSelectedMovie", val);
-      this.$store.dispatch("getResSelectedMovie", val);
+      this.$store.dispatch("getResSelectedMovie", val.id);
     },
   },
   computed: {

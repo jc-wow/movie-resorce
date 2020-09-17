@@ -14,7 +14,11 @@
           @load="getProjectPosition"
         />
       </div>
-      <Light :position="projectorPosition" :content="menuContent"></Light>
+      <Light
+        :position="projectorPosition"
+        :content="menuContent"
+        @getCurMoviedetail="getMoviedetail"
+      ></Light>
     </div>
   </div>
 </template>
@@ -31,6 +35,7 @@ export default {
         {
           title: "天堂电影院",
           cover: "../../assets/ep1.mp4",
+          id: "1291828",
         },
       ],
       projectorPosition: {
@@ -50,6 +55,14 @@ export default {
       this.projectorPosition.x1 =
         projectObjClient.right -
         (projectObjClient.right - projectObjClient.left) / 2;
+    },
+    getMoviedetail() {
+      const id = this.movies[0].id;
+      this.$store.dispatch("getResSelectedMovie", id);
+      this.$store.commit("getSelectedMovie", this.movies[0]);
+      this.$router
+        .push({ path: `/movie/${this.movies[0].title}` })
+        .catch((err) => err);
     },
   },
 };
