@@ -50,12 +50,15 @@ export default {
           d3.select(this).style("opacity", 1);
         })
         .on("mouseout", function () {
-          d3.select(this).style("opacity", 0.6);
+          d3.select(this).style("opacity", 0.7);
         });
     },
     selectText(val) {
       const selectedText = val.target.innerHTML;
-      if (selectedText === "关于首页") this.$emit("getCurMoviedetail");
+      if (selectedText === "关于首页") {
+        window.ispopstate = false;
+        this.$emit("getCurMoviedetail");
+      }
     },
     getLightXCoor() {
       const lightClientObj = document
@@ -101,7 +104,7 @@ export default {
     position: relative;
 
     .light-blink {
-      animation: blink 8s linear infinite;
+      animation: blink 5s linear infinite;
     }
 
     .light-text {

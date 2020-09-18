@@ -6,6 +6,7 @@ import VueAxios from "vue-axios";
 import API from "./libs/api";
 import jQuery from "jquery";
 import Utils from "@/libs/utils";
+import animated from "animate.css";
 
 import App from "./App.vue";
 import router from "./router";
@@ -15,6 +16,7 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios);
 Vue.use(API);
+Vue.use(animated);
 global.$ = jQuery;
 Vue.prototype.utils = Utils;
 

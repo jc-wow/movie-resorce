@@ -20,13 +20,13 @@ export default {
         .catch((err) => err);
     },
     returnMainPage() {
-			this.$router.push({ path: "/" }).catch((err) => err);
-			this.$store.commit("getSelectedMovie", {});
+      this.$router.push({ path: "/" }).catch((err) => err);
+      this.$store.commit("getSelectedMovie", {});
     },
   },
   watch: {
     "$store.state.selectedMovie.id": function (newVal, oldVal) {
-			if (!newVal) return;
+      if (!newVal) return;
       this.routeToDetail();
     },
     "$store.state.curPage": function (newVal, oldVal) {

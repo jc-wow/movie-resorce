@@ -80,8 +80,8 @@ export default {
     },
     mouseoutImg(e) {
       $(e.currentTarget.parentElement).css({
-				transform: "translateY(0px)",
-				transition: "0s linear",
+        transform: "translateY(0px)",
+        transition: "0s linear",
       });
     },
     getMoveInfo() {
@@ -128,6 +128,7 @@ export default {
     selectMovie(val) {
       this.$store.commit("getSelectedMovie", val);
       this.$store.dispatch("getResSelectedMovie", val.id);
+      window.ispopstate = false;
     },
   },
   computed: {

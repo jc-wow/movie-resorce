@@ -15,7 +15,7 @@ import InfoContainer from "./InfoContainer";
 export default {
   name: "Movie",
   components: {
-    InfoContainer
+    InfoContainer,
   },
   data() {
     return {
@@ -72,7 +72,7 @@ export default {
     menu() {
       return this.$store.state.menuIsShowing;
     },
-  }
+  },
 };
 </script>
 
@@ -81,7 +81,7 @@ export default {
   position: relative;
   width: 100%;
   height: auto;
-	background-color: #000;
+  background-color: #000;
 
   .movie-main-head {
     height: 8vh;
@@ -89,6 +89,8 @@ export default {
 
   .movie-main-body {
     height: auto;
+    animation: zoomIn;
+    animation-duration: 1s;
 
     .movieInfo-menuLogo {
       position: absolute;

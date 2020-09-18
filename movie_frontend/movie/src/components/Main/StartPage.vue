@@ -81,7 +81,7 @@ export default {
   .video-container {
     display: flex;
     justify-content: center;
-    flex-direction: row;
+    flex-direction: row;	
 
     .start-page-video {
       position: absolute;
