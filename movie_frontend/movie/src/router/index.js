@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "@/components/Main/Main";
 import MovieDetail from "@/components/Movie/MovieDetail";
+import Discuss from "@/components/Discuss/Discuss";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: "/movie/:id",
     component: MovieDetail,
     name: "movie"
+  },
+  {
+    path: "/discuss",
+    component: Discuss,
+    name: "discuss"
   }
 
   // route level code-splitting
@@ -25,13 +31,14 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-	base: process.env.BASE_URL,
+  base: process.env.BASE_URL,
   routes
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name === "" && from.name === "") next({ name: "main" });
-  else next();
+  if (to.name === "" && from.name === "") {
+    next({ name: "main" });
+  } else next();
 });
 
 export default router;

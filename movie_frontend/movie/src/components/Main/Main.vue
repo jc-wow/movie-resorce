@@ -4,7 +4,6 @@
     <StartPage class="st"></StartPage>
     <MovieMain class="mv-main"></MovieMain>
     <Music class="mu-main"></Music>
-    <Discuss class="dics"></Discuss>
   </div>
 </template>
 
@@ -28,7 +27,6 @@ export default {
     StartPage,
     MovieMain,
     Music,
-    Discuss,
     SideBar,
   },
   methods: {
@@ -44,9 +42,9 @@ export default {
       this.heightOfmv = document.getElementsByClassName(
         "mv-main"
       )[0].clientHeight;
-      this.heightOfDics = document.getElementsByClassName(
-        "dics"
-      )[0].clientHeight;
+      // this.heightOfDics = document.getElementsByClassName(
+      //   "dics"
+      // )[0].clientHeight;
     },
     jumpToPage(val) {
       this.height = 0;
@@ -79,7 +77,10 @@ export default {
     "$store.state.curPage": {
       handler: function (newVal, oldVal) {
         {
-          if (!newVal) return;
+					if (!newVal) return;
+					if (newVal === '讨论') {
+						this.$router.push({ name: 'discuss' });
+					}
           this.$nextTick(() => this.jumpToPage(newVal));
         }
       },

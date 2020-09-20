@@ -6,6 +6,7 @@
     <div class="nav-classify">
       <span class="nav-classify-1" @click="changePage($event)">首页</span>
       <span @click="changePage($event)">电影</span>
+      <span @click="changePage($event)">讨论</span>
     </div>
   </div>
 </template>
@@ -68,13 +69,13 @@ export default {
 .nav {
   width: 100%;
   height: 8vh;
-  display: flex;
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   position: fixed;
   z-index: 999;
   display: flex;
   align-items: center;
+  background-color: #000;
 
   .nav-logo {
     height: 100%;
@@ -98,21 +99,21 @@ export default {
     span {
       cursor: pointer;
       margin-left: 10%;
-			color: #e3dbdf;
+      color: #e3dbdf;
     }
 
-		.nav-classify-1 {
-			margin-left: 15%
-		}
+    .nav-classify-1 {
+      margin-left: 15%;
+    }
   }
 }
 
-.title::after {
+.nav::after {
   content: "";
   width: 110%;
   height: 110%;
   position: absolute;
-  top: -5%;
+  top: -10%;
   left: -5%;
   opacity: 0.2;
   background-image: url("../../assets/grain.jpg");

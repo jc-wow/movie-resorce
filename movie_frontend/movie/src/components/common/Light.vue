@@ -50,7 +50,7 @@ export default {
           d3.select(this).style("opacity", 1);
         })
         .on("mouseout", function () {
-          d3.select(this).style("opacity", 0.7);
+          d3.select(this).style("opacity", 0.3);
         });
     },
     selectText(val) {
@@ -104,12 +104,12 @@ export default {
     position: relative;
 
     .light-blink {
-      animation: blink 5s linear infinite;
+      animation: blink 8s linear infinite;
     }
 
     .light-text {
       font-size: 1.2rem;
-      opacity: 0.6;
+      opacity: 0.3;
     }
   }
 

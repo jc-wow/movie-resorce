@@ -18,7 +18,9 @@ export default {
   data() {
     return {
       content: "",
-      editorOption: {},
+      editorOption: {
+        theme: "snow",
+      },
     };
   },
   methods: {
@@ -31,4 +33,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.editor {
+	background-color: #fff;
+}
 </style>

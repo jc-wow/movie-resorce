@@ -106,7 +106,7 @@ export default {
 
       .start-page-projector {
         width: 21%;
-        opacity: 0.8;
+        opacity: 0.4;
       }
     }
   }
