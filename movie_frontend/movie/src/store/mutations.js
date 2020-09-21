@@ -13,6 +13,9 @@ const mutations = {
 	},
 	getResSelectedMovie(state, val) {
 		state.resSelectedMovie = val;
+	},
+	getSelectedDiscuss(state, val) {
+		state.selectedDiscuss = val;
 	}
 };
 

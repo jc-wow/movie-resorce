@@ -11,8 +11,9 @@ export default new Vuex.Store({
     menuIsShowing: false, // menu show flag
     curPage: "", // current menu
     selectedMovie: {}, // current selected movie
-    resSelectedMovie: {} // current selected movie which request from api
-  },
+    resSelectedMovie: {}, // current selected movie which request from api
+		selectedDiscuss: {} // current selected discuss
+	},
   mutations,
   actions,
   modules: {}

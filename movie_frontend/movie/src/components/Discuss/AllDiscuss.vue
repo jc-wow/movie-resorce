@@ -4,7 +4,13 @@
       <h1>{{ tipBoard }}</h1>
     </div>
     <div class="alldiscuss-container">
-      <div class="alldiscuss-container-nav"></div>
+      <div class="alldiscuss-container-nav">
+        <el-row>
+          <el-col :span="2" :offset="22" type="flex">
+            <el-button icon="el-icon-plus" size="small" plain @click="addDiscuss">发言</el-button>
+          </el-col>
+        </el-row>
+      </div>
       <ul>
         <li v-for="(discuss, index) in discussList" :key="'dis' + index">
           <el-divider></el-divider>
@@ -48,14 +54,15 @@ export default {
       tipBoard: "Only in their dreams can men be truly free",
     };
   },
+  methods: {
+    addDiscuss() {
+      this.$store.commit("getSelectedDiscuss", "add");
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-* {
-  margin: 0;
-  padding: 0;
-}
 .alldiscuss {
   background-color: #e4e4e1;
   background-image: radial-gradient(
@@ -83,12 +90,22 @@ export default {
 
     .alldiscuss-container-nav {
       height: 5vh;
-      width: 75%;
+      width: 70%;
       margin: auto;
     }
 
+    .el-col {
+      text-align: center;
+      cursor: pointer;
+
+      .el-button {
+        width: 80%;
+      }
+    }
+
     ul {
-      width: 75%;
+      padding: 0;
+      width: 70%;
       margin: auto;
       list-style-type: none;
     }

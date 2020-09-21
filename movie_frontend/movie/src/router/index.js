@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Main from "@/components/Main/Main";
 import MovieDetail from "@/components/Movie/MovieDetail";
 import Discuss from "@/components/Discuss/Discuss";
+import EditDiscuss from "@/components/Discuss/EditDiscuss";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: "/discuss",
     component: Discuss,
     name: "discuss"
+  },
+  {
+    path: "/discuss/:id",
+    component: EditDiscuss,
+    name: "editDiscuss"
   }
 
   // route level code-splitting

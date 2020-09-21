@@ -33,6 +33,11 @@ export default {
       if (!newVal) return;
       this.returnMainPage();
     },
+    "$store.state.selectedDiscuss": function (newVal, oldVal) {
+      if (this.$store.state.selectedDiscuss === "add") {
+        this.$router.push({ path: "/discuss/new_discuss" });
+      }
+    },
   },
 };
 </script>
