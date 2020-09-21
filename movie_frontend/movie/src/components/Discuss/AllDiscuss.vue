@@ -76,6 +76,7 @@ export default {
       rgba(143, 152, 157, 0.6) 100%
     );
   background-blend-mode: normal, multiply;
+	
 
   .alldiscuss-tipboard {
     height: 30vh;
@@ -95,11 +96,11 @@ export default {
     }
 
     .el-col {
-      text-align: center;
+      text-align: right;
       cursor: pointer;
 
       .el-button {
-        width: 80%;
+        width: 65%;
       }
     }
 

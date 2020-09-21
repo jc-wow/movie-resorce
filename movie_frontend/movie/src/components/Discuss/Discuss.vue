@@ -1,6 +1,9 @@
 <template>
   <div class="discuss">
     <div class="head"></div>
+    <div class="alldiscuss-tipboard">
+      <h1>{{ tipBoard }}</h1>
+    </div>
     <AllDiscuss></AllDiscuss>
   </div>
 </template>

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Editor from "./Editor";
+import Editor from "../common/Editor";
 
 export default {
 	name: "editDiscuss",
