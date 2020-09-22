@@ -8,5 +8,4 @@ module.exports = (app) => {
   router.resources("movie", "/movie", controller.movie);
   router.resources("movie", "/movie/:id", controller.movie);
   router.resources("discuss", "/discuss", controller.discuss);
-  router.resources("discuss", "/discuss/new", controller.discuss);
 };

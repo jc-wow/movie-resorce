@@ -12,7 +12,8 @@ export default new Vuex.Store({
     curPage: "", // current menu
     selectedMovie: {}, // current selected movie
     resSelectedMovie: {}, // current selected movie which request from api
-		selectedDiscuss: {} // current selected discuss
+		selectedDiscuss: {}, // current selected discuss
+		resPostDiscuss: ''
 	},
   mutations,
   actions,

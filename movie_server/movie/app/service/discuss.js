@@ -24,6 +24,11 @@ class Discuss extends Service {
   async listOne(param) {
     return this.ctx.model.Discuss.findByPk(param);
   }
+
+  async create(param) {
+		console.log(param)
+    return this.ctx.model.Discuss.create(param);
+  }
 }
 
 module.exports = Discuss;

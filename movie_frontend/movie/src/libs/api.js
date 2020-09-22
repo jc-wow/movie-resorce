@@ -34,9 +34,9 @@ export default {
       });
     };
     Vue.prototype.post = function(url, params) {
-      return Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         instance
-          .post(url, qs.stringify(params))
+          .post(url, params)
           .then(res => {
             resolve(res.data);
           })

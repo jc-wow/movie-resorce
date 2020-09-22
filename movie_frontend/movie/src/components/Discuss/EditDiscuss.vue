@@ -3,7 +3,7 @@
     <div class="edit-discuss-head"></div>
     <div class="edit-discuss-func">
       <el-button plain>预览</el-button>
-      <el-button plain type="primary">提交</el-button>
+      <el-button plain type="primary" @click="post">提交</el-button>
     </div>
     <el-input placeholder="添加标题" v-model="discussHead"></el-input>
     <Editor class="discuss-editor"></Editor>
@@ -15,13 +15,25 @@ import Editor from "../common/Editor";
 
 export default {
   name: "editDiscuss",
+  components: {
+    Editor,
+  },
   data() {
     return {
       discussHead: "",
     };
   },
-  components: {
-    Editor,
+  methods: {
+    post() {
+      const param = {
+        title: "ee",
+        author: "aa",
+        tag: "aa",
+        content: "aaa",
+        reply: "aaa",
+      };
+      this.$store.dispatch("postDiscuss", param);
+    },
   },
 };
 </script>
