@@ -7,7 +7,6 @@ import API from "./libs/api";
 import jQuery from "jquery";
 import Utils from "@/libs/utils";
 import animated from "animate.css";
-import Quill from 'quill'
 
 import App from "./App.vue";
 import router from "./router";
@@ -21,10 +20,6 @@ Vue.use(animated);
 
 global.$ = jQuery;
 Vue.prototype.utils = Utils;
-
-let Size = Quill.import("attributors/style/size");
-Size.whitelist = ["14px", "16px", "18px"];
-Quill.register(Size, true);
 
 
 new Vue({

@@ -1,6 +1,10 @@
 <template>
   <div class="edit-discuss">
     <div class="edit-discuss-head"></div>
+    <div class="edit-discuss-func">
+      <el-button plain>预览</el-button>
+      <el-button plain type="primary">提交</el-button>
+    </div>
     <el-input placeholder="添加标题" v-model="discussHead"></el-input>
     <Editor class="discuss-editor"></Editor>
   </div>
@@ -10,12 +14,12 @@
 import Editor from "../common/Editor";
 
 export default {
-	name: "editDiscuss",
-	data() {
-		return {
-			discussHead: ''
-		}
-	},
+  name: "editDiscuss",
+  data() {
+    return {
+      discussHead: "",
+    };
+  },
   components: {
     Editor,
   },
@@ -45,11 +49,21 @@ export default {
     height: 8vh;
   }
 
+  .edit-discuss-func {
+    width: 99%;
+    margin-top: 0.1%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .el-input {
     width: 55%;
+    margin-top: 3%;
   }
+
   .discuss-editor {
     width: 55%;
+    margin-top: 1%;
   }
 }
 </style>

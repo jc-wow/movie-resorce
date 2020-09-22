@@ -1,5 +1,22 @@
 <template>
   <div class="editor">
+    <div id="announcementEditorToolbar">
+      <span class="ql-formats">
+        <select class="ql-size">
+          <option value="18px">正文</option>
+          <option value="22px">22px</option>
+          <option value="26px">26px</option>
+          <option value="30px">30px</option>
+        </select>
+      </span>
+      <button class="ql-bold"></button>
+      <button class="ql-italic"></button>
+      <button class="ql-underline"></button>
+      <button class="ql-list" value="ordered"></button>
+      <button class="ql-list" value="bullet"></button>
+      <select class="ql-align"></select>
+    </div>
+    <div name="announcementEditor" id="announcementEditor"></div>
     <quill-editor :content="content" :options="editorOption" @change="onEditorChange($event)" />
   </div>
 </template>
@@ -9,6 +26,7 @@ import { quillEditor } from "vue-quill-editor";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
+import Quill from "quill";
 
 export default {
   name: "editor",
@@ -20,16 +38,9 @@ export default {
       content: "",
       editorOption: {
         theme: "snow",
-        placeholder: "添加想法",
+        placeholder: "添加想法...",
         modules: {
-          toolbar: [
-            [{ size: ["14px", "16px", "18px"] }],
-            [{ header: 1 }, { header: 2 }],
-            ["bold", "italic", "underline", "strike"],
-            ["blockquote", "code-block"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            [{ align: [] }],
-          ],
+          toolbar: "#announcementEditorToolbar",
         },
       },
     };
@@ -40,36 +51,33 @@ export default {
       this.content = html;
     },
   },
+  created() {
+    let Size = Quill.import("attributors/style/size");
+    Size.whitelist = ["18px", "22px", "26px", "30px"];
+    Quill.register(Size, true);
+  },
 };
 </script>
 
 <style lang="scss">
 .editor {
   background-color: #fff;
+  height: 70vh;
 
-  .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14px"]::before,
-  .ql-snow
-    .ql-picker.ql-size
-    .ql-picker-label.ql-active[data-value="14px"]::before {
-    content: "14px";
+  #announcementEditorToolbar {
+    display: flex;
+    height: 8%;
   }
 
-  .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before,
-  .ql-snow
-    .ql-picker.ql-size
-    .ql-picker-label.ql-active[data-value="16px"]::before {
-    content: "16px";
-  }
+  .quill-editor {
+    height: 92%;
+    .ql-container {
+      font-size: 18px;
 
-  .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="18px"]::before,
-  .ql-snow
-    .ql-picker.ql-size
-    .ql-picker-label.ql-active[data-value="18px"]::before {
-    content: "18px";
-  }
-
-  .ql-size .ql-picker-label::before {
-    content: "16px" !important;
+      .ql-blank {
+        font-size: 15px;
+      }
+    }
   }
 }
 </style>

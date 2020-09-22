@@ -29,13 +29,19 @@ export default {
       if (!newVal) return;
       this.routeToDetail();
     },
+    // back to main page when click '电影' and '首页'
     "$store.state.curPage": function (newVal, oldVal) {
       if (!newVal) return;
-      this.returnMainPage();
+      if (newVal === "电影" || newVal === "首页") {
+        this.returnMainPage();
+      } else {
+        this.$router.push({ name: "discuss" });
+      }
     },
     "$store.state.selectedDiscuss": function (newVal, oldVal) {
       if (this.$store.state.selectedDiscuss === "add") {
         this.$router.push({ path: "/discuss/new_discuss" });
+        this.$store.commit("getCurPage", "");
       }
     },
   },

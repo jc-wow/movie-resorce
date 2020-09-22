@@ -42,9 +42,6 @@ export default {
       this.heightOfmv = document.getElementsByClassName(
         "mv-main"
       )[0].clientHeight;
-      // this.heightOfDics = document.getElementsByClassName(
-      //   "dics"
-      // )[0].clientHeight;
     },
     jumpToPage(val) {
       this.height = 0;
@@ -77,10 +74,7 @@ export default {
     "$store.state.curPage": {
       handler: function (newVal, oldVal) {
         {
-					if (!newVal) return;
-					if (newVal === '讨论') {
-						this.$router.push({ name: 'discuss' });
-					}
+          if (!newVal) return;
           this.$nextTick(() => this.jumpToPage(newVal));
         }
       },

@@ -59,6 +59,9 @@ export default {
       this.$store.commit("getSelectedDiscuss", "add");
     },
   },
+  destroyed() {
+    this.$store.commit("getSelectedDiscuss", "");
+  },
 };
 </script>
 
@@ -76,7 +79,6 @@ export default {
       rgba(143, 152, 157, 0.6) 100%
     );
   background-blend-mode: normal, multiply;
-	
 
   .alldiscuss-tipboard {
     height: 30vh;
@@ -100,7 +102,7 @@ export default {
       cursor: pointer;
 
       .el-button {
-        width: 65%;
+        width: 80%;
       }
     }
 
