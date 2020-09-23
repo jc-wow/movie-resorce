@@ -1,29 +1,39 @@
 <template>
   <div class="edit-discuss">
     <div class="edit-discuss-head"></div>
-    <div class="edit-discuss-func">
-      <el-button plain>预览</el-button>
-      <el-button plain type="primary" @click="post">提交</el-button>
+    <div class="edit-discuss-container" v-show="!isPreview">
+      <div class="edit-discuss-func">
+        <el-button plain @click="preview">预览</el-button>
+        <el-button plain type="primary" @click="post">提交</el-button>
+      </div>
+      <el-input placeholder="添加标题" v-model="discussHead"></el-input>
+      <Editor class="discuss-editor" @editorHtml="editorHtml"></Editor>
     </div>
-    <el-input placeholder="添加标题" v-model="discussHead"></el-input>
-    <Editor class="discuss-editor"></Editor>
+    <Preview :data="previewData" :head="discussHead" v-show="isPreview" @showEditor="preview"></Preview>
   </div>
 </template>
 
 <script>
 import Editor from "../common/Editor";
+import Preview from "./Preview";
 
 export default {
   name: "editDiscuss",
   components: {
     Editor,
+    Preview,
   },
   data() {
     return {
       discussHead: "",
+      previewData: "",
+      isPreview: false,
     };
   },
   methods: {
+    preview() {
+      this.isPreview = !this.isPreview;
+    },
     post() {
       const param = {
         title: "ee",
@@ -33,6 +43,9 @@ export default {
         reply: "aaa",
       };
       this.$store.dispatch("postDiscuss", param);
+    },
+    editorHtml(val) {
+      this.previewData = val;
     },
   },
 };
@@ -61,26 +74,33 @@ export default {
     height: 8vh;
   }
 
-  .edit-discuss-func {
-    width: 99%;
-    margin-top: 0.1%;
+  .edit-discuss-container {
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
-  }
+    flex-direction: column;
+    align-items: center;
 
-  .el-input {
-    width: 55%;
-    margin-top: 3%;
-
-    .el-input__inner {
-      font-weight: 600;
-			font-size: 1.1rem;
+    .edit-discuss-func {
+      width: 99%;
+      margin-top: 0.1%;
+      display: flex;
+      justify-content: flex-end;
     }
-  }
 
-  .discuss-editor {
-    width: 55%;
-    margin-top: 1%;
+    .el-input {
+      width: 55%;
+      margin-top: 3%;
+
+      .el-input__inner {
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+    }
+
+    .discuss-editor {
+      width: 55%;
+      margin-top: 1%;
+    }
   }
 }
 </style>

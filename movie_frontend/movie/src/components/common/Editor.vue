@@ -48,7 +48,8 @@ export default {
   },
   methods: {
     onEditorChange({ quill, html, text }) {
-      console.log("editor change!", quill, html, text);
+			// console.log("editor change!", quill, html, text);
+			this.$emit('editorHtml', html);
       this.content = html;
     },
   },
