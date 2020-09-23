@@ -19,6 +19,9 @@ const mutations = {
 	},
 	getResPostDiscuss(state, val) {
 		state.resPostDiscuss = val;
+	},
+	getAllDiscuss(state, val) {
+		state.allDiscuss = val;
 	}
 };
 

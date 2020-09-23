@@ -7,6 +7,8 @@ import API from "./libs/api";
 import jQuery from "jquery";
 import Utils from "@/libs/utils";
 import animated from "animate.css";
+import Day from "dayjs";
+import "dayjs/locale/zh-cn";
 
 import App from "./App.vue";
 import router from "./router";
@@ -18,9 +20,13 @@ Vue.use(VueAxios, axios);
 Vue.use(API);
 Vue.use(animated);
 
+Day.locale("zh-cn");
+const relativeTime = require("dayjs/plugin/relativeTime");
+Day.extend(relativeTime);
+
 global.$ = jQuery;
 Vue.prototype.utils = Utils;
-
+Vue.prototype.Day = Day;
 
 new Vue({
   router,

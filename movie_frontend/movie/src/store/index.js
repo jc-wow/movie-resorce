@@ -13,7 +13,8 @@ export default new Vuex.Store({
     selectedMovie: {}, // current selected movie
     resSelectedMovie: {}, // current selected movie which request from api
 		selectedDiscuss: {}, // current selected discuss
-		resPostDiscuss: ''
+		resPostDiscuss: '', // response after post a new discuss
+		allDiscuss: []
 	},
   mutations,
   actions,

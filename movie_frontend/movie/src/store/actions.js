@@ -24,11 +24,21 @@ const actions = {
       this._vm.post("/discuss", param).then((res) => {
         if (res.success) {
           commit("getResPostDiscuss", res.data);
-          resolve(data);
+          resolve(res);
         }
       });
     });
-  },
+	},
+	getAllDiscuss({ commit }, param) {
+		return new Promise((resolve, reject) => {
+			this._vm.get('/discuss', param).then(res => {
+				if (res.success) {
+					commit('getAllDiscuss', res.data);
+					resolve(res);
+				}
+			})
+		})
+	}
 };
 
 export default actions;

@@ -3,9 +3,10 @@
     <div id="announcementEditorToolbar">
       <span class="ql-formats">
         <select class="ql-size">
-          <option value="18px">正文</option>
+          <option selected>默认</option>
+          <option value="16px">16px</option>
+          <option value="18px">18px</option>
           <option value="22px">22px</option>
-          <option value="26px">26px</option>
           <option value="30px">30px</option>
         </select>
       </span>
@@ -53,7 +54,7 @@ export default {
   },
   created() {
     let Size = Quill.import("attributors/style/size");
-    Size.whitelist = ["18px", "22px", "26px", "30px"];
+    Size.whitelist = ["16px", "18px", "22px", "30px"];
     Quill.register(Size, true);
   },
 };

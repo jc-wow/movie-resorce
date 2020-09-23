@@ -4,7 +4,7 @@
       <polygon
         class="light-blink"
         :points="`${position.x1},0 0,${coor.leftY} ${coor.rightX},${coor.rightY}`"
-        style="fill: rgb(255, 255, 255, 0.1)"
+        style="fill: rgb(255, 255, 255, 0.15)"
       />
       <text
         v-for="(value, index) in content"
@@ -50,7 +50,7 @@ export default {
           d3.select(this).style("opacity", 1);
         })
         .on("mouseout", function () {
-          d3.select(this).style("opacity", 0.3);
+          d3.select(this).style("opacity", 0.5);
         });
     },
     selectText(val) {
@@ -109,7 +109,7 @@ export default {
 
     .light-text {
       font-size: 1.2rem;
-      opacity: 0.3;
+      opacity: 0.5;
     }
   }
 

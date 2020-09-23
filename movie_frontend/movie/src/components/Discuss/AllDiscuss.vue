@@ -12,15 +12,38 @@
         </el-row>
       </div>
       <ul>
-        <li v-for="(discuss, index) in discussList" :key="'dis' + index">
+        <li class="alldiscuss-title">
+          <el-row type="flex" align="bottom" style="height: 100%">
+            <el-col :span="13">讨论</el-col>
+            <el-col class="col-2" :span="4">作者</el-col>
+            <el-col class="col-3" :span="3">回应</el-col>
+            <el-col class="col-4" :span="4">
+              <span>回应时间</span>
+            </el-col>
+          </el-row>
+        </li>
+        <li class="discuss-item" v-for="(discuss, index) in discussList" :key="'dis' + index">
           <el-divider></el-divider>
-          <span>{{ discuss }}</span>
+          <el-row type="flex" style="height: 100%">
+            <el-col :span="13">{{ discuss.title }}</el-col>
+            <el-col class="col-2" :span="4">{{ discuss.author }}</el-col>
+            <el-col class="col-3" :span="3">{{ }}</el-col>
+            <el-col class="col-4" :span="4" style="font-size: 0.8rem; color: #5d5e5f">
+              <span>{{ getTimeToNow(discuss.updated_at) }}</span>
+            </el-col>
+          </el-row>
         </li>
         <el-divider></el-divider>
       </ul>
     </div>
     <div class="alldiscuss-page">
-      <el-pagination layout="prev, pager, next" :total="50"></el-pagination>
+      <el-pagination
+        layout="prev, pager, next"
+        :total="totalDiscuss"
+        :background="pageBg"
+        :page-size="20"
+        hide-on-single-page
+      ></el-pagination>
     </div>
   </div>
 </template>
@@ -30,27 +53,13 @@ export default {
   name: "alldiscuss",
   data() {
     return {
-      discussList: [
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-        "这是测试评论",
-      ],
+      pageBg: true,
+      discussList: [],
+      reqParam: {
+        page: 1,
+        limit: 20,
+      },
+      totalDiscuss: 0,
       tipBoard: "Only in their dreams can men be truly free",
     };
   },
@@ -58,6 +67,18 @@ export default {
     addDiscuss() {
       this.$store.commit("getSelectedDiscuss", "add");
     },
+    getDiscuss() {
+      return this.$store.dispatch("getAllDiscuss", this.reqParam);
+    },
+    getTimeToNow(date) {
+      return this.Day(date).format("YYYY-MM-DD hh:mm");
+    },
+  },
+  mounted() {
+    this.getDiscuss().then((res) => {
+      this.discussList = res.data.rows;
+      this.totalDiscuss = res.data.count;
+    });
   },
   destroyed() {
     this.$store.commit("getSelectedDiscuss", "");
@@ -90,19 +111,20 @@ export default {
 
   .alldiscuss-container {
     font-size: 0.9rem;
+    height: 100vh;
 
     .alldiscuss-container-nav {
       height: 5vh;
       width: 70%;
       margin: auto;
-    }
 
-    .el-col {
-      text-align: right;
-      cursor: pointer;
+      .el-col {
+        text-align: right;
+        cursor: pointer;
 
-      .el-button {
-        width: 80%;
+        .el-button {
+          width: 70px;
+        }
       }
     }
 
@@ -111,6 +133,20 @@ export default {
       width: 70%;
       margin: auto;
       list-style-type: none;
+
+			.col-3 {
+				text-align: center;
+			}
+
+      .col-4 {
+        text-align: right;
+      }
+
+      .alldiscuss-title {
+        height: 4vh;
+        font-size: 0.85rem;
+        color: #44464f;
+      }
     }
     .el-divider {
       background-color: #a0a2a7;

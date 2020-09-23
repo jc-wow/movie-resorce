@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .edit-discuss {
   height: 100vh;
   display: flex;
@@ -71,6 +71,11 @@ export default {
   .el-input {
     width: 55%;
     margin-top: 3%;
+
+    .el-input__inner {
+      font-weight: 600;
+			font-size: 1.1rem;
+    }
   }
 
   .discuss-editor {
