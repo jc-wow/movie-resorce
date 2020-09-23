@@ -1,11 +1,11 @@
 <template>
   <div class="edit-discuss">
     <div class="edit-discuss-head"></div>
+    <div class="edit-discuss-func">
+      <el-button plain @click="preview">{{ isPreview ? '返回编辑' : '预览' }}</el-button>
+      <el-button plain type="primary" @click="post">提交</el-button>
+    </div>
     <div class="edit-discuss-container" v-show="!isPreview">
-      <div class="edit-discuss-func">
-        <el-button plain @click="preview">预览</el-button>
-        <el-button plain type="primary" @click="post">提交</el-button>
-      </div>
       <el-input placeholder="添加标题" v-model="discussHead"></el-input>
       <Editor class="discuss-editor" @editorHtml="editorHtml"></Editor>
     </div>
@@ -57,6 +57,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  // overflow-y: auto;
   background-color: #e4e4e1;
   background-image: radial-gradient(
       at top center,
@@ -74,18 +75,19 @@ export default {
     height: 8vh;
   }
 
+  .edit-discuss-func {
+    width: 99%;
+    margin-top: 0.1%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .edit-discuss-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    .edit-discuss-func {
-      width: 99%;
-      margin-top: 0.1%;
-      display: flex;
-      justify-content: flex-end;
-    }
+    overflow-y: auto;
 
     .el-input {
       width: 55%;

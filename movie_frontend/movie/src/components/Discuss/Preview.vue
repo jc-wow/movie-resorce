@@ -1,12 +1,7 @@
 <template>
   <div class="preview">
-    <div class="preview-edit">
-      <el-button plain @click="returnEditor">返回编辑</el-button>
-    </div>
-    <div class='preview-text'>
-      <div class="preview-title" v-html="head"></div>
-      <div class="preview-content" v-html="data"></div>
-    </div>
+    <div class="preview-title" v-html="head"></div>
+    <div class="preview-content" v-html="data"></div>
   </div>
 </template>
 
@@ -20,23 +15,30 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    returnEditor() {
-      this.$emit("showEditor");
-    },
-  },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .preview {
-  width: 100%;
+  width: 60%;
+  margin-top: 3%;
 
-  .preview-edit {
-    display: flex;
-    justify-content: flex-end;
-    width: 99.5%;
-    margin-top: 0.1%;
+  .preview-title {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.7rem;
+
+    p {
+      margin: 2px;
+    }
+  }
+
+  .preview-content {
+    margin-top: 7%;
+
+    p {
+      margin: 0;
+    }
   }
 }
 </style>
