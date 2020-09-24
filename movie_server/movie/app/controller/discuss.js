@@ -5,11 +5,10 @@ const Controller = require("./base");
 class DiscussController extends Controller {
   async index() {
     const ctx = this.ctx;
-    const { page, limit, id } = ctx.query;
+    const { page, limit } = ctx.query;
     const query = {
       limit: parseInt(limit),
       page: parseInt(page),
-      id,
     };
     ctx.body = await ctx.service.discuss.listAll(query);
     this.success(ctx.body);

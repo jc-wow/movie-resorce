@@ -4,21 +4,22 @@ const Service = require("egg").Service;
 
 class Discuss extends Service {
   async listAll(param) {
-    const { limit, page, category } = param;
+    const { limit, page } = param;
     const offset = limit * (page - 1);
     const options = {
-      attributes: ["id", "rate", "title", "cover"],
-      offset: offset,
-      limit: limit,
-      order: [
-        ["rate", "DESC"],
-        ["id", "DESC"],
+      attributes: [
+        "id",
+        "title",
+        "author",
+        "tag",
+        "content",
+        "reply",
+        "updated_at",
       ],
-      where: {
-        category: category,
-      },
+      offset,
+      limit,
     };
-    return this.ctx.model.Discuss.findAll(options);
+    return this.ctx.model.Discuss.findAndCountAll(options);
   }
 
   async listOne(param) {
@@ -26,7 +27,6 @@ class Discuss extends Service {
   }
 
   async create(param) {
-		console.log(param)
     return this.ctx.model.Discuss.create(param);
   }
 }
