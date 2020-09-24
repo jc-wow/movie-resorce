@@ -6,7 +6,7 @@
     <div class="nav-classify">
       <span class="nav-classify-1" @click="changePage($event)">首页</span>
       <span @click="changePage($event)">电影</span>
-      <span @click="changePage($event)">讨论</span>
+      <span @click="changePage($event)">想法</span>
     </div>
   </div>
 </template>

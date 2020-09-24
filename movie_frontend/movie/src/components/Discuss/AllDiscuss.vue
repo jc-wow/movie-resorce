@@ -14,7 +14,7 @@
       <ul>
         <li class="alldiscuss-title">
           <el-row type="flex" align="bottom" style="height: 100%">
-            <el-col :span="13">讨论</el-col>
+            <el-col :span="13">想法</el-col>
             <el-col class="col-2" :span="4">作者</el-col>
             <el-col class="col-3" :span="3">回应</el-col>
             <el-col class="col-4" :span="4">

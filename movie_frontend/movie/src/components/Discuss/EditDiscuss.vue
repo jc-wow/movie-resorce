@@ -53,11 +53,10 @@ export default {
 
 <style lang="scss">
 .edit-discuss {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  // overflow-y: auto;
   background-color: #e4e4e1;
   background-image: radial-gradient(
       at top center,
