@@ -25,8 +25,8 @@ const relativeTime = require("dayjs/plugin/relativeTime");
 Day.extend(relativeTime);
 
 global.$ = jQuery;
-Vue.prototype.utils = Utils;
 Vue.prototype.Day = Day;
+Vue.prototype.utils = Utils;
 
 new Vue({
   router,

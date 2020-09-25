@@ -19,7 +19,7 @@ export default {
         .push({ path: `/movie/${this.$store.state.selectedMovie.title}` })
         .catch((err) => err);
     },
-    returnMainPage() {
+    returnToMainPage() {
       this.$router.push({ path: "/" }).catch((err) => err);
       this.$store.commit("getSelectedMovie", {});
     },
@@ -33,16 +33,23 @@ export default {
     "$store.state.curPage": function (newVal, oldVal) {
       if (!newVal) return;
       if (newVal === "电影" || newVal === "首页") {
-        this.returnMainPage();
+        this.returnToMainPage();
       } else {
         this.$router.push({ name: "discuss" });
       }
     },
+    // listen select discuss and add new discuss
     "$store.state.selectedDiscuss": function (newVal, oldVal) {
+      if (newVal.length === 0) return;
       if (this.$store.state.selectedDiscuss === "add") {
-        this.$router.push({ path: "/discuss/new_discuss" });
-        this.$store.commit("getCurPage", "");
+        this.$router.push({ path: "/discuss/new" });
+        this.$store.commit("getSelectedDiscuss", "");
+      } else {
+        this.$router.push({
+          path: `/discuss/${this.$store.state.selectedDiscuss.id}`,
+        });
       }
+      this.$store.commit("getCurPage", "");
     },
   },
 };

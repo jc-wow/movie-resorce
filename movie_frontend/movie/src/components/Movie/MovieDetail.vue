@@ -72,7 +72,8 @@ export default {
     window.addEventListener("beforeunload", (e) => {
       e.preventDefault();
       this.saveMovieInfo();
-    });
+		});
+		// record browser back and forward event
     window.addEventListener("popstate", (e) => {
       window.ispopstate = true;
       this.$store.commit("getSelectedMovie", null);

@@ -22,7 +22,7 @@ const mutations = {
 	},
 	getAllDiscuss(state, val) {
 		state.allDiscuss = val;
-	}
+	},
 };
 
 export default mutations;

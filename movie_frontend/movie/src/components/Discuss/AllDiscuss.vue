@@ -22,14 +22,19 @@
             </el-col>
           </el-row>
         </li>
-        <li class="discuss-item" v-for="(discuss, index) in discussList" :key="'dis' + index">
+        <li
+          class="discuss-item"
+          v-for="(discuss, index) in discussList"
+          :key="'dis' + index"
+          @click="showDetailDiscuss(discuss)"
+        >
           <el-divider></el-divider>
-          <el-row type="flex" style="height: 100%">
+          <el-row type="flex" style="height: 100%; cursor: pointer;">
             <el-col :span="13">{{ discuss.title }}</el-col>
             <el-col class="col-2" :span="4">{{ discuss.author }}</el-col>
             <el-col class="col-3" :span="3">{{ }}</el-col>
             <el-col class="col-4" :span="4" style="font-size: 0.8rem; color: #5d5e5f">
-              <span>{{ getTimeToNow(discuss.updated_at) }}</span>
+              <span>{{ utils.formatDate(discuss.updated_at) }}</span>
             </el-col>
           </el-row>
         </li>
@@ -70,8 +75,8 @@ export default {
     getDiscuss() {
       return this.$store.dispatch("getAllDiscuss", this.reqParam);
     },
-    getTimeToNow(date) {
-      return this.Day(date).format("YYYY-MM-DD hh:mm");
+    showDetailDiscuss(val) {
+      this.$store.commit("getSelectedDiscuss", val);
     },
   },
   mounted() {
@@ -79,10 +84,7 @@ export default {
       this.discussList = res.data.rows;
       this.totalDiscuss = res.data.count;
     });
-  },
-  destroyed() {
-    this.$store.commit("getSelectedDiscuss", "");
-  },
+  }
 };
 </script>
 
@@ -134,9 +136,9 @@ export default {
       margin: auto;
       list-style-type: none;
 
-			.col-3 {
-				text-align: center;
-			}
+      .col-3 {
+        text-align: center;
+      }
 
       .col-4 {
         text-align: right;

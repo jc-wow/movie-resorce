@@ -36,11 +36,11 @@ export default {
     },
     post() {
       const param = {
-        title: "ee",
-        author: "aa",
-        tag: "aa",
-        content: "aaa",
-        reply: "aaa",
+        title: this.discussHead,
+        author: "",
+        tag: "",
+        content: this.previewData,
+        reply: "",
       };
       this.$store.dispatch("postDiscuss", param);
     },
@@ -93,7 +93,7 @@ export default {
       margin-top: 3%;
 
       .el-input__inner {
-        font-weight: 600;
+        font-weight: 500;
         font-size: 1.1rem;
       }
     }
