@@ -77,6 +77,7 @@ export default {
     },
     showDetailDiscuss(val) {
       this.$store.commit("getSelectedDiscuss", val);
+      sessionStorage.removeItem("discussDetail");
     },
   },
   mounted() {
@@ -84,7 +85,7 @@ export default {
       this.discussList = res.data.rows;
       this.totalDiscuss = res.data.count;
     });
-  }
+  },
 };
 </script>
 

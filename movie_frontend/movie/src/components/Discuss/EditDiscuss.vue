@@ -7,7 +7,7 @@
     </div>
     <div class="edit-discuss-container" v-show="!isPreview">
       <el-input placeholder="添加标题" v-model="discussHead"></el-input>
-      <Editor class="discuss-editor" @editorHtml="editorHtml"></Editor>
+      <Editor class="discuss-editor" @editorHtml="editorHtml" :height="editorHeight"></Editor>
     </div>
     <Preview :data="previewData" :head="discussHead" v-show="isPreview" @showEditor="preview"></Preview>
   </div>
@@ -28,6 +28,7 @@ export default {
       discussHead: "",
       previewData: "",
       isPreview: false,
+      editorHeight: "60vh",
     };
   },
   methods: {
@@ -83,6 +84,7 @@ export default {
 
   .edit-discuss-container {
     width: 100%;
+		margin-top: 1%;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -34,6 +34,9 @@ export default {
   components: {
     quillEditor,
   },
+  props: {
+    height: String,
+  },
   data() {
     return {
       content: "",
@@ -48,8 +51,7 @@ export default {
   },
   methods: {
     onEditorChange({ quill, html, text }) {
-			// console.log("editor change!", quill, html, text);
-			this.$emit('editorHtml', html);
+      this.$emit("editorHtml", html);
       this.content = html;
     },
   },
@@ -58,21 +60,23 @@ export default {
     Size.whitelist = ["16px", "18px", "22px", "30px"];
     Quill.register(Size, true);
   },
+  mounted() {
+    document.getElementsByClassName("ql-container")[0].style =
+      `min-height: ${this.height}`;
+  },
 };
 </script>
 
 <style lang="scss">
 .editor {
   background-color: #fff;
-  height: 70vh;
+  height: 100%;
 
   #announcementEditorToolbar {
     display: flex;
-    height: 8%;
   }
 
   .quill-editor {
-    height: 92%;
     .ql-container {
       font-size: 18px;
 

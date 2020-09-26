@@ -4,18 +4,35 @@
       <header class="discuss-detail-header">
         <h1>{{ discuss.title }}</h1>
       </header>
+      <div class="discuss-detail-info">
+        <span>来自：</span>
+        <span>{{ discuss.author }}</span>
+        <span class="discuss-detail-time">{{ utils.formatDate(discuss.updated_at) }}</span>
+      </div>
       <article v-html="discuss.content" class="discuss-detail-content"></article>
     </section>
+    <el-divider></el-divider>
     <div class="discuss-detail-reply"></div>
+    <p style="width: 60%">发表想法：</p>
+    <div class="discuss-detail-newreply">
+      <Editor :height="editorHeight"></Editor>
+      <el-button plain size="small" style="float: right; margin-top: 2%;">发表</el-button>
+    </div>
   </div>
 </template>
 
 <script>
+import Editor from "../common/Editor";
+
 export default {
   name: "discussDetail",
+  components: {
+    Editor,
+  },
   data() {
     return {
       discuss: {},
+      editorHeight: "30vh",
     };
   },
   methods: {
@@ -35,12 +52,12 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .discuss-detail {
   min-height: 92vh;
   padding-top: 8vh;
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   background-color: #e4e4e1;
   background-image: radial-gradient(
@@ -57,15 +74,34 @@ export default {
 
   .discuss-detail-section {
     width: 60%;
-		padding-top: 1%;
+    padding-top: 1%;
 
     .discuss-detail-header {
       text-align: center;
     }
 
-    .discuss-detail-content {
-      margin-top: 9%;
+    .discuss-detail-info {
+      margin-top: 4%;
+      font-size: 0.8rem;
+      font-weight: 400;
+      opacity: 0.7;
+
+      .discuss-detail-time {
+        margin-left: 2%;
+      }
     }
+
+    .discuss-detail-content {
+      margin-top: 7%;
+    }
+  }
+  .el-divider {
+    width: 60%;
+  }
+
+  .discuss-detail-newreply {
+    width: 60%;
+    min-height: 30vh;
   }
 }
 </style>
