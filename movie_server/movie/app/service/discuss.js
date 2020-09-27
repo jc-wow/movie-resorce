@@ -29,6 +29,20 @@ class Discuss extends Service {
   async create(param) {
     return this.ctx.model.Discuss.create(param);
   }
+
+  async update(param) {
+    const { id, reply } = param;
+    return this.ctx.model.Discuss.update(
+      {
+        content: reply,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+  }
 }
 
 module.exports = Discuss;

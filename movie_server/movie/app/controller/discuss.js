@@ -35,6 +35,18 @@ class DiscussController extends Controller {
       success: true,
     };
   }
+
+  async update() {
+    const ctx = this.ctx.request.body;
+    const param = {
+      id: ctx.id,
+      content: ctx.content,
+    };
+    await this.ctx.service.discuss.update(param);
+    this.ctx.body = {
+      success: true,
+    };
+  }
 }
 
 module.exports = DiscussController;

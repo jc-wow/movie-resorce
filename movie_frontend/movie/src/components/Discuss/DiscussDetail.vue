@@ -13,10 +13,10 @@
     </section>
     <el-divider></el-divider>
     <div class="discuss-detail-reply"></div>
-    <p style="width: 60%">发表想法：</p>
+    <p style="width: 60%; font-size: 0.8rem">发表想法：</p>
     <div class="discuss-detail-newreply">
-      <Editor :height="editorHeight"></Editor>
-      <el-button plain size="small" style="float: right; margin-top: 2%;">发表</el-button>
+      <Editor :height="editorHeight" @editorHtml="editorHtml"></Editor>
+      <el-button plain size="small" style="float: right; margin-top: 2%;" @click="updateDiscuss">发表</el-button>
     </div>
   </div>
 </template>
@@ -38,6 +38,15 @@ export default {
   methods: {
     saveDiscuss() {
       sessionStorage.setItem("discussDetail", JSON.stringify(this.discuss));
+    },
+    editorHtml(val) {
+      this.reqParam = {
+        id: this.$store.state.selectedDiscuss.id,
+        reply: val,
+      };
+    },
+    updateDiscuss() {
+      this.$store.dispatch("updateDiscuss", this.reqParam);
     },
   },
   mounted() {

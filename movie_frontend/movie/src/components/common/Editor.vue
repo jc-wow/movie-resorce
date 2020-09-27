@@ -17,7 +17,6 @@
       <button class="ql-list" value="bullet"></button>
       <select class="ql-align"></select>
     </div>
-    <div name="announcementEditor" id="announcementEditor"></div>
     <quill-editor :content="content" :options="editorOption" @change="onEditorChange($event)" />
   </div>
 </template>

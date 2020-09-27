@@ -3,8 +3,8 @@ import qs from "qs";
 
 const instance = Axios.create({
   headers: {
-    "Content-Type": "application/json"
-  }
+    "Content-Type": "application/json",
+  },
 });
 
 if (process.env.NODE_ENV === "development") {
@@ -23,12 +23,12 @@ export default {
       return new Promise((resolve, reject) => {
         instance
           .get(url, {
-            params: params
+            params: params,
           })
-          .then(res => {
+          .then((res) => {
             resolve(res.data);
           })
-          .catch(error => {
+          .catch((error) => {
             reject(error);
           });
       });
@@ -37,13 +37,23 @@ export default {
       return new Promise((resolve, reject) => {
         instance
           .post(url, params)
-          .then(res => {
+          .then((res) => {
             resolve(res.data);
           })
-          .catch(err => {
+          .catch((err) => {
             reject(err);
           });
       });
     };
-  }
+    Vue.prototype.put = function(url, params) {
+      return new Promise((resolve, reject) => {
+        instance
+          .put(url, params)
+          .then((res) => {
+            resolve(res.data);
+          })
+          .catch((err) => reject(err));
+      });
+    };
+  },
 };
