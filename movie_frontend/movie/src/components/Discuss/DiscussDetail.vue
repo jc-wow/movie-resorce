@@ -7,16 +7,40 @@
       <div class="discuss-detail-info">
         <span>来自：</span>
         <span>{{ discuss.author }}</span>
-        <span class="discuss-detail-time">{{ utils.formatDate(discuss.updated_at) }}</span>
+        <span class="discuss-detail-time">{{
+          utils.formatDate(discuss.updated_at)
+        }}</span>
       </div>
-      <article v-html="discuss.content" class="discuss-detail-content"></article>
+      <article
+        v-html="discuss.content"
+        class="discuss-detail-content"
+      ></article>
     </section>
     <el-divider></el-divider>
-    <div class="discuss-detail-reply"></div>
+    <div class="discuss-detail-reply">
+      <div class="discuss-detail-reply-info">
+        <span></span>
+        <span></span>
+      </div>
+      <div class="discuss-detail-reply-content" v-html="discuss.reply"></div>
+    </div>
+    <el-pagination
+      layout="prev, pager, next"
+      :total="totalReply"
+      :background="pageBg"
+      :page-size="20"
+      hide-on-single-page
+    ></el-pagination>
     <p style="width: 60%; font-size: 0.8rem">发表想法：</p>
     <div class="discuss-detail-newreply">
       <Editor :height="editorHeight" @editorHtml="editorHtml"></Editor>
-      <el-button plain size="small" style="float: right; margin-top: 2%;" @click="updateDiscuss">发表</el-button>
+      <el-button
+        plain
+        size="small"
+        style="float: right; margin-top: 2%"
+        @click="updateDiscuss"
+        >发表</el-button
+      >
     </div>
   </div>
 </template>
@@ -33,6 +57,8 @@ export default {
     return {
       discuss: {},
       editorHeight: "30vh",
+      totalReply: 0,
+      pageBg: true,
     };
   },
   methods: {
@@ -41,7 +67,8 @@ export default {
     },
     editorHtml(val) {
       this.reqParam = {
-        id: this.$store.state.selectedDiscuss.id,
+				id: this.$store.state.selectedDiscuss.id,
+				author: 'admin',
         reply: val,
       };
     },
@@ -107,6 +134,10 @@ export default {
   .el-divider {
     width: 60%;
   }
+
+	.discuss-detail-reply {
+		width: 60%;
+	}
 
   .discuss-detail-newreply {
     width: 60%;

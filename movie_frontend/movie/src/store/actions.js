@@ -47,7 +47,7 @@ const actions = {
   },
   updateDiscuss({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.put(`/discuss/${param.id}`).then((res) => {
+      this._vm.put(`/discuss/${param.id}`, param).then((res) => {
         if (res.success) {
           commit("getResPostDiscuss", res.data);
           resolve(res);

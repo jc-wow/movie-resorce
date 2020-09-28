@@ -1,5 +1,5 @@
 <template>
-  <div class="editor">
+  <div class="editor" @click="focus">
     <div id="announcementEditorToolbar">
       <span class="ql-formats">
         <select class="ql-size">
@@ -17,7 +17,12 @@
       <button class="ql-list" value="bullet"></button>
       <select class="ql-align"></select>
     </div>
-    <quill-editor :content="content" :options="editorOption" @change="onEditorChange($event)" />
+    <quill-editor
+      ref="myQuillEditor"
+      :content="content"
+      :options="editorOption"
+      @change="onEditorChange($event)"
+    />
   </div>
 </template>
 
@@ -52,6 +57,10 @@ export default {
     onEditorChange({ quill, html, text }) {
       this.$emit("editorHtml", html);
       this.content = html;
+		},
+		// get editor focus
+    focus() {
+      this.$refs.myQuillEditor.quill.focus();
     },
   },
   created() {
@@ -60,8 +69,9 @@ export default {
     Quill.register(Size, true);
   },
   mounted() {
-    document.getElementsByClassName("ql-container")[0].style =
-      `min-height: ${this.height}`;
+    document.getElementsByClassName(
+      "ql-container"
+    )[0].style = `min-height: ${this.height}`;
   },
 };
 </script>

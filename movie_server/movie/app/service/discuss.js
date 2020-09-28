@@ -34,7 +34,7 @@ class Discuss extends Service {
     const { id, reply } = param;
     return this.ctx.model.Discuss.update(
       {
-        content: reply,
+        reply: reply,
       },
       {
         where: {
