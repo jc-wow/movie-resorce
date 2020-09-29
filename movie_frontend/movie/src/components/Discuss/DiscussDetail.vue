@@ -178,7 +178,7 @@ export default {
 
     .discuss-detail-info {
       margin-top: 4%;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       font-weight: 400;
       opacity: 0.7;
 
@@ -200,12 +200,12 @@ export default {
 
     .discuss-detail-reply-info {
       background-color: #c8cac8;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       font-weight: 400;
       opacity: 0.7;
 
       .discuss-detail-reply-info1 {
-        line-height: 2rem;
+        line-height: 1.7rem;
         margin-right: 2%;
         color: #0927cf;
         opacity: 1;
