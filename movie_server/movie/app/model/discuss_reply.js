@@ -8,18 +8,17 @@ module.exports = (app) => {
   const { STRING } = app.Sequelize;
 
   const Movie = app.model.define(
-    "discuss",
+    "discuss_reply",
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-      title: STRING(255),
+      rid: INTEGER(11),
       author: STRING(50),
-      tag: STRING(100),
       content: TEXT,
       created_at: DATE,
       updated_at: DATE,
     },
     {
-      tableName: "discusses",
+      tableName: "discuss_replies",
     }
   );
 

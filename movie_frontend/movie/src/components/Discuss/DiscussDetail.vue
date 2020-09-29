@@ -18,11 +18,17 @@
     </section>
     <el-divider></el-divider>
     <div class="discuss-detail-reply">
-      <div class="discuss-detail-reply-info">
-        <span></span>
-        <span></span>
+      <div
+        :id="'discuss-detail-reply_' + index"
+        v-for="(item, index) in reply"
+        :key="'reply_' + index"
+      >
+        <div class="discuss-detail-reply-info">
+          <span class="discuss-detail-reply-info1">{{ item.author }}</span>
+          <span>{{ utils.formatDate(item.updated_at) }}</span>
+        </div>
+        <div class="discuss-detail-reply-content" v-html="item.content"></div>
       </div>
-      <div class="discuss-detail-reply-content" v-html="discuss.reply"></div>
     </div>
     <el-pagination
       layout="prev, pager, next"
@@ -31,7 +37,7 @@
       :page-size="20"
       hide-on-single-page
     ></el-pagination>
-    <p style="width: 60%; font-size: 0.8rem">发表想法：</p>
+    <p class="discuss-detail-edit">发表想法：</p>
     <div class="discuss-detail-newreply">
       <Editor :height="editorHeight" @editorHtml="editorHtml"></Editor>
       <el-button
@@ -59,31 +65,84 @@ export default {
       editorHeight: "30vh",
       totalReply: 0,
       pageBg: true,
+      reply: [
+        {
+          author: "",
+          updated_at: "",
+          content: "",
+        },
+      ],
     };
   },
   methods: {
-    saveDiscuss() {
-      sessionStorage.setItem("discussDetail", JSON.stringify(this.discuss));
+    // save data to sessionstorage in case refresh page
+    saveData() {
+      if (this.discuss && Object.keys(this.discuss) !== 0) {
+        sessionStorage.setItem("discussDetail", JSON.stringify(this.discuss));
+      }
+      if (this.reply && this.reply.length !== 0) {
+        sessionStorage.setItem(
+          "discussReplyDetail",
+          JSON.stringify(this.reply)
+        );
+      }
     },
     editorHtml(val) {
-      this.reqParam = {
-				id: this.$store.state.selectedDiscuss.id,
-				author: 'admin',
-        reply: val,
-      };
+      this.replyContent = val;
+    },
+    createReply() {
+      return this.$store.dispatch("createDiscussReply", this.reqParam);
     },
     updateDiscuss() {
-      this.$store.dispatch("updateDiscuss", this.reqParam);
+      if (!this.discuss) {
+        this.discuss =
+          Object.keys(this.$store.state.selectedDiscuss).length !== 0
+            ? this.$store.state.selectedDiscuss
+            : JSON.parse(sessionStorage.getItem("discussDetail"));
+      }
+      this.reqParam = {
+        content: this.replyContent,
+        rid: this.discuss.id,
+        author: "admin",
+      };
+			this.createReply().then(() => this.getReplyAfterCreate());
+			this.clearEditor();
+    },
+    // get reply after post a new one
+    getReplyAfterCreate() {
+      sessionStorage.removeItem("discussReplyDetail");
+      this.getReply(this.discuss.id).then((res) => {
+        this.reply = res.data.rows;
+        this.saveData();
+      });
+    },
+    getReply(rid) {
+      return this.$store.dispatch("getDiscussReply", {
+        rid,
+      });
+    },
+    getData() {
+      const discuss = JSON.parse(sessionStorage.getItem("discussDetail"));
+      const reply = JSON.parse(sessionStorage.getItem("discussReplyDetail"));
+      if (discuss && reply) {
+        this.discuss = discuss;
+        this.reply = reply;
+      } else {
+        this.discuss = this.$store.state.selectedDiscuss;
+        this.rid = this.discuss.id;
+        this.getReply(this.rid).then((res) => {
+          this.reply = res.data.rows;
+          this.saveData();
+        });
+      }
+    },
+    clearEditor() {
+      const element = document.getElementsByClassName("ql-editor");
+      element[0].innerHTML = "";
     },
   },
-  mounted() {
-    const discuss = JSON.parse(sessionStorage.getItem("discussDetail"));
-    if (discuss && Object.keys(discuss).length !== 0) {
-      this.discuss = discuss;
-    } else {
-      this.discuss = this.$store.state.selectedDiscuss;
-      this.saveDiscuss();
-    }
+  created() {
+    this.getData();
   },
 };
 </script>
@@ -92,6 +151,7 @@ export default {
 .discuss-detail {
   min-height: 92vh;
   padding-top: 8vh;
+  padding-bottom: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -118,7 +178,7 @@ export default {
 
     .discuss-detail-info {
       margin-top: 4%;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-weight: 400;
       opacity: 0.7;
 
@@ -135,9 +195,29 @@ export default {
     width: 60%;
   }
 
-	.discuss-detail-reply {
-		width: 60%;
-	}
+  .discuss-detail-reply {
+    width: 60%;
+
+    .discuss-detail-reply-info {
+      background-color: #c8cac8;
+      font-size: 0.9rem;
+      font-weight: 400;
+      opacity: 0.7;
+
+      .discuss-detail-reply-info1 {
+        line-height: 2rem;
+        margin-right: 2%;
+        color: #0927cf;
+        opacity: 1;
+      }
+    }
+  }
+
+  .discuss-detail-edit {
+    width: 60%;
+    font-size: 1.1rem;
+    margin-top: 5%;
+  }
 
   .discuss-detail-newreply {
     width: 60%;

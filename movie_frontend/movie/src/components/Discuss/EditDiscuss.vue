@@ -41,7 +41,6 @@ export default {
         author: "",
         tag: "",
         content: this.previewData,
-        reply: "",
       };
       this.$store.dispatch("postDiscuss", param);
     },

@@ -13,7 +13,6 @@ class Discuss extends Service {
         "author",
         "tag",
         "content",
-        "reply",
         "updated_at",
       ],
       offset,

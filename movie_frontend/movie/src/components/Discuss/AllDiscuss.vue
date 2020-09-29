@@ -7,7 +7,13 @@
       <div class="alldiscuss-container-nav">
         <el-row>
           <el-col :span="2" :offset="22" type="flex">
-            <el-button icon="el-icon-plus" size="small" plain @click="addDiscuss">发言</el-button>
+            <el-button
+              icon="el-icon-plus"
+              size="small"
+              plain
+              @click="addDiscuss"
+              >发言</el-button
+            >
           </el-col>
         </el-row>
       </div>
@@ -29,11 +35,15 @@
           @click="showDetailDiscuss(discuss)"
         >
           <el-divider></el-divider>
-          <el-row type="flex" style="height: 100%; cursor: pointer;">
+          <el-row type="flex" style="height: 100%; cursor: pointer">
             <el-col :span="13">{{ discuss.title }}</el-col>
             <el-col class="col-2" :span="4">{{ discuss.author }}</el-col>
-            <el-col class="col-3" :span="3">{{ }}</el-col>
-            <el-col class="col-4" :span="4" style="font-size: 0.8rem; color: #5d5e5f">
+            <el-col class="col-3" :span="3"></el-col>
+            <el-col
+              class="col-4"
+              :span="4"
+              style="font-size: 0.8rem; color: #5d5e5f"
+            >
               <span>{{ utils.formatDate(discuss.updated_at) }}</span>
             </el-col>
           </el-row>
@@ -78,6 +88,7 @@ export default {
     showDetailDiscuss(val) {
       this.$store.commit("getSelectedDiscuss", val);
       sessionStorage.removeItem("discussDetail");
+      sessionStorage.removeItem("discussReplyDetail");
     },
   },
   mounted() {

@@ -6,7 +6,7 @@ const utils = {
 	 * @param {Date} date 
 	 */
   formatDate(date) {
-    return Vue.prototype.Day(date).format("YYYY-MM-DD hh:mm");
+    return Vue.prototype.Day(date).format("YYYY-MM-DD HH:mm");
   }
 };
 

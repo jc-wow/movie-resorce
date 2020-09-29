@@ -23,6 +23,9 @@ const mutations = {
 	getAllDiscuss(state, val) {
 		state.allDiscuss = val;
 	},
+	getDiscussReply(state, val) {
+		state.discussReply = val;
+	}
 };
 
 export default mutations;
