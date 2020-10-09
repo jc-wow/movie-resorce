@@ -7,7 +7,13 @@
       <div class="alldiscuss-container-nav">
         <el-row>
           <el-col :span="2" :offset="22" type="flex">
-            <el-button icon="el-icon-plus" size="small" plain @click="addDiscuss">发言</el-button>
+            <el-button
+              icon="el-icon-plus"
+              size="small"
+              plain
+              @click="addDiscuss"
+              >发言</el-button
+            >
           </el-col>
         </el-row>
       </div>
@@ -29,11 +35,15 @@
           @click="showDetailDiscuss(discuss)"
         >
           <el-divider></el-divider>
-          <el-row type="flex" style="height: 100%; cursor: pointer;">
+          <el-row type="flex" style="height: 100%; cursor: pointer">
             <el-col :span="13">{{ discuss.title }}</el-col>
             <el-col class="col-2" :span="4">{{ discuss.author }}</el-col>
-            <el-col class="col-3" :span="3">{{ }}</el-col>
-            <el-col class="col-4" :span="4" style="font-size: 0.8rem; color: #5d5e5f">
+            <el-col class="col-3" :span="3"></el-col>
+            <el-col
+              class="col-4"
+              :span="4"
+              style="font-size: 0.8rem; color: #5d5e5f"
+            >
               <span>{{ utils.formatDate(discuss.updated_at) }}</span>
             </el-col>
           </el-row>
@@ -76,8 +86,8 @@ export default {
       return this.$store.dispatch("getAllDiscuss", this.reqParam);
     },
     showDetailDiscuss(val) {
-			this.$store.commit("getSelectedDiscuss", val);
-			sessionStorage.removeItem('discussDetail');
+      this.$store.commit("getSelectedDiscuss", val);
+      sessionStorage.removeItem("discussDetail");
     },
   },
   mounted() {
@@ -85,24 +95,25 @@ export default {
       this.discussList = res.data.rows;
       this.totalDiscuss = res.data.count;
     });
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .alldiscuss {
-  background-color: #e4e4e1;
-  background-image: radial-gradient(
-      at top center,
-      rgba(255, 255, 255, 0.03) 0%,
-      rgba(0, 0, 0, 0.03) 100%
+  background-image: linear-gradient(to left, #bdbbbe 0%, #9d9ea3 100%),
+    radial-gradient(
+      88% 271%,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(254, 254, 254, 0.25) 1%,
+      rgba(0, 0, 0, 0.25) 100%
     ),
-    linear-gradient(
-      to top,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(143, 152, 157, 0.6) 100%
+    radial-gradient(
+      50% 100%,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(0, 0, 0, 0.3) 100%
     );
-  background-blend-mode: normal, multiply;
+  background-blend-mode: normal, lighten, soft-light;
 
   .alldiscuss-tipboard {
     height: 30vh;

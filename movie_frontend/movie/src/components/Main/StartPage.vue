@@ -6,7 +6,7 @@
         <source src="../../assets/ep1.mp4" type="video/mp4" />
       </video>
     </div>
-    <div class="start-page-sidebar-container">
+    <!-- <div class="start-page-sidebar-container">
       <div class="start-page-sidebar">
         <img
           src="../../assets/projector.svg"
@@ -19,16 +19,15 @@
         :content="menuContent"
         @getCurMoviedetail="getMoviedetail"
       ></Light>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import Light from "@/components/common/Light";
+// import Light from "@/components/common/Light";
 
 export default {
   name: "startPage",
-  components: { Light },
   data() {
     return {
       movies: [
@@ -38,9 +37,9 @@ export default {
           id: "1291828",
         },
       ],
-      projectorPosition: {
-        x1: 0,
-      },
+      // projectorPosition: {
+      //   x1: 0,
+      // },
       menuContent: ["切换首页", "关于首页"],
     };
   },
@@ -81,12 +80,12 @@ export default {
   .video-container {
     display: flex;
     justify-content: center;
-    flex-direction: row;	
+    flex-direction: row;
 
     .start-page-video {
       position: absolute;
       height: 92%;
-      width: 79%;
+      width: 100%;
     }
 
     .start-page-about {

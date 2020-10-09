@@ -105,8 +105,8 @@ export default {
         rid: this.discuss.id,
         author: "admin",
       };
-			this.createReply().then(() => this.getReplyAfterCreate());
-			this.clearEditor();
+      this.createReply().then(() => this.getReplyAfterCreate());
+      this.clearEditor();
     },
     // get reply after post a new one
     getReplyAfterCreate() {
@@ -155,18 +155,19 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #e4e4e1;
-  background-image: radial-gradient(
-      at top center,
-      rgba(255, 255, 255, 0.03) 0%,
-      rgba(0, 0, 0, 0.03) 100%
+  background-image: linear-gradient(to left, #bdbbbe 0%, #9d9ea3 100%),
+    radial-gradient(
+      88% 271%,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(254, 254, 254, 0.25) 1%,
+      rgba(0, 0, 0, 0.25) 100%
     ),
-    linear-gradient(
-      to top,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(143, 152, 157, 0.6) 100%
+    radial-gradient(
+      50% 100%,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(0, 0, 0, 0.3) 100%
     );
-  background-blend-mode: normal, multiply;
+  background-blend-mode: normal, lighten, soft-light;
 
   .discuss-detail-section {
     width: 60%;
@@ -199,15 +200,14 @@ export default {
     width: 60%;
 
     .discuss-detail-reply-info {
-      background-color: #c8cac8;
+      background-color: #b3b3b3;
       font-size: 0.8rem;
       font-weight: 400;
       opacity: 0.7;
 
       .discuss-detail-reply-info1 {
         line-height: 1.7rem;
-        margin-right: 2%;
-        color: #0927cf;
+        margin-right: 4%;
         opacity: 1;
       }
     }

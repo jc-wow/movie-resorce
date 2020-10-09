@@ -4,19 +4,52 @@
       <img src="../../assets/text.png" style="object-fit: cover" />
     </div>
     <div class="nav-classify">
-      <span class="nav-classify-1" @click="changePage($event)">首页</span>
-      <span @click="changePage($event)">电影</span>
-      <span @click="changePage($event)">想法</span>
+      <span
+        class="nav-classify-1"
+        @click="changePage($event)"
+        @mouseover="enterNav($event)"
+        @mouseleave="leaveNav($event)"
+        >首页</span
+      >
+      <span
+        class="nav-classify-2"
+        @click="changePage($event)"
+        @mouseover="enterNav($event)"
+        @mouseleave="leaveNav($event)"
+        >电影</span
+      >
+      <span
+        class="nav-classify-3"
+        @click="changePage($event)"
+        @mouseover="enterNav($event)"
+        @mouseleave="leaveNav($event)"
+        >想法</span
+      >
     </div>
+    <Drawer :showDrawer="showDrawer"></Drawer>
   </div>
 </template>
 
 <script>
+import Drawer from "@/components/common/Drawer";
+
 export default {
   name: "Navigation",
+  components: { Drawer },
+  data() {
+    return {
+      showDrawer: false,
+    };
+  },
   methods: {
     changePage(val) {
       this.$store.commit("getCurPage", val.target.textContent);
+    },
+    enterNav(e) {
+      e.target.style = "background-color: #2b2929";
+    },
+    leaveNav(e) {
+      e.target.style = "background-color: none";
     },
   },
 };
@@ -98,8 +131,14 @@ export default {
 
     span {
       cursor: pointer;
-      margin-left: 10%;
+      margin-left: 8%;
       color: #e3dbdf;
+      line-height: 2.5rem;
+      width: 9%;
+      text-align: center;
+      border-radius: 10px;
+      border: 0px solid #000;
+      // background-color: #2b2929;
     }
 
     .nav-classify-1 {
