@@ -29,7 +29,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-movie",
+    "start": "egg-scripts start",
     "stop": "egg-scripts stop --title=egg-server-movie",
     "dev": "egg-bin dev --port 7003",
     "debug": "egg-bin debug",
