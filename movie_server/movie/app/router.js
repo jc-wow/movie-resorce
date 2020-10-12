@@ -5,9 +5,9 @@
  */
 module.exports = (app) => {
   const { router, controller } = app;
-  router.resources("movies", "/movie", controller.movie);
-  router.resources("movie", "/movie/:id", controller.movie);
-  router.resources("discusses", "/discuss", controller.discuss);
-  router.resources("discuss", "/discuss/:id", controller.discuss);
-  router.resources("reply", "/discuss_reply/:id", controller.discussReply);
+  router.resources("movies", "/api/movie", controller.movie);
+  router.resources("movie", "/api/movie/:id", controller.movie);
+  router.resources("discusses", "/api/discuss", controller.discuss);
+  router.resources("discuss", "/api/discuss/:id", controller.discuss);
+  router.resources("reply", "/api/discuss_reply/:id", controller.discussReply);
 };

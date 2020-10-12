@@ -8,11 +8,11 @@ const instance = Axios.create({
 });
 
 if (process.env.NODE_ENV === "development") {
-  instance.defaults.baseURL = "http://127.0.0.1:7003/";
+  instance.defaults.baseURL = "http://127.0.0.1:7003/api/";
 } else if (process.env.NODE_ENV === "debug") {
   instance.defaults.baseURL = "";
 } else if (process.env.NODE_ENV === "production") {
-  instance.defaults.baseURL = "http://39.97.177.60:7001/";
+  instance.defaults.baseURL = "http://39.97.177.60:7001/api/";
 }
 
 instance.defaults.timeout = 100000;
