@@ -101,20 +101,12 @@ export default {
 
 <style lang="scss" scoped>
 .alldiscuss {
-  background-image: linear-gradient(to left, #bdbbbe 0%, #9d9ea3 100%),
-    radial-gradient(
-      88% 271%,
-      rgba(255, 255, 255, 0.25) 0%,
-      rgba(254, 254, 254, 0.25) 1%,
-      rgba(0, 0, 0, 0.25) 100%
-    ),
-    radial-gradient(
-      50% 100%,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(0, 0, 0, 0.3) 100%
-    );
-  background-blend-mode: normal, lighten, soft-light;
-
+  background-image: linear-gradient(
+    to bottom,
+    rgb(185, 185, 185),
+    rgb(200, 200, 200) 30%,
+    rgb(220, 220, 220)
+  );
   .alldiscuss-tipboard {
     height: 30vh;
     display: flex;

@@ -12,11 +12,15 @@ export default new Vuex.Store({
     curPage: "", // current menu
     selectedMovie: {}, // current selected movie
     resSelectedMovie: {}, // current selected movie which request from api
-		selectedDiscuss: {}, // current selected discuss
-		resPostDiscuss: '', // response after post a new discuss
-		allDiscuss: [], // all discuss from api request,
-		discussReply: [],
-	},
+    selectedDiscuss: {}, // current selected discuss
+    resPostDiscuss: "", // response after post a new discuss
+    allDiscuss: [], // all discuss from api request,
+    discussReply: [],
+    userInfo: {
+      email: "",
+      author: ""
+    }
+  },
   mutations,
   actions,
   modules: {}
