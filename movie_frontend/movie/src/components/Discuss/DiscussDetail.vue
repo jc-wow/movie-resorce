@@ -48,16 +48,21 @@
         >发表</el-button
       >
     </div>
+		<div class="discuss-detail-login">
+			<Login></Login>
+		</div>
   </div>
 </template>
 
 <script>
 import Editor from "../common/Editor";
+import Login from "../common/Login";
 
 export default {
   name: "discussDetail",
   components: {
-    Editor,
+		Editor,
+		Login
   },
   data() {
     return {
@@ -151,7 +156,6 @@ export default {
 .discuss-detail {
   min-height: 92vh;
   padding-top: 8vh;
-  padding-bottom: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -191,10 +195,11 @@ export default {
 
   .discuss-detail-reply {
     width: 60%;
+		font-size: 0.8rem;
 
     .discuss-detail-reply-info {
       background-color: #b3b3b3;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-weight: 400;
       opacity: 0.7;
 
@@ -216,5 +221,10 @@ export default {
     width: 60%;
     min-height: 30vh;
   }
+
+	.discuss-detail-login {
+		height: 20vh;
+		width: 60%;
+	}
 }
 </style>

@@ -15,7 +15,7 @@
         :height="editorHeight"
       ></Editor>
     </div>
-    <div class="edit-discuss-login">
+    <div class="edit-discuss-login" v-show="!isPreview">
       <Login></Login>
     </div>
     <Preview
@@ -30,7 +30,8 @@
 <script>
 import Editor from "../common/Editor";
 import Preview from "./Preview";
-import Login from "../Login/Login";
+import Login from "../common/Login";
+import { loginMixin } from "../../mixin/loginMixin.js";
 
 export default {
   name: "editDiscuss",
@@ -39,6 +40,7 @@ export default {
     Preview,
     Login,
   },
+  mixins: [loginMixin],
   data() {
     return {
       discussHead: "",
@@ -62,18 +64,15 @@ export default {
         email: this.email,
         content: this.previewData,
       };
-      this.$store.dispatch("postDiscuss", param);
-    },
-    checkUserinfo() {
-      if (this.email.length === 0 || this.author.length === 0) {
-        this.$message.error("昵称和邮箱不能为空哦");
-        return false;
-      }
-      if (!this.utils.testEmailValid(this.email)) {
-        this.$message.error("邮箱不合法哦");
-        return false;
-      }
-      return true;
+      this.$store.dispatch("postDiscuss", param).then((res) => {
+        if (res.success) {
+          this.$message({
+            message: "恭喜，发表成功啦",
+            type: "success",
+          });
+        }
+      });
+      this.$router.push({ name: "discuss" });
     },
     editorHtml(val) {
       this.previewData = val;
@@ -84,7 +83,7 @@ export default {
 
 <style lang="scss">
 .edit-discuss {
-  // min-height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -131,7 +130,7 @@ export default {
   }
 
   .edit-discuss-login {
-    height: 24vh;
+    height: 20vh;
     width: 55%;
   }
 }
