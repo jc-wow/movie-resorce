@@ -2,12 +2,15 @@
   <div class="login">
     <div class="login-user login-section">
       <label>昵称:</label>
-      <el-input v-model="author" style="width: 40%"></el-input>
+      <el-input
+        v-model="author"
+        style="width: 40%; front-size: 1rem"
+      ></el-input>
       <span>（必填哦）</span>
     </div>
     <div class="login-email login-section">
       <label>邮箱:</label>
-      <el-input v-model="email" style="width: 40%"></el-input>
+      <el-input v-model="email" style="width: 40%; front-size: 1rem"></el-input>
       <span>（必填哦）</span>
     </div>
     <!-- <div class="login-confirm login-section">
@@ -32,8 +35,8 @@ export default {
       this.$store.commit("getUserInfo", { email: this.email });
     },
     author: function () {
-			this.$store.commit('getUserInfo', { author: this.author })
-		},
+      this.$store.commit("getUserInfo", { author: this.author });
+    },
   },
 };
 </script>

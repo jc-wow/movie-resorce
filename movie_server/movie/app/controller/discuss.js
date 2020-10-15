@@ -28,6 +28,7 @@ class DiscussController extends Controller {
       author: ctx.author,
       tag: ctx.tag,
       content: ctx.content,
+      email: ctx.email,
     };
     await this.ctx.service.discuss.create(param);
     this.ctx.body = {

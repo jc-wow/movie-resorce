@@ -12,6 +12,7 @@ class Discuss extends Service {
         "title",
         "author",
         "tag",
+        "email",
         "content",
         "updated_at",
       ],

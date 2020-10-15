@@ -87,7 +87,7 @@ export default {
 
   .quill-editor {
     .ql-container {
-      font-size: 18px;
+      font-size: 16px;
 
       .ql-blank {
         font-size: 15px;
