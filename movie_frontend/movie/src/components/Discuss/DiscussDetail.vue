@@ -36,6 +36,8 @@
       :background="pageBg"
       :page-size="20"
       hide-on-single-page
+      @prev-click="preClick"
+      @next-click="nextClick"
     ></el-pagination>
     <p class="discuss-detail-edit">发表想法：</p>
     <div class="discuss-detail-newreply">
@@ -82,6 +84,10 @@ export default {
     };
   },
   methods: {
+    preClick(val) {},
+    nextClick(val) {
+      debugger
+    },
     // save data to sessionstorage in case refresh page
     saveData() {
       if (this.discuss && Object.keys(this.discuss) !== 0) {

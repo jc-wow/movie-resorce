@@ -38,12 +38,9 @@
           <el-row type="flex" style="height: 100%; cursor: pointer">
             <el-col :span="12">{{ discuss.title }}</el-col>
             <el-col class="col-2" :span="5">{{ discuss.author }}</el-col>
-            <el-col
-              class="col-3"
-              :span="3"
-              style="font-size: 0.8rem"
-              >{{ discuss.reply === 0 ? "" : discuss.reply }}</el-col
-            >
+            <el-col class="col-3" :span="3" style="font-size: 0.8rem">{{
+              discuss.reply === 0 ? "" : discuss.reply
+            }}</el-col>
             <el-col
               class="col-4"
               :span="4"
@@ -62,6 +59,8 @@
         :total="totalDiscuss"
         :background="pageBg"
         :page-size="20"
+        @prev-click="preClick"
+        @next-click="nextClick"
         hide-on-single-page
       ></el-pagination>
     </div>
@@ -94,6 +93,12 @@ export default {
       this.$store.commit("getSelectedDiscuss", val);
       sessionStorage.removeItem("discussDetail");
     },
+    preClick(val) {
+
+		},
+    nextClick(val) {
+			console.log(val)
+		},
   },
   created() {
     this.getDiscuss().then((res) => {
