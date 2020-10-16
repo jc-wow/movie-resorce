@@ -48,22 +48,24 @@
         >发表</el-button
       >
     </div>
-		<div class="discuss-detail-login">
-			<Login></Login>
-		</div>
+    <div class="discuss-detail-login">
+      <Login></Login>
+    </div>
   </div>
 </template>
 
 <script>
 import Editor from "../common/Editor";
 import Login from "../common/Login";
+import { loginMixin } from "../../mixin/loginMixin.js";
 
 export default {
   name: "discussDetail",
   components: {
-		Editor,
-		Login
+    Editor,
+    Login,
   },
+  mixins: [loginMixin],
   data() {
     return {
       discuss: {},
@@ -95,9 +97,7 @@ export default {
     editorHtml(val) {
       this.replyContent = val;
     },
-    createReply() {
-      return this.$store.dispatch("createDiscussReply", this.reqParam);
-    },
+    // update discuss relpy
     updateDiscuss() {
       if (!this.discuss) {
         this.discuss =
@@ -105,19 +105,34 @@ export default {
             ? this.$store.state.selectedDiscuss
             : JSON.parse(sessionStorage.getItem("discussDetail"));
       }
+
+      this.author = this.$store.state.userInfo.author;
+      this.email = this.$store.state.userInfo.email;
       this.reqParam = {
         content: this.replyContent,
         rid: this.discuss.id,
-        author: "admin",
+        author: this.author,
+        email: this.email,
       };
-      this.createReply().then(() => this.getReplyAfterCreate());
+
+      if (!this.checkUserinfo()) return;
+      this.$store.dispatch("createDiscussReply", this.reqParam).then((res) => {
+        if (res.success) {
+          this.$message({
+            message: "恭喜，发表成功啦",
+            type: "success",
+          });
+          this.getReplyAfterCreate();
+        }
+      });
       this.clearEditor();
     },
-    // get reply after post a new one
+    // get reply after created a new one
     getReplyAfterCreate() {
       sessionStorage.removeItem("discussReplyDetail");
       this.getReply(this.discuss.id).then((res) => {
         this.reply = res.data.rows;
+        this.totalReply = res.data.count;
         this.saveData();
       });
     },
@@ -137,6 +152,7 @@ export default {
         this.rid = this.discuss.id;
         this.getReply(this.rid).then((res) => {
           this.reply = res.data.rows;
+          this.totalReply = res.data.count;
           this.saveData();
         });
       }
@@ -195,7 +211,7 @@ export default {
 
   .discuss-detail-reply {
     width: 60%;
-		font-size: 0.8rem;
+    font-size: 0.8rem;
 
     .discuss-detail-reply-info {
       background-color: #b3b3b3;
@@ -222,9 +238,9 @@ export default {
     min-height: 30vh;
   }
 
-	.discuss-detail-login {
-		height: 20vh;
-		width: 60%;
-	}
+  .discuss-detail-login {
+    height: 20vh;
+    width: 60%;
+  }
 }
 </style>

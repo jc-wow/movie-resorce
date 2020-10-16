@@ -15,6 +15,7 @@ module.exports = (app) => {
       author: STRING(50),
       tag: STRING(100),
       email: STRING(50),
+      reply: INTEGER(11),
       content: TEXT,
       created_at: DATE,
       updated_at: DATE,

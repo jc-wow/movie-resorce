@@ -20,8 +20,8 @@
       <ul>
         <li class="alldiscuss-title">
           <el-row type="flex" align="bottom" style="height: 100%">
-            <el-col :span="13">想法</el-col>
-            <el-col class="col-2" :span="4">作者</el-col>
+            <el-col :span="12">想法</el-col>
+            <el-col class="col-2" :span="5">作者</el-col>
             <el-col class="col-3" :span="3">回应</el-col>
             <el-col class="col-4" :span="4">
               <span>回应时间</span>
@@ -36,9 +36,14 @@
         >
           <el-divider></el-divider>
           <el-row type="flex" style="height: 100%; cursor: pointer">
-            <el-col :span="13">{{ discuss.title }}</el-col>
-            <el-col class="col-2" :span="4">{{ discuss.author }}</el-col>
-            <el-col class="col-3" :span="3"></el-col>
+            <el-col :span="12">{{ discuss.title }}</el-col>
+            <el-col class="col-2" :span="5">{{ discuss.author }}</el-col>
+            <el-col
+              class="col-3"
+              :span="3"
+              style="font-size: 0.8rem"
+              >{{ discuss.reply === 0 ? "" : discuss.reply }}</el-col
+            >
             <el-col
               class="col-4"
               :span="4"
@@ -90,7 +95,7 @@ export default {
       sessionStorage.removeItem("discussDetail");
     },
   },
-  mounted() {
+  created() {
     this.getDiscuss().then((res) => {
       this.discussList = res.data.rows;
       this.totalDiscuss = res.data.count;

@@ -18,12 +18,14 @@ class DiscussReplyController extends Controller {
     const param = {
       rid: ctx.rid,
       author: ctx.author,
+      email: ctx.email,
       content: ctx.content,
     };
     await this.ctx.service.discussReply.create(param);
     this.ctx.body = {
       success: true,
     };
+    this.ctx.service.discussReply.updateTotalReply(ctx.rid);
   }
 }
 

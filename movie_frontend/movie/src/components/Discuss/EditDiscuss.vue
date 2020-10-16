@@ -68,11 +68,11 @@ export default {
         if (res.success) {
           this.$message({
             message: "恭喜，发表成功啦",
-            type: "success",
+						type: "success",
           });
+          this.$router.push({ name: "discuss" });
         }
       });
-      this.$router.push({ name: "discuss" });
     },
     editorHtml(val) {
       this.previewData = val;

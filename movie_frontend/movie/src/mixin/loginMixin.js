@@ -6,10 +6,13 @@ export const loginMixin = {
         return false;
       }
       if (!this.utils.testEmailValid(this.email)) {
-        this.$message.error("邮箱不合法哦");
+        this.$message({
+          message: "邮箱不合法哦",
+          type: "error",
+        });
         return false;
       }
       return true;
-    },
-  },
+    }
+  }
 };

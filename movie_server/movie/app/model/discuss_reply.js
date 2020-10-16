@@ -13,6 +13,7 @@ module.exports = (app) => {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       rid: INTEGER(11),
       author: STRING(50),
+      email: STRING(50),
       content: TEXT,
       created_at: DATE,
       updated_at: DATE,

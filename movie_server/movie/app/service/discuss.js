@@ -14,6 +14,7 @@ class Discuss extends Service {
         "tag",
         "email",
         "content",
+        "reply",
         "updated_at",
       ],
       offset,
@@ -28,20 +29,6 @@ class Discuss extends Service {
 
   async create(param) {
     return this.ctx.model.Discuss.create(param);
-  }
-
-  async update(param) {
-    const { id, reply } = param;
-    return this.ctx.model.Discuss.update(
-      {
-        reply: reply,
-      },
-      {
-        where: {
-          id: id,
-        },
-      }
-    );
   }
 }
 

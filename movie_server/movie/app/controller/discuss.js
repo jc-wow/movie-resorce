@@ -35,14 +35,6 @@ class DiscussController extends Controller {
       success: true,
     };
   }
-
-  async update() {
-    const ctx = this.ctx.request.body;
-    await this.ctx.service.discuss.update(ctx);
-    this.ctx.body = {
-      success: true,
-    };
-  }
 }
 
 module.exports = DiscussController;
