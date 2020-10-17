@@ -2,9 +2,9 @@
   <div class="movie-main">
     <div class="movie-main-head"></div>
     <div class="movie-main-body" @click="showStartpage = !showStartpage">
-      <div class="movie-container" v-for="(item, index) in category" :key="item.key">
-        <InfoContainer :category="item"></InfoContainer>
-      </div>
+      <!-- <div class="movie-container" v-for="(item, index) in category" :key="item.key"> -->
+        <!-- <InfoContainer :category="item"></InfoContainer> -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -88,7 +88,7 @@ export default {
   }
 
   .movie-main-body {
-    height: auto;
+    min-height: 92vh;
     animation: zoomIn;
     animation-duration: 1s;
 

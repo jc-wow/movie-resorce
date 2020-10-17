@@ -59,8 +59,10 @@
         :total="totalDiscuss"
         :background="pageBg"
         :page-size="20"
-        @prev-click="preClick"
-        @next-click="nextClick"
+        :current-page.sync="reqParam.page"
+        @current-change="changePage"
+        @prev-click="changePage"
+        @next-click="changePage"
         hide-on-single-page
       ></el-pagination>
     </div>
@@ -87,30 +89,32 @@ export default {
       this.$store.commit("getSelectedDiscuss", "add");
     },
     getDiscuss() {
-      return this.$store.dispatch("getAllDiscuss", this.reqParam);
+      const curPage = sessionStorage.getItem("alldiscussOffset");
+      if (curPage) this.reqParam.page = parseInt(curPage);
+      this.$store.dispatch("getAllDiscuss", this.reqParam).then((res) => {
+        this.discussList = res.data.rows;
+        this.totalDiscuss = res.data.count;
+      });
     },
     showDetailDiscuss(val) {
       this.$store.commit("getSelectedDiscuss", val);
       sessionStorage.removeItem("discussDetail");
     },
-    preClick(val) {
-
-		},
-    nextClick(val) {
-			console.log(val)
-		},
+    changePage(val) {
+      this.reqParam.page = val;
+      sessionStorage.setItem("alldiscussOffset", val);
+      this.getDiscuss();
+    },
   },
   created() {
-    this.getDiscuss().then((res) => {
-      this.discussList = res.data.rows;
-      this.totalDiscuss = res.data.count;
-    });
+    this.getDiscuss();
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .alldiscuss {
+  min-height: 92vh;
   background-image: linear-gradient(
     to bottom,
     rgb(185, 185, 185),
@@ -127,7 +131,7 @@ export default {
 
   .alldiscuss-container {
     font-size: 0.9rem;
-    height: 100vh;
+    min-height: 50vh;
 
     .alldiscuss-container-nav {
       height: 5vh;

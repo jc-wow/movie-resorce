@@ -3,7 +3,7 @@
     <SideBar class="sbar"></SideBar>
     <StartPage class="st"></StartPage>
     <MovieMain class="mv-main"></MovieMain>
-    <Music class="mu-main"></Music>
+    <!-- <Music class="mu-main"></Music> -->
   </div>
 </template>
 

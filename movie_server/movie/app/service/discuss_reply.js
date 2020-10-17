@@ -11,6 +11,8 @@ class DiscussReply extends Service {
       where: {
         rid: param.rid,
       },
+      offset: (param.offset - 1) * param.limit,
+      limit: parseInt(param.limit),
     };
     return this.ctx.model.DiscussReply.findAndCountAll(option);
   }

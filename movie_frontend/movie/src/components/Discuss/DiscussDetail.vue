@@ -36,8 +36,10 @@
       :background="pageBg"
       :page-size="20"
       hide-on-single-page
-      @prev-click="preClick"
-      @next-click="nextClick"
+      :current-page.sync="getRepParam.offset"
+      @current-change="changePage"
+      @prev-click="changePage"
+      @next-click="changePage"
     ></el-pagination>
     <p class="discuss-detail-edit">发表想法：</p>
     <div class="discuss-detail-newreply">
@@ -81,12 +83,18 @@ export default {
           content: "",
         },
       ],
+      getRepParam: {
+        rid: 0,
+        offset: 1,
+        limit: 20,
+      },
     };
   },
   methods: {
-    preClick(val) {},
-    nextClick(val) {
-      debugger
+    changePage(val) {
+      this.getRepParam.offset = val;
+      sessionStorage.setItem("discussRepOffset", val);
+      this.getReply();
     },
     // save data to sessionstorage in case refresh page
     saveData() {
@@ -98,6 +106,7 @@ export default {
           "discussReplyDetail",
           JSON.stringify(this.reply)
         );
+        sessionStorage.setItem("totalReply", this.totalReply);
       }
     },
     editorHtml(val) {
@@ -136,31 +145,34 @@ export default {
     // get reply after created a new one
     getReplyAfterCreate() {
       sessionStorage.removeItem("discussReplyDetail");
-      this.getReply(this.discuss.id).then((res) => {
+      sessionStorage.removeItem("totalReply");
+      this.getReply();
+    },
+    getReply() {
+      this.getRepParam.rid = this.discuss.id;
+      this.$store.dispatch("getDiscussReply", this.getRepParam).then((res) => {
         this.reply = res.data.rows;
         this.totalReply = res.data.count;
         this.saveData();
       });
     },
-    getReply(rid) {
-      return this.$store.dispatch("getDiscussReply", {
-        rid,
-      });
-    },
     getData() {
       const discuss = JSON.parse(sessionStorage.getItem("discussDetail"));
       const reply = JSON.parse(sessionStorage.getItem("discussReplyDetail"));
+      const totalReply = JSON.parse(sessionStorage.getItem("totalReply"));
+      if (this.getRepParam.offset) {
+        this.getRepParam.offset = parseInt(
+          sessionStorage.getItem("discussRepOffset")
+        );
+      }
       if (discuss && reply) {
         this.discuss = discuss;
         this.reply = reply;
+        this.totalReply = totalReply;
       } else {
         this.discuss = this.$store.state.selectedDiscuss;
         this.rid = this.discuss.id;
-        this.getReply(this.rid).then((res) => {
-          this.reply = res.data.rows;
-          this.totalReply = res.data.count;
-          this.saveData();
-        });
+        this.getReply();
       }
     },
     clearEditor() {
@@ -169,7 +181,7 @@ export default {
     },
   },
   created() {
-    this.getData();
+		this.getData();
   },
 };
 </script>

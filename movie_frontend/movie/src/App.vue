@@ -35,6 +35,7 @@ export default {
       if (newVal === "电影" || newVal === "首页") {
         this.returnToMainPage();
       } else {
+        sessionStorage.removeItem("alldiscussOffset");
         this.$router.push({ name: "discuss" });
       }
     },
@@ -45,6 +46,7 @@ export default {
         this.$router.push({ path: "/discuss/new" });
         this.$store.commit("getSelectedDiscuss", "");
       } else {
+        sessionStorage.removeItem("discussRepOffset");
         this.$router.push({
           path: `/discuss/${this.$store.state.selectedDiscuss.id}`,
         });

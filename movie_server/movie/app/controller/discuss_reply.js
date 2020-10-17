@@ -5,10 +5,7 @@ const Controller = require("./base");
 class DiscussReplyController extends Controller {
   async index() {
     const ctx = this.ctx;
-    const { rid } = ctx.query;
-    const query = {
-      rid,
-    };
+    const query = ctx.query;
     ctx.body = await ctx.service.discussReply.listAll(query);
     this.success(ctx.body);
   }
