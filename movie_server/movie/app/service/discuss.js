@@ -19,6 +19,7 @@ class Discuss extends Service {
       ],
       offset,
       limit,
+      order: [["updated_at", "DESC"]],
     };
     return this.ctx.model.Discuss.findAndCountAll(options);
   }

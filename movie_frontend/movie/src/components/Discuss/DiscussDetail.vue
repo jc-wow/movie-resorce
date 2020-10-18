@@ -179,9 +179,18 @@ export default {
       const element = document.getElementsByClassName("ql-editor");
       element[0].innerHTML = "";
     },
+    listenLeavePage() {
+      window.onbeforeunload = () => {
+        return "sure";
+      };
+    },
   },
   created() {
-		this.getData();
+    this.getData();
+    this.listenLeavePage();
+  },
+  destroyed() {
+    window.onbeforeunload = null;
   },
 };
 </script>
@@ -225,6 +234,8 @@ export default {
   }
   .el-divider {
     width: 60%;
+    height: 0.5px;
+    background-color: #a0a2a7;
   }
 
   .discuss-detail-reply {

@@ -1,9 +1,8 @@
 <template>
   <div class="movie-main">
-    <div class="movie-main-head"></div>
     <div class="movie-main-body" @click="showStartpage = !showStartpage">
       <!-- <div class="movie-container" v-for="(item, index) in category" :key="item.key"> -->
-        <!-- <InfoContainer :category="item"></InfoContainer> -->
+      <!-- <InfoContainer :category="item"></InfoContainer> -->
       <!-- </div> -->
     </div>
   </div>
@@ -82,10 +81,6 @@ export default {
   width: 100%;
   height: auto;
   background-color: #000;
-
-  .movie-main-head {
-    height: 8vh;
-  }
 
   .movie-main-body {
     min-height: 92vh;

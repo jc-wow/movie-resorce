@@ -50,7 +50,7 @@
             </el-col>
           </el-row>
         </li>
-        <el-divider></el-divider>
+        <el-divider style="height: 0.5px"></el-divider>
       </ul>
     </div>
     <div class="alldiscuss-page">
@@ -170,10 +170,8 @@ export default {
     }
     .el-divider {
       background-color: #a0a2a7;
-    }
-
-    .el-divider--horizontal {
-      margin: 1.3vh 0;
+			margin: 1.3vh 0;
+			height: 0.5px
     }
   }
 
