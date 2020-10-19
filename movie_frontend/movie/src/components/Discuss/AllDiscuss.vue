@@ -115,6 +115,7 @@ export default {
 <style lang="scss" scoped>
 .alldiscuss {
   min-height: 92vh;
+	padding-top: 8vh;
   background-image: linear-gradient(
     to bottom,
     rgb(185, 185, 185),
@@ -131,7 +132,7 @@ export default {
 
   .alldiscuss-container {
     font-size: 0.9rem;
-    min-height: 50vh;
+    min-height: 52vh;
 
     .alldiscuss-container-nav {
       height: 5vh;

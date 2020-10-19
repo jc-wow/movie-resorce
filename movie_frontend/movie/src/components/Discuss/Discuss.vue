@@ -1,6 +1,5 @@
 <template>
   <div class="discuss">
-    <div class="head"></div>
     <AllDiscuss></AllDiscuss>
   </div>
 </template>
@@ -18,8 +17,5 @@ export default {
 
 <style lang="scss" scoped>
 .discuss {
-  .head {
-    height: 8vh;
-	}
 }
 </style>

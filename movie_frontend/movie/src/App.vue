@@ -38,20 +38,22 @@ export default {
         this.returnToMainPage();
       } else {
         sessionStorage.removeItem("alldiscussOffset");
-        this.$router.push({ name: "discuss" });
+        this.$router.push({ name: "discuss" }).catch(err => err);
       }
     },
     // listen select discuss and add new discuss
     "$store.state.selectedDiscuss": function (newVal, oldVal) {
       if (newVal.length === 0) return;
       if (this.$store.state.selectedDiscuss === "add") {
-        this.$router.push({ path: "/discuss/new" });
+        this.$router.push({ path: "/discuss/new" }).catch((err) => err);
         this.$store.commit("getSelectedDiscuss", "");
       } else {
         sessionStorage.removeItem("discussRepOffset");
-        this.$router.push({
-          path: `/discuss/${this.$store.state.selectedDiscuss.id}`,
-        });
+        this.$router
+          .push({
+            path: `/discuss/${this.$store.state.selectedDiscuss.id}`,
+          })
+          .catch((err) => err);
       }
       this.$store.commit("getCurPage", "");
     },
