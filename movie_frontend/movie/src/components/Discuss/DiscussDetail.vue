@@ -1,6 +1,8 @@
 <template>
   <div class="discuss-detail">
-    <section class="discuss-detail-section">
+    <section class="discuss-detail-section" style="height: 100vh" v-show="loading">
+    </section>
+    <section class="discuss-detail-section" v-show="!loading">
       <header class="discuss-detail-header">
         <h1>{{ discuss.title }}</h1>
       </header>
@@ -87,7 +89,8 @@ export default {
         rid: 0,
         offset: 1,
         limit: 20,
-      },
+			},
+			loading: false,
     };
   },
   methods: {
@@ -163,11 +166,13 @@ export default {
       this.getReply();
     },
     getReply() {
+			this.loading = true;
       this.getRepParam.rid = this.discuss.id;
       this.$store.dispatch("getDiscussReply", this.getRepParam).then((res) => {
         this.reply = res.data.rows;
         this.totalReply = res.data.count;
-        this.saveData();
+				this.saveData();
+				this.loading = false;
       });
     },
     getData() {
@@ -200,6 +205,10 @@ export default {
     },
   },
   created() {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+    });
     this.getData();
     this.listenLeavePage();
   },

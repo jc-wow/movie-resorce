@@ -35,7 +35,12 @@ export default {
       this.title = `本片上映于${this.getTargetItem(
         this.movieInfo.release_date,
         1
-      )}，由${this.getTargetItem(
+      )}${
+        !this.movieInfo.release_date.includes("-") &&
+        !this.movieInfo.release_date.includes(")")
+          ? "年"
+          : ""
+      }，由${this.getTargetItem(
         this.movieInfo.director,
         2
       )}执导，${this.getTargetItem(this.movieInfo.actor, 3)}主演。`;
@@ -72,8 +77,8 @@ export default {
     window.addEventListener("beforeunload", (e) => {
       e.preventDefault();
       this.saveMovieInfo();
-		});
-		// record browser back and forward event
+    });
+    // record browser back and forward event
     window.addEventListener("popstate", (e) => {
       window.ispopstate = true;
       this.$store.commit("getSelectedMovie", null);
@@ -114,10 +119,9 @@ export default {
   .movie-detail-info {
     width: 60%;
     text-align: justify;
-    line-height: 2rem;
-    text-indent: 2em;
+    line-height: 1.8rem;
     font-size: 1.1rem;
-    opacity: 0.8;
+    opacity: 0.9;
 
     p {
       width: 86%;
