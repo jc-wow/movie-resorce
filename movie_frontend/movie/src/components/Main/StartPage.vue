@@ -63,7 +63,10 @@ export default {
         .push({ path: `/movie/${this.movies[0].title}` })
         .catch((err) => err);
     },
-  },
+	},
+	activated() {
+		document.getElementsByClassName('start-page-video')[0].play();
+	},
 };
 </script>
 

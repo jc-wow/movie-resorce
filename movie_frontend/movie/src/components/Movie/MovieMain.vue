@@ -9,11 +9,9 @@
         }"
         v-for="(item, index) in category"
         :key="item.key"
-      >	
-			<keep-alive>
+      >
         <InfoContainer :category="item"></InfoContainer>
-			</keep-alive>
-			</div>
+      </div>
     </div>
   </div>
 </template>

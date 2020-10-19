@@ -26,7 +26,16 @@ export default {
       author: "",
       // checked: false,
     };
-  },
+	},
+	methods: {
+		getUserInfo() {
+			const userInfo = sessionStorage.getItem('userInfo');
+			if (userInfo) {
+				this.email = JSON.parse(userInfo).email;
+				this.author = JSON.parse(userInfo).author;
+			} 
+		}
+	},
   watch: {
     email: function () {
       this.$store.commit("getUserInfo", { email: this.email });
@@ -34,7 +43,10 @@ export default {
     author: function () {
       this.$store.commit("getUserInfo", { author: this.author });
     },
-  },
+	},
+	mounted() {
+		this.getUserInfo()
+	},
 };
 </script>
 
@@ -49,7 +61,7 @@ export default {
   }
 
   .login-section {
-    margin-top: 3%;
+    margin-top: 2%;
 
     label {
       margin-right: 2%;

@@ -136,11 +136,25 @@ export default {
           this.$message({
             message: "恭喜，发表成功啦",
             type: "success",
+            duration: 1500,
           });
+          this.saveUserinfo();
           this.getReplyAfterCreate();
         }
       });
       this.clearEditor();
+    },
+    saveUserinfo() {
+      if (sessionStorage.getItem("userInfo")) {
+        sessionStorage.removeItem("userInfo");
+      }
+      sessionStorage.setItem(
+        "userInfo",
+        JSON.stringify({
+          author: this.reqParam.author,
+          email: this.reqParam.email,
+        })
+      );
     },
     // get reply after created a new one
     getReplyAfterCreate() {

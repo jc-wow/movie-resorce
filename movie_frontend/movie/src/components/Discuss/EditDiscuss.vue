@@ -68,11 +68,25 @@ export default {
         if (res.success) {
           this.$message({
             message: "恭喜，发表成功啦",
-            type: "success",
+						type: "success",
+						duration: 1500
           });
+          this.saveUserinfo();
           this.$router.push({ name: "discuss" });
         }
       });
+    },
+    saveUserinfo() {
+      if (sessionStorage.getItem("userInfo")) {
+        sessionStorage.removeItem("userInfo");
+      }
+      sessionStorage.setItem(
+        "userInfo",
+        JSON.stringify({
+          author: this.author,
+          email: this.email,
+        })
+      );
     },
     editorHtml(val) {
       this.previewData = val;
