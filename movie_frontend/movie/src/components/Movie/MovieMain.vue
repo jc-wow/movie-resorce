@@ -1,9 +1,19 @@
 <template>
   <div class="movie-main">
     <div class="movie-main-body" @click="showStartpage = !showStartpage">
-      <!-- <div class="movie-container" v-for="(item, index) in category" :key="item.key"> -->
-      <!-- <InfoContainer :category="item"></InfoContainer> -->
-      <!-- </div> -->
+      <div
+        class="movie-container"
+        :style="{
+          'margin-top': index === 0 ? 0 : '1%',
+          'padding-top': index === 0 ? '9vh' : 0,
+        }"
+        v-for="(item, index) in category"
+        :key="item.key"
+      >	
+			<keep-alive>
+        <InfoContainer :category="item"></InfoContainer>
+			</keep-alive>
+			</div>
     </div>
   </div>
 </template>
@@ -97,7 +107,6 @@ export default {
     .movie-container {
       margin-left: 6%;
       height: 43vh;
-      margin-top: 2%;
     }
   }
 }

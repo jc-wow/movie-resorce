@@ -85,7 +85,7 @@ export default {
       });
     },
     getMoveInfo() {
-      this.reqAPIing = true;
+			this.reqAPIing = true;
       this.$store.dispatch("getMovieInfo", this.requestParam).then((res) => {
         this.stopReqAPI(res);
         this.getHighestScoreMovie;
@@ -137,7 +137,7 @@ export default {
         this.movieInfo.push(...status.movieInfo);
       },
     }),
-  },
+	},
   mounted() {
     this.getMoveInfo();
     this.listenImgTrans();
@@ -145,7 +145,7 @@ export default {
   },
   destroyed() {
     this.removeTransEvent();
-  },
+	},
 };
 </script>
 
