@@ -3,17 +3,13 @@
     <div class="login-user login-section">
       <label>昵称:</label>
       <el-input v-model="author"></el-input>
-      <span>（必填哦）</span>
+      <span>（必填哦，公开哒）</span>
     </div>
     <div class="login-email login-section">
       <label>邮箱:</label>
       <el-input v-model="email"></el-input>
-      <span>（必填哦）</span>
+      <span>（必填哦，会保密）</span>
     </div>
-    <!-- <div class="login-confirm login-section">
-      <label>是否记住？</label>
-      <el-checkbox v-model="checked" size="medium"></el-checkbox>
-    </div> -->
   </div>
 </template>
 
@@ -24,7 +20,6 @@ export default {
     return {
       email: "",
       author: "",
-      // checked: false,
     };
 	},
 	methods: {
