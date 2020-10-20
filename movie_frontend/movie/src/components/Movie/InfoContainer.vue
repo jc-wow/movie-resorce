@@ -25,13 +25,17 @@
         :key="'container_' + index"
         @click="selectMovie(item)"
       >
+        <div class="image-info-container-intro" v-show="item.showInfoIntro">
+          <p>类型：{{ item.genre }}</p>
+          <p>时长：{{ item.runtime }}</p>
+        </div>
         <el-image
           class="image-info-container"
           :src="item.cover"
           referrerpolicy="no-referrer"
           fit="cover"
-          @mousemove="hangoverImg($event)"
-          @mouseout="mouseoutImg($event)"
+          @mousemove.stop="hangoverImg($event, item)"
+          @mouseout.stop="mouseoutImg()"
         ></el-image>
         <a>{{ item.title }}</a>
       </div>
@@ -72,20 +76,34 @@ export default {
       this.transDistance -= 0.5 * this.pageWidth;
       this.paging("down", this.transDistance);
     },
-    hangoverImg(e) {
-      $(e.currentTarget.parentElement).css({
-        transform: "translateY(-10px)",
+    curHoverObj(e) {
+      this.imgCont = $(e.currentTarget.parentElement);
+      this.img = $(e.currentTarget);
+    },
+    hangoverImg(e, item) {
+      this.curHoverObj(e);
+      this.imgCont.css({
+        transform: "scale(1.3)",
         transition: "0.2s linear",
       });
-    },
-    mouseoutImg(e) {
-      $(e.currentTarget.parentElement).css({
-        transform: "translateY(0px)",
-        transition: "0s linear",
+      this.img.css({
+        opacity: 0.3,
       });
+      this.item = item;
+      this.item.showInfoIntro = true;
+    },
+    mouseoutImg() {
+      this.imgCont.css({
+        transform: "scale(1)",
+        transition: "0.2s linear",
+      });
+      this.img.css({
+        opacity: 1,
+      });
+      this.item.showInfoIntro = false;
     },
     getMoveInfo() {
-			this.reqAPIing = true;
+      this.reqAPIing = true;
       this.$store.dispatch("getMovieInfo", this.requestParam).then((res) => {
         this.stopReqAPI(res);
         this.getHighestScoreMovie;
@@ -134,10 +152,13 @@ export default {
   computed: {
     ...mapState({
       getHighestScoreMovie(status) {
-        this.movieInfo.push(...status.movieInfo);
+        status.movieInfo.forEach((ele, index) => {
+          this.$set(ele, "showInfoIntro", false);
+          this.movieInfo.push(ele);
+        });
       },
     }),
-	},
+  },
   mounted() {
     this.getMoveInfo();
     this.listenImgTrans();
@@ -145,7 +166,10 @@ export default {
   },
   destroyed() {
     this.removeTransEvent();
-	},
+  },
+  deactivated() {
+    this.mouseoutImg();
+  },
 };
 </script>
 
@@ -203,6 +227,16 @@ export default {
       justify-content: space-around;
       margin: 0 1%;
       cursor: pointer;
+      position: relative;
+
+      .image-info-container-intro {
+        color: #fff;
+        position: absolute;
+        z-index: 999;
+        left: -5%;
+        bottom: 15%;
+        font-weight: 550;
+      }
 
       .image-info-container {
         @media screen and (min-width: 1920px) {

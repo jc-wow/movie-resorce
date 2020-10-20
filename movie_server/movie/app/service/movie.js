@@ -7,7 +7,7 @@ class MovieInfo extends Service {
     const { limit, page, category } = param;
     const offset = limit * (page - 1);
     const options = {
-      attributes: ["id", "rate", "title", "cover"],
+      attributes: ["id", "rate", "title", "cover", "runtime", "genre"],
       offset: offset,
       limit: limit,
       order: [
