@@ -242,7 +242,7 @@ export default {
 
     .discuss-detail-info {
       margin-top: 4%;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-weight: 400;
       opacity: 0.7;
 
@@ -263,7 +263,7 @@ export default {
 
   .discuss-detail-reply {
     width: 60%;
-    font-size: 0.8rem;
+    font-size: 1rem;
 
     .discuss-detail-reply-info {
       background-color: #b3b3b3;
