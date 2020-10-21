@@ -19,7 +19,7 @@ export default new Vuex.Store({
     userInfo: {
       email: "",
       author: ""
-    }
+		},
   },
   mutations,
   actions,

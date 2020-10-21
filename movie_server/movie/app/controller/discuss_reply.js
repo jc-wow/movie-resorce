@@ -22,7 +22,22 @@ class DiscussReplyController extends Controller {
     this.ctx.body = {
       success: true,
     };
+    // update discuss table total column after insert a new reply to discuss
     this.ctx.service.discussReply.updateTotalReply(ctx.rid);
+  }
+
+  async update() {
+    const param = this.ctx.request.body;
+    try {
+      await this.ctx.service.discussReply.updateDiscussRereply(param);
+      this.ctx.body = {
+        success: true,
+      };
+    } catch (err) {
+      this.ctx.body = {
+        success: false,
+      };
+    }
   }
 }
 

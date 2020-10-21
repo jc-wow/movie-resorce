@@ -35,9 +35,12 @@
         <div class="discuss-detail-reply-content" v-html="item.content"></div>
         <div class="discuss-detail-reply-rereply">
           <span
-            :style="{ backgroundColor: item.mouseover ? '#fff' : null }"
-            @mousemove="hover($event, item)"
-            @mouseleave="leave($event, item)"
+            :style="{
+              backgroundColor: item.mouseover ? '#fff' : null,
+              fontSize: '0.7rem',
+            }"
+            @mousemove="hoverRereply($event, item)"
+            @mouseleave="leaveRereply($event, item)"
             @click="clickRereply(item)"
             >回应</span
           >
@@ -58,9 +61,22 @@
     <p class="discuss-detail-edit">发表想法：</p>
     <p class="discuss-detail-viewreply" v-if="showReplyView">
       <span class="discuss-detail-viewreply-author">{{
-        replyView.author + "："
+        replyView.author + "说："
       }}</span>
-      {{ replyView.content }}
+      <i
+        class="el-icon-close"
+        :style="{
+          cursor: 'pointer',
+          position: 'absolute',
+          right: '1%',
+          backgroundColor: isHoverCloseReply ? '#929292' : '#fff',
+          color: isHoverCloseReply ? '#fff' : '#000',
+        }"
+        @mousemove="hoverCloseReply"
+        @mouseleave="leaveCloseReply"
+        @click="delReply"
+      ></i>
+      <span style="display: block">{{ replyView.content }}</span>
     </p>
     <div class="discuss-detail-newreply">
       <Editor :height="editorHeight" @editorHtml="editorHtml"></Editor>
@@ -114,18 +130,33 @@ export default {
         content: "",
       },
       showReplyView: false,
+      isHoverCloseReply: false,
+      updateReplyParam: {
+        id: 0,
+        reply: "",
+      },
     };
   },
   methods: {
-    hover(e, item) {
+    hoverRereply(e, item) {
       if (e.currentTarget.textContent === "回应") {
         item.mouseover = true;
       }
     },
-    leave(e, item) {
+    leaveRereply(e, item) {
       if (e.currentTarget.textContent === "回应") {
         item.mouseover = false;
       }
+    },
+    hoverCloseReply() {
+      this.isHoverCloseReply = true;
+    },
+    leaveCloseReply() {
+      this.isHoverCloseReply = false;
+    },
+    delReply() {
+      this.showReplyView = false;
+      this.isHoverCloseReply = false;
     },
     // click reply
     clickRereply(item) {
@@ -137,6 +168,7 @@ export default {
       });
       this.replyView.author = item.author;
       this.replyView.content = item.content.replace(/\<.*?\>/g, "");
+      this.updateReplyParam.id = item.id;
     },
     changePage(val) {
       this.getRepParam.offset = val;
@@ -158,9 +190,14 @@ export default {
     },
     editorHtml(val) {
       this.replyContent = val;
+      this.updateReplyParam.reply = val;
     },
     // update discuss relpy
     updateDiscuss() {
+      if (this.showReplyView) {
+        this.updateDiscussRereply();
+        return;
+      }
       if (!this.discuss) {
         this.discuss =
           Object.keys(this.$store.state.selectedDiscuss).length !== 0
@@ -181,7 +218,7 @@ export default {
       this.$store.dispatch("createDiscussReply", this.reqParam).then((res) => {
         if (res.success) {
           this.$message({
-            message: "恭喜，发表成功啦",
+            message: "恭喜，回应成功啦",
             type: "success",
             duration: 1500,
           });
@@ -190,6 +227,21 @@ export default {
         }
       });
       this.clearEditor();
+    },
+    updateDiscussRereply() {
+      this.$store
+        .dispatch("updateDiscussReply", this.updateReplyParam)
+        .then((res) => {
+          if (res.success) {
+            this.$message({
+              message: "恭喜，回应成功啦",
+              type: "success",
+              duration: 1500,
+            });
+            this.saveUserinfo();
+            this.getReplyAfterCreate();
+          }
+        });
     },
     saveUserinfo() {
       if (sessionStorage.getItem("userInfo")) {
@@ -283,7 +335,7 @@ export default {
 
     .discuss-detail-info {
       margin-top: 4%;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       font-weight: 400;
       opacity: 0.7;
 
@@ -294,6 +346,7 @@ export default {
 
     .discuss-detail-content {
       margin-top: 7%;
+      font-size: 0.9rem;
     }
   }
   .el-divider {
@@ -319,7 +372,9 @@ export default {
       }
     }
   }
-
+  .discuss-detail-reply-content {
+    font-size: 0.8rem;
+  }
   .discuss-detail-reply-rereply {
     cursor: pointer;
     display: flex;
@@ -332,7 +387,7 @@ export default {
 
   .discuss-detail-edit {
     width: 60%;
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-top: 5%;
   }
 
@@ -344,12 +399,8 @@ export default {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     background-color: #fff;
-    border-radius: 8px;
-
-    .discuss-detail-viewreply-author {
-      background-color: #409eff;
-      color: #fff;
-    }
+    font-size: 0.9rem;
+    display: relative;
   }
 
   .discuss-detail-newreply {

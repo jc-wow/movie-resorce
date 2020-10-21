@@ -51,6 +51,20 @@ class DiscussReply extends Service {
       }
     );
   }
+
+  async updateDiscussRereply(param) {
+    const { id, reply } = param;
+    return this.ctx.model.DiscussReply.update(
+      {
+        reply,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+  }
 }
 
 module.exports = DiscussReply;

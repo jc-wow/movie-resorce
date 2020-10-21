@@ -29,7 +29,7 @@ const mutations = {
   getUserInfo(state, val) {
     const key = Object.keys(val)[0];
     state.userInfo[key] = val[key];
-  }
+	},
 };
 
 export default mutations;
