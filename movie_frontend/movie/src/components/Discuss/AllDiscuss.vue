@@ -169,6 +169,7 @@ export default {
         color: #44464f;
       }
     }
+		
     .el-divider {
       background-color: #a0a2a7;
       margin: 1.3vh 0;

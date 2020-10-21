@@ -1,7 +1,10 @@
 <template>
   <div class="discuss-detail">
-    <section class="discuss-detail-section" style="height: 100vh" v-show="loading">
-    </section>
+    <section
+      class="discuss-detail-section"
+      style="height: 100vh"
+      v-show="loading"
+    ></section>
     <section class="discuss-detail-section" v-show="!loading">
       <header class="discuss-detail-header">
         <h1>{{ discuss.title }}</h1>
@@ -30,6 +33,15 @@
           <span>{{ utils.formatDate(item.updated_at) }}</span>
         </div>
         <div class="discuss-detail-reply-content" v-html="item.content"></div>
+        <div class="discuss-detail-reply-rereply">
+          <span
+            :style="{ backgroundColor: item.mouseover ? '#fff' : null }"
+            @mousemove="hover($event, item)"
+            @mouseleave="leave($event, item)"
+            @click="clickRereply(item)"
+            >回应</span
+          >
+        </div>
       </div>
     </div>
     <el-pagination
@@ -44,6 +56,12 @@
       @next-click="changePage"
     ></el-pagination>
     <p class="discuss-detail-edit">发表想法：</p>
+    <p class="discuss-detail-viewreply" v-if="showReplyView">
+      <span class="discuss-detail-viewreply-author">{{
+        replyView.author + "："
+      }}</span>
+      {{ replyView.content }}
+    </p>
     <div class="discuss-detail-newreply">
       <Editor :height="editorHeight" @editorHtml="editorHtml"></Editor>
       <el-button
@@ -89,11 +107,37 @@ export default {
         rid: 0,
         offset: 1,
         limit: 20,
-			},
-			loading: false,
+      },
+      loading: false,
+      replyView: {
+        author: "",
+        content: "",
+      },
+      showReplyView: false,
     };
   },
   methods: {
+    hover(e, item) {
+      if (e.currentTarget.textContent === "回应") {
+        item.mouseover = true;
+      }
+    },
+    leave(e, item) {
+      if (e.currentTarget.textContent === "回应") {
+        item.mouseover = false;
+      }
+    },
+    // click reply
+    clickRereply(item) {
+      this.showReplyView = true;
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        left: 0,
+        behavior: "smooth",
+      });
+      this.replyView.author = item.author;
+      this.replyView.content = item.content.replace(/\<.*?\>/g, "");
+    },
     changePage(val) {
       this.getRepParam.offset = val;
       sessionStorage.setItem("discussRepOffset", val);
@@ -166,28 +210,28 @@ export default {
       this.getReply();
     },
     getReply() {
-			this.loading = true;
+      this.loading = true;
       this.getRepParam.rid = this.discuss.id;
       this.$store.dispatch("getDiscussReply", this.getRepParam).then((res) => {
         this.reply = res.data.rows;
         this.totalReply = res.data.count;
-				this.saveData();
-				this.loading = false;
+        this.reply.forEach((ele, index) => {
+          this.$set(ele, "mouseover", false);
+        });
+        this.saveData();
+        this.loading = false;
       });
     },
     getData() {
       const discuss = JSON.parse(sessionStorage.getItem("discussDetail"));
       const reply = JSON.parse(sessionStorage.getItem("discussReplyDetail"));
       const totalReply = JSON.parse(sessionStorage.getItem("totalReply"));
-      if (this.getRepParam.offset) {
-        this.getRepParam.offset = parseInt(
-          sessionStorage.getItem("discussRepOffset")
-        );
-      }
+      const offset = parseInt(sessionStorage.getItem("discussRepOffset"));
       if (discuss && reply) {
         this.discuss = discuss;
         this.reply = reply;
         this.totalReply = totalReply;
+        this.getRepParam.offset = offset;
       } else {
         this.discuss = this.$store.state.selectedDiscuss;
         this.rid = this.discuss.id;
@@ -204,11 +248,8 @@ export default {
       };
     },
   },
-  created() {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-    });
+  mounted() {
+    window.scrollTo(0, 0);
     this.getData();
     this.listenLeavePage();
   },
@@ -279,10 +320,36 @@ export default {
     }
   }
 
+  .discuss-detail-reply-rereply {
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 1%;
+    width: 99%;
+    font-size: 0.9rem;
+    opacity: 0.6;
+  }
+
   .discuss-detail-edit {
     width: 60%;
     font-size: 1.1rem;
     margin-top: 5%;
+  }
+
+  .discuss-detail-viewreply {
+    width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    background-color: #fff;
+    border-radius: 8px;
+
+    .discuss-detail-viewreply-author {
+      background-color: #409eff;
+      color: #fff;
+    }
   }
 
   .discuss-detail-newreply {

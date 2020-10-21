@@ -93,6 +93,7 @@ export default {
       this.item.showInfoIntro = true;
     },
     mouseoutImg() {
+      if (!this.imgCont || !this.img) return;
       this.imgCont.css({
         transform: "scale(1)",
         transition: "0.2s linear",
