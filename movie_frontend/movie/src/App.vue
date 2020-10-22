@@ -76,11 +76,11 @@ html {
       height: 100%;
       background-color: #000;
       @media screen and (max-width: 1920px) {
-        min-width: 800px;
+        min-width: 1500px;
       	overflow-x: auto;
       }
-      @media screen and (min-width: 1920px) {
-        min-width: 1500px;
+      @media screen and (min-width: 2000px) {
+        min-width: 2500px;
       }
     }
   }

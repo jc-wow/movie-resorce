@@ -28,7 +28,8 @@
     </div>
     <el-input
       placeholder="请输入内容"
-      v-model="input1"
+      v-model="searchVal"
+			@input="changeSearchVal"
     >
       <el-button slot="append" icon="el-icon-search"></el-button>
     </el-input>
@@ -44,7 +45,9 @@ export default {
   components: { Drawer },
   data() {
     return {
-      showDrawer: false,
+			showDrawer: false,
+			searchVal: '',
+			timer: null
     };
   },
   methods: {
@@ -56,12 +59,22 @@ export default {
     },
     leaveNav(e) {
       e.target.style = "background-color: none";
-    },
-  },
+		},
+		changeSearchVal(val) {
+			clearTimeout(this.timer);
+			this.timer = setTimeout(() => this.reqSearchAPI(), 2000)
+		},
+		reqSearchAPI() {
+			console.log(55555)
+		}
+	},
+	destroyed() {
+		this.timer = null;
+	},
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @keyframes grain {
   0%,
   100% {
@@ -146,11 +159,21 @@ export default {
       border: 0px solid #000;
       // background-color: #2b2929;
     }
-
     .nav-classify-1 {
       margin-left: 15%;
     }
   }
+	.el-input-group {
+		width: 11%;
+
+		.el-input__inner {
+			height: 35px;
+		}
+
+		.el-button {
+			padding: 10px 12px;
+		}
+	}
 }
 
 .nav::after {

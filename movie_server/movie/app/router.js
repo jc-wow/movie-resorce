@@ -14,5 +14,10 @@ module.exports = (app) => {
     "reply",
     "/api/discuss_reply/:id/update",
     controller.discussReply.update
-  );
+	);
+	router.post(
+		"movie",
+		"/api/searchmovie",
+		controller
+	)
 };
