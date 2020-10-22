@@ -9,6 +9,10 @@ module.exports = (app) => {
   router.resources("movie", "/api/movie/:id", controller.movie);
   router.resources("discusses", "/api/discuss", controller.discuss);
   router.resources("discuss", "/api/discuss/:id", controller.discuss);
-	router.resources("reply", "/api/discuss_reply/:id", controller.discussReply);
-	router.post('reply', "/api/discuss_reply/:id/update", controller.discussReply.update)
+  router.resources("reply", "/api/discuss_reply/:id", controller.discussReply);
+  router.post(
+    "reply",
+    "/api/discuss_reply/:id/update",
+    controller.discussReply.update
+  );
 };

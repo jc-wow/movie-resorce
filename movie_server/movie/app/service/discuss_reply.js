@@ -7,7 +7,16 @@ const Service = require("egg").Service;
 class DiscussReply extends Service {
   async listAll(param) {
     const option = {
-      attributes: ["id", "author", "content", "updated_at", "email"],
+      attributes: [
+        "id",
+        "author",
+        "content",
+        "updated_at",
+        "email",
+        "reply",
+        "reply_author",
+        "reply_email",
+      ],
       where: {
         rid: param.rid,
       },
@@ -53,10 +62,12 @@ class DiscussReply extends Service {
   }
 
   async updateDiscussRereply(param) {
-    const { id, reply } = param;
+    const { id, reply, reReplyAuthor, reReplyEmail } = param;
     return this.ctx.model.DiscussReply.update(
       {
         reply,
+        reply_author: reReplyAuthor,
+        reply_email: reReplyEmail,
       },
       {
         where: {

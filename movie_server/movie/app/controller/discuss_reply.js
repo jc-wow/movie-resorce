@@ -17,6 +17,9 @@ class DiscussReplyController extends Controller {
       author: ctx.author,
       email: ctx.email,
       content: ctx.content,
+      reply: ctx.reply,
+      reply_author: ctx.reReplyAuthor,
+      reply_email: ctx.reReplyEmail,
     };
     await this.ctx.service.discussReply.create(param);
     this.ctx.body = {

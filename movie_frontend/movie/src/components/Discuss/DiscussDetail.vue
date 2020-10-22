@@ -28,9 +28,23 @@
         v-for="(item, index) in reply"
         :key="'reply_' + index"
       >
-        <div class="discuss-detail-reply-info">
-          <span class="discuss-detail-reply-info1">{{ item.author }}</span>
-          <span>{{ utils.formatDate(item.updated_at) }}</span>
+        <el-row class="discuss-detail-reply-info">
+          <el-col :span="2" style="margin-left: 0.5%"
+            ><span class="discuss-detail-reply-info1">{{
+              item.author
+            }}</span></el-col
+          >
+          <el-col :span="19"
+            ><span>{{ utils.formatDate(item.updated_at) }}</span></el-col
+          >
+        </el-row>
+        <div class="discuss-detail-reply-rereply-content" v-if="item.reply">
+          <span
+            class="discuss-detail-rereply-author"
+            style="margin-left: 0.5%"
+            >{{ item.reply_author + "说：" }}</span
+          >
+          <span>{{ extractContent(item.reply) }}</span>
         </div>
         <div class="discuss-detail-reply-content" v-html="item.content"></div>
         <div class="discuss-detail-reply-rereply">
@@ -132,8 +146,12 @@ export default {
       showReplyView: false,
       isHoverCloseReply: false,
       updateReplyParam: {
-        id: 0,
+        rid: 0,
         reply: "",
+        reReplyAuthor: "",
+        reReplyEmail: "",
+        content: "",
+        author: "",
       },
     };
   },
@@ -160,19 +178,22 @@ export default {
     },
     // click reply
     clickRereply(item) {
+      this.replyInfo = item;
       this.showReplyView = true;
       window.scrollTo({
         top: document.body.scrollHeight,
         left: 0,
-        behavior: "smooth",
       });
       this.replyView.author = item.author;
-      this.replyView.content = item.content.replace(/\<.*?\>/g, "");
-      this.updateReplyParam.id = item.id;
+      this.replyView.content = this.extractContent(item.content);
+    },
+    extractContent(val) {
+      return val.replace(/\<.*?\>/g, "");
     },
     changePage(val) {
       this.getRepParam.offset = val;
       sessionStorage.setItem("discussRepOffset", val);
+      window.scrollTo(0, 0);
       this.getReply();
     },
     // save data to sessionstorage in case refresh page
@@ -190,14 +211,22 @@ export default {
     },
     editorHtml(val) {
       this.replyContent = val;
-      this.updateReplyParam.reply = val;
     },
     // update discuss relpy
     updateDiscuss() {
-      if (this.showReplyView) {
-        this.updateDiscussRereply();
-        return;
-      }
+      this.author = this.$store.state.userInfo.author;
+      this.email = this.$store.state.userInfo.email;
+
+      const reqParam = {
+        reReplyAuthor: this.replyInfo.author || null,
+        reReplyEmail: this.replyInfo.email || null,
+        rid: this.discuss.id,
+        content: this.replyContent,
+        reply: this.replyInfo.content || null,
+        author: this.author,
+        email: this.email,
+      };
+
       if (!this.discuss) {
         this.discuss =
           Object.keys(this.$store.state.selectedDiscuss).length !== 0
@@ -205,43 +234,20 @@ export default {
             : JSON.parse(sessionStorage.getItem("discussDetail"));
       }
 
-      this.author = this.$store.state.userInfo.author;
-      this.email = this.$store.state.userInfo.email;
-      this.reqParam = {
-        content: this.replyContent,
-        rid: this.discuss.id,
-        author: this.author,
-        email: this.email,
-      };
-
       if (!this.checkUserinfo()) return;
-      this.$store.dispatch("createDiscussReply", this.reqParam).then((res) => {
+      this.$store.dispatch("createDiscussReply", reqParam).then((res) => {
         if (res.success) {
           this.$message({
             message: "恭喜，回应成功啦",
             type: "success",
             duration: 1500,
-          });
+					});
+					this.showReplyView = false;
           this.saveUserinfo();
           this.getReplyAfterCreate();
         }
       });
       this.clearEditor();
-    },
-    updateDiscussRereply() {
-      this.$store
-        .dispatch("updateDiscussReply", this.updateReplyParam)
-        .then((res) => {
-          if (res.success) {
-            this.$message({
-              message: "恭喜，回应成功啦",
-              type: "success",
-              duration: 1500,
-            });
-            this.saveUserinfo();
-            this.getReplyAfterCreate();
-          }
-        });
     },
     saveUserinfo() {
       if (sessionStorage.getItem("userInfo")) {
@@ -250,8 +256,8 @@ export default {
       sessionStorage.setItem(
         "userInfo",
         JSON.stringify({
-          author: this.reqParam.author,
-          email: this.reqParam.email,
+          author: this.author,
+          email: this.email,
         })
       );
     },
@@ -364,6 +370,8 @@ export default {
       font-size: 0.7rem;
       font-weight: 400;
       opacity: 0.7;
+      display: flex;
+      align-items: center;
 
       .discuss-detail-reply-info1 {
         line-height: 1.7rem;
@@ -372,8 +380,20 @@ export default {
       }
     }
   }
+  .discuss-detail-reply-rereply-content {
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    margin-top: 1%;
+    border-radius: 5px;
+    background-color: #fff;
+    line-height: 2rem;
+  }
   .discuss-detail-reply-content {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
   .discuss-detail-reply-rereply {
     cursor: pointer;
@@ -400,7 +420,12 @@ export default {
     -webkit-box-orient: vertical;
     background-color: #fff;
     font-size: 0.9rem;
-    display: relative;
+    position: relative;
+    border-radius: 5px;
+
+    span {
+      margin-left: 0.5%;
+    }
   }
 
   .discuss-detail-newreply {
