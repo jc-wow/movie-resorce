@@ -26,6 +26,12 @@
         >想法</span
       >
     </div>
+    <el-input
+      placeholder="请输入内容"
+      v-model="input1"
+    >
+      <el-button slot="append" icon="el-icon-search"></el-button>
+    </el-input>
     <Drawer :showDrawer="showDrawer"></Drawer>
   </div>
 </template>
@@ -134,7 +140,7 @@ export default {
       margin-left: 8%;
       color: #e3dbdf;
       line-height: 2.5rem;
-      width: 9%;
+      // width: 9%;
       text-align: center;
       border-radius: 10px;
       border: 0px solid #000;

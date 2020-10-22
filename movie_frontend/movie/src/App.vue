@@ -38,7 +38,7 @@ export default {
         this.returnToMainPage();
       } else {
         sessionStorage.removeItem("alldiscussOffset");
-        this.$router.push({ name: "discuss" }).catch(err => err);
+        this.$router.push({ name: "discuss" }).catch((err) => err);
       }
     },
     // listen select discuss and add new discuss
@@ -70,12 +70,18 @@ html {
 
   body {
     margin: 0;
-    height: 100%;
 
     #app {
       position: relative;
       height: 100%;
       background-color: #000;
+      @media screen and (max-width: 1920px) {
+        min-width: 800px;
+      	overflow-x: auto;
+      }
+      @media screen and (min-width: 1920px) {
+        min-width: 1500px;
+      }
     }
   }
 }
