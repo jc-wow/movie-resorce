@@ -90,7 +90,9 @@
         @mouseleave="leaveCloseReply"
         @click="delReply"
       ></i>
-      <span style="display: block">{{ replyView.content }}</span>
+      <span style="display: block; word-break: break-word">{{
+        replyView.content
+      }}</span>
     </p>
     <div class="discuss-detail-newreply">
       <Editor :height="editorHeight" @editorHtml="editorHtml"></Editor>
@@ -216,13 +218,12 @@ export default {
     updateDiscuss() {
       this.author = this.$store.state.userInfo.author;
       this.email = this.$store.state.userInfo.email;
-
       const reqParam = {
-        reReplyAuthor: this.replyInfo.author || null,
-        reReplyEmail: this.replyInfo.email || null,
+        reReplyAuthor: this.replyInfo ? this.replyInfo.author : null,
+        reReplyEmail: this.replyInfo ? this.replyInfo.email : null,
         rid: this.discuss.id,
         content: this.replyContent,
-        reply: this.replyInfo.content || null,
+        reply: this.replyInfo ? this.replyInfo.content : null,
         author: this.author,
         email: this.email,
       };
@@ -241,8 +242,8 @@ export default {
             message: "恭喜，回应成功啦",
             type: "success",
             duration: 1500,
-					});
-					this.showReplyView = false;
+          });
+          this.showReplyView = false;
           this.saveUserinfo();
           this.getReplyAfterCreate();
         }
@@ -281,20 +282,15 @@ export default {
       });
     },
     getData() {
-      const discuss = JSON.parse(sessionStorage.getItem("discussDetail"));
-      const reply = JSON.parse(sessionStorage.getItem("discussReplyDetail"));
-      const totalReply = JSON.parse(sessionStorage.getItem("totalReply"));
-      const offset = parseInt(sessionStorage.getItem("discussRepOffset"));
-      if (discuss && reply) {
-        this.discuss = discuss;
-        this.reply = reply;
-        this.totalReply = totalReply;
-        this.getRepParam.offset = offset;
-      } else {
-        this.discuss = this.$store.state.selectedDiscuss;
-        this.rid = this.discuss.id;
-        this.getReply();
-      }
+      this.discuss =
+        JSON.parse(sessionStorage.getItem("discussDetail")) ||
+        this.$store.state.selectedDiscuss;
+      this.reply = JSON.parse(sessionStorage.getItem("discussReplyDetail"));
+      this.totalReply = JSON.parse(sessionStorage.getItem("totalReply"));
+      this.getRepParam.offset =
+        parseInt(sessionStorage.getItem("discussRepOffset")) || 1;
+      this.rid = this.discuss.id;
+      this.getReply();
     },
     clearEditor() {
       const element = document.getElementsByClassName("ql-editor");
@@ -309,7 +305,7 @@ export default {
   mounted() {
     window.scrollTo(0, 0);
     this.getData();
-    this.listenLeavePage();
+    // this.listenLeavePage();
   },
   destroyed() {
     window.onbeforeunload = null;
@@ -385,15 +381,16 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     margin-top: 1%;
     border-radius: 5px;
     background-color: #fff;
-    line-height: 2rem;
+    line-height: 1.5rem;
   }
   .discuss-detail-reply-content {
     font-size: 0.9rem;
+    word-break: break-word;
   }
   .discuss-detail-reply-rereply {
     cursor: pointer;

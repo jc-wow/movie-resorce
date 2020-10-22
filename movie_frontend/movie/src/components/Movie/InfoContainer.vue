@@ -233,10 +233,10 @@ export default {
       .image-info-container-intro {
         color: #fff;
         position: absolute;
-        z-index: 999;
         left: -5%;
         bottom: 15%;
         font-weight: 550;
+        z-index: 999;
       }
 
       .image-info-container {
