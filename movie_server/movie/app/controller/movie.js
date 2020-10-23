@@ -9,7 +9,7 @@ class MovieController extends Controller {
     const query = {
       limit: parseInt(limit),
       page: parseInt(page),
-      category: category,
+      category,
     };
     ctx.body = await ctx.service.movie.listAll(query);
     this.success(ctx.body);
@@ -20,11 +20,13 @@ class MovieController extends Controller {
     const { id } = ctx.query;
     ctx.body = await ctx.service.movie.listOne(id);
     this.success(ctx.body);
-	}
-	
-	async search() {
-		const ctx = this.ctx.request.body;
-	}
+  }
+
+  async search() {
+    const query = this.ctx.query;
+    this.ctx.body = await this.ctx.service.movie.search(query);
+    this.success(this.ctx.body);
+  }
 }
 
 module.exports = MovieController;

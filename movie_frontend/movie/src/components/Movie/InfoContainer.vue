@@ -146,8 +146,7 @@ export default {
     },
     selectMovie(val) {
       this.$store.commit("getSelectedMovie", val);
-      this.$store.dispatch("getResSelectedMovie", val.id);
-      window.ispopstate = false;
+      this.$router.push({ name: "discussDetail" }).catch((err) => err);
     },
   },
   computed: {

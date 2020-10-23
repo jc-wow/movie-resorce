@@ -27,9 +27,6 @@ export default {
     };
   },
   methods: {
-    saveMovieInfo() {
-      sessionStorage.setItem("movieInfo", JSON.stringify(this.movieInfo));
-    },
     getIntroduction() {
       this.summary = this.movieInfo.summary.replace(/\s/g, "");
       this.title = `本片上映于${this.getTargetItem(
@@ -54,39 +51,20 @@ export default {
         return val;
       }
     },
-  },
-  watch: {
-    "$store.state.resSelectedMovie": function (newVal, oldVal) {
-      this.movieInfo = newVal;
-      this.getIntroduction();
+    getMovieInfo() {
+      this.id =
+        this.$store.state.selectedMovie.id || sessionStorage.getItem("movieid");
+      sessionStorage.setItem("movieid", this.id);
+      this.$store.dispatch("getResSelectedMovie", this.id).then((res) => {
+        if (res.success) {
+          this.movieInfo = res.data;
+          this.getIntroduction();
+        }
+      });
     },
   },
-  mounted() {
-    this.savedMovieInfo = JSON.parse(sessionStorage.getItem("movieInfo"));
-    if (
-      (this.savedMovieInfo &&
-        Object.keys(this.savedMovieInfo).length > 0 &&
-        !this.$store.state.resSelectedMovie.id) ||
-      window.ispopstate
-    ) {
-      this.movieInfo = this.savedMovieInfo;
-      this.getIntroduction();
-    }
-    // set movie detail in sessionstorage
-    // in case disappear when refresh page
-    window.addEventListener("beforeunload", (e) => {
-      e.preventDefault();
-      this.saveMovieInfo();
-    });
-    // record browser back and forward event
-    window.addEventListener("popstate", (e) => {
-      window.ispopstate = true;
-      this.$store.commit("getSelectedMovie", null);
-    });
-    window.ispopstate = false;
-  },
-  destroyed() {
-    window.removeEventListener("beforeunload", this.saveMovieInfo());
+  created() {
+    this.getMovieInfo();
   },
 };
 </script>
@@ -101,8 +79,8 @@ export default {
   color: #fff;
   display: flex;
   flex-direction: row;
-  animation: zoomIn;
-  animation-duration: 1s;
+  // animation: zoomIn;
+  // animation-duration: 1s;
 
   .movie-detail-video {
     width: 40%;

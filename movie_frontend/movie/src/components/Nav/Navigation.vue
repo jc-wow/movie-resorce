@@ -26,13 +26,27 @@
         >想法</span
       >
     </div>
-    <el-input
-      placeholder="请输入内容"
-      v-model="searchVal"
-			@input="changeSearchVal"
-    >
-      <el-button slot="append" icon="el-icon-search"></el-button>
-    </el-input>
+    <div class="nav-search">
+      <el-input
+        placeholder="搜索你感兴趣的电影"
+        v-model="searchVal"
+        @input="changeSearchVal"
+        @keyup.enter.native="changeSearchVal"
+      >
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="changeSearchVal"
+        ></el-button>
+      </el-input>
+    </div>
+    <div class="nav-searchpanel">
+      <ul>
+        <li v-for="(item, index) in searchResVal" :key="'search' + index">
+          {{ item.title }}
+        </li>
+      </ul>
+    </div>
     <Drawer :showDrawer="showDrawer"></Drawer>
   </div>
 </template>
@@ -45,9 +59,10 @@ export default {
   components: { Drawer },
   data() {
     return {
-			showDrawer: false,
-			searchVal: '',
-			timer: null
+      showDrawer: false,
+      searchVal: "",
+      timer: null,
+      searchResVal: [],
     };
   },
   methods: {
@@ -59,18 +74,33 @@ export default {
     },
     leaveNav(e) {
       e.target.style = "background-color: none";
-		},
-		changeSearchVal(val) {
-			clearTimeout(this.timer);
-			this.timer = setTimeout(() => this.reqSearchAPI(), 2000)
-		},
-		reqSearchAPI() {
-			console.log(55555)
-		}
-	},
-	destroyed() {
-		this.timer = null;
-	},
+    },
+    changeSearchVal() {
+      const reg = new RegExp(
+        "[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"
+      );
+      if (
+        !this.searchVal ||
+        this.searchVal.trim().length === 0 ||
+        this.searchVal.trim().match(reg)
+      ) {
+        this.searchResVal = [];
+        return;
+      }
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => this.reqSearchAPI(), 500);
+    },
+    reqSearchAPI() {
+      this.$store
+        .dispatch("searchMovie", { key: this.searchVal })
+        .then((res) => {
+          this.searchResVal = res.data.rows;
+        });
+    },
+  },
+  destroyed() {
+    this.timer = null;
+  },
 };
 </script>
 
@@ -153,27 +183,35 @@ export default {
       margin-left: 8%;
       color: #e3dbdf;
       line-height: 2.5rem;
-      // width: 9%;
       text-align: center;
       border-radius: 10px;
       border: 0px solid #000;
-      // background-color: #2b2929;
     }
     .nav-classify-1 {
       margin-left: 15%;
     }
   }
-	.el-input-group {
-		width: 11%;
 
-		.el-input__inner {
-			height: 35px;
-		}
+  .nav-search {
+    width: 15%;
+    display: flex;
 
-		.el-button {
-			padding: 10px 12px;
-		}
-	}
+    .el-input-group {
+      .el-input__inner {
+        height: 33px;
+      }
+
+      .el-button {
+        padding: 10px 12px;
+      }
+    }
+  }
+
+  .nav-searchpanel {
+    ul {
+      list-style-type: none;
+    }
+  }
 }
 
 .nav::after {

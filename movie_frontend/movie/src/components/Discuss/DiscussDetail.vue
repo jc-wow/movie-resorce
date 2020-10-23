@@ -238,11 +238,6 @@ export default {
       if (!this.checkUserinfo()) return;
       this.$store.dispatch("createDiscussReply", reqParam).then((res) => {
         if (res.success) {
-          this.$message({
-            message: "恭喜，回应成功啦",
-            type: "success",
-            duration: 1500,
-          });
           this.showReplyView = false;
           this.saveUserinfo();
           this.getReplyAfterCreate();

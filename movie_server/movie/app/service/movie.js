@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 const Service = require("egg").Service;
+const { Op } = require("sequelize");
 
 class MovieInfo extends Service {
   async listAll(param) {
@@ -8,14 +9,14 @@ class MovieInfo extends Service {
     const offset = limit * (page - 1);
     const options = {
       attributes: ["id", "rate", "title", "cover", "runtime", "genre"],
-      offset: offset,
-      limit: limit,
+      offset,
+      limit,
       order: [
         ["rate", "DESC"],
         ["id", "DESC"],
       ],
       where: {
-        category: category,
+        category,
       },
     };
     return this.ctx.model.Movie.findAll(options);
@@ -23,6 +24,22 @@ class MovieInfo extends Service {
 
   async listOne(param) {
     return this.ctx.model.Movie.findByPk(param);
+  }
+
+  async search(param) {
+    const { key } = param;
+    return this.ctx.model.Movie.findAndCountAll({
+      attributes: ["id", "rate", "title", "cover", "runtime", "genre"],
+      order: [
+        ["rate", "DESC"],
+        ["id", "DESC"],
+      ],
+      where: {
+        title: {
+          [Op.substring]: key,
+        },
+      },
+    });
   }
 }
 

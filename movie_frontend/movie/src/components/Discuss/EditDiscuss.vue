@@ -66,11 +66,6 @@ export default {
       };
       this.$store.dispatch("postDiscuss", param).then((res) => {
         if (res.success) {
-          this.$message({
-            message: "恭喜，发表成功啦",
-						type: "success",
-						duration: 1500
-          });
           this.saveUserinfo();
           this.$router.push({ name: "discuss" });
         }
