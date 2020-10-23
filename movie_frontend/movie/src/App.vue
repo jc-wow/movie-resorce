@@ -43,7 +43,6 @@ export default {
     },
     // listen select discuss and add new discuss
     "$store.state.selectedDiscuss": function (newVal, oldVal) {
-			debugger
       if (newVal.length === 0) return;
       if (this.$store.state.selectedDiscuss === "add") {
         this.$router.push({ path: "/discuss/new" }).catch((err) => err);

@@ -41,11 +41,9 @@
       </el-input>
     </div>
     <div class="nav-searchpanel">
-      <ul>
-        <li v-for="(item, index) in searchResVal" :key="'search' + index">
-          {{ item.title }}
-        </li>
-      </ul>
+      <span v-for="(item, index) in searchResVal" :key="'search' + index">
+        {{ item.title }}
+      </span>
     </div>
     <Drawer :showDrawer="showDrawer"></Drawer>
   </div>
@@ -76,6 +74,10 @@ export default {
       e.target.style = "background-color: none";
     },
     changeSearchVal() {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => this.reqSearchAPI(), 500);
+    },
+    reqSearchAPI() {
       const reg = new RegExp(
         "[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"
       );
@@ -87,16 +89,28 @@ export default {
         this.searchResVal = [];
         return;
       }
-      clearTimeout(this.timer);
-      this.timer = setTimeout(() => this.reqSearchAPI(), 500);
-    },
-    reqSearchAPI() {
       this.$store
         .dispatch("searchMovie", { key: this.searchVal })
         .then((res) => {
           this.searchResVal = res.data.rows;
         });
     },
+    putSearchPanel() {
+      const searchInputObj = document.getElementsByClassName("nav-search")[0];
+      const searchInputObjPosition = searchInputObj.getBoundingClientRect();
+      const sWidth = searchInputObjPosition.right - searchInputObjPosition.left;
+      const sX = searchInputObjPosition.left;
+      const sY = searchInputObjPosition.bottom;
+      const searchPanelObj = document.getElementsByClassName(
+        "nav-searchpanel"
+      )[0];
+      searchPanelObj.style.cssText = `width: ${sWidth}px; left: ${sX}px; top: ${
+        5 + sY
+      }px`;
+    },
+  },
+  mounted() {
+    this.putSearchPanel();
   },
   destroyed() {
     this.timer = null;
@@ -174,7 +188,7 @@ export default {
 
   .nav-classify {
     height: 100%;
-    width: 50%;
+    width: 45%;
     display: flex;
     align-items: center;
 
@@ -193,7 +207,7 @@ export default {
   }
 
   .nav-search {
-    width: 15%;
+    width: 18%;
     display: flex;
 
     .el-input-group {
@@ -208,8 +222,12 @@ export default {
   }
 
   .nav-searchpanel {
-    ul {
-      list-style-type: none;
+    position: absolute;
+    font-size: 0.9rem;
+    background-color: #fff;
+    color: #000;
+    span {
+      display: block;
     }
   }
 }
