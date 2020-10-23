@@ -198,49 +198,34 @@ export default {
       window.scrollTo(0, 0);
       this.getReply();
     },
-    // save data to sessionstorage in case refresh page
-    saveData() {
-      if (this.discuss && Object.keys(this.discuss) !== 0) {
-        sessionStorage.setItem("discussDetail", JSON.stringify(this.discuss));
-      }
-      if (this.reply && this.reply.length !== 0) {
-        sessionStorage.setItem(
-          "discussReplyDetail",
-          JSON.stringify(this.reply)
-        );
-        sessionStorage.setItem("totalReply", this.totalReply);
-      }
-    },
     editorHtml(val) {
       this.replyContent = val;
     },
     // update discuss relpy
     updateDiscuss() {
-      this.author = this.$store.state.userInfo.author;
-      this.email = this.$store.state.userInfo.email;
+      this.author =
+        this.$store.state.userInfo.author ||
+        JSON.parse(sessionStorage.getItem("userInfo")).author;
+      this.email =
+        this.$store.state.userInfo.email ||
+        JSON.parse(sessionStorage.getItem("userInfo")).email;
+
       const reqParam = {
         reReplyAuthor: this.replyInfo ? this.replyInfo.author : null,
         reReplyEmail: this.replyInfo ? this.replyInfo.email : null,
-        rid: this.discuss.id,
+        rid: this.getRepParam.rid,
         content: this.replyContent,
         reply: this.replyInfo ? this.replyInfo.content : null,
         author: this.author,
         email: this.email,
       };
 
-      if (!this.discuss) {
-        this.discuss =
-          Object.keys(this.$store.state.selectedDiscuss).length !== 0
-            ? this.$store.state.selectedDiscuss
-            : JSON.parse(sessionStorage.getItem("discussDetail"));
-      }
-
       if (!this.checkUserinfo()) return;
       this.$store.dispatch("createDiscussReply", reqParam).then((res) => {
         if (res.success) {
           this.showReplyView = false;
           this.saveUserinfo();
-          this.getReplyAfterCreate();
+          this.getReply();
         }
       });
       this.clearEditor();
@@ -257,53 +242,34 @@ export default {
         })
       );
     },
-    // get reply after created a new one
-    getReplyAfterCreate() {
-      sessionStorage.removeItem("discussReplyDetail");
-      sessionStorage.removeItem("totalReply");
-      this.getReply();
-    },
     getReply() {
       this.loading = true;
-      this.getRepParam.rid = this.discuss.id;
       this.$store.dispatch("getDiscussReply", this.getRepParam).then((res) => {
         this.reply = res.data.rows;
         this.totalReply = res.data.count;
         this.reply.forEach((ele, index) => {
           this.$set(ele, "mouseover", false);
         });
-        this.saveData();
         this.loading = false;
       });
     },
     getData() {
-      this.discuss =
-        JSON.parse(sessionStorage.getItem("discussDetail")) ||
-        this.$store.state.selectedDiscuss;
-      this.reply = JSON.parse(sessionStorage.getItem("discussReplyDetail"));
-      this.totalReply = JSON.parse(sessionStorage.getItem("totalReply"));
       this.getRepParam.offset =
         parseInt(sessionStorage.getItem("discussRepOffset")) || 1;
-      this.rid = this.discuss.id;
+      this.getRepParam.rid =
+        this.$store.state.selectedDiscuss.id ||
+        sessionStorage.getItem("discussid");
+      sessionStorage.setItem("discussid", this.getRepParam.rid);
       this.getReply();
     },
     clearEditor() {
       const element = document.getElementsByClassName("ql-editor");
       element[0].innerHTML = "";
     },
-    listenLeavePage() {
-      window.onbeforeunload = () => {
-        return "sure";
-      };
-    },
   },
-  mounted() {
+  created() {
     window.scrollTo(0, 0);
     this.getData();
-    // this.listenLeavePage();
-  },
-  destroyed() {
-    window.onbeforeunload = null;
   },
 };
 </script>

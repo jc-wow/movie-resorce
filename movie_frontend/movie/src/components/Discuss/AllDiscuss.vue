@@ -89,7 +89,7 @@ export default {
       this.$store.commit("getSelectedDiscuss", "add");
     },
     getDiscuss() {
-      const curPage = sessionStorage.getItem("alldiscussOffset");
+			const curPage = sessionStorage.getItem("alldiscussOffset");
       if (curPage) this.reqParam.page = parseInt(curPage);
       this.$store.dispatch("getAllDiscuss", this.reqParam).then((res) => {
         this.discussList = res.data.rows;
@@ -98,7 +98,6 @@ export default {
     },
     showDetailDiscuss(val) {
       this.$store.commit("getSelectedDiscuss", val);
-      sessionStorage.removeItem("discussDetail");
     },
     changePage(val) {
       this.reqParam.page = val;
