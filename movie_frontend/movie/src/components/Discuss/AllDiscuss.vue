@@ -89,7 +89,7 @@ export default {
       this.$store.commit("getSelectedDiscuss", "add");
     },
     getDiscuss() {
-			const curPage = sessionStorage.getItem("alldiscussOffset");
+      const curPage = sessionStorage.getItem("alldiscussOffset");
       if (curPage) this.reqParam.page = parseInt(curPage);
       this.$store.dispatch("getAllDiscuss", this.reqParam).then((res) => {
         this.discussList = res.data.rows;
@@ -98,6 +98,7 @@ export default {
     },
     showDetailDiscuss(val) {
       this.$store.commit("getSelectedDiscuss", val);
+      sessionStorage.setItem("curdiscuss", JSON.stringify(val));
     },
     changePage(val) {
       this.reqParam.page = val;
@@ -114,7 +115,7 @@ export default {
 <style lang="scss" scoped>
 .alldiscuss {
   min-height: 92vh;
-	padding-top: 8vh;
+  padding-top: 8vh;
   background-image: linear-gradient(
     to bottom,
     rgb(185, 185, 185),
@@ -168,7 +169,7 @@ export default {
         color: #44464f;
       }
     }
-		
+
     .el-divider {
       background-color: #a0a2a7;
       margin: 1.3vh 0;

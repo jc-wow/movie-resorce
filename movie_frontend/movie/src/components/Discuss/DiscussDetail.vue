@@ -260,6 +260,10 @@ export default {
         this.$store.state.selectedDiscuss.id ||
         sessionStorage.getItem("discussid");
       sessionStorage.setItem("discussid", this.getRepParam.rid);
+      this.discuss =
+        Object.keys(this.$store.state.selectedDiscuss).length === 0
+          ? JSON.parse(sessionStorage.getItem("curdiscuss"))
+					: this.$store.state.selectedDiscuss;
       this.getReply();
     },
     clearEditor() {
