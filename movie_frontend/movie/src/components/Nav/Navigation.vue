@@ -41,7 +41,13 @@
       </el-input>
     </div>
     <div class="nav-searchpanel">
-      <span v-for="(item, index) in searchResVal" :key="'search' + index">
+      <span
+        v-for="(item, index) in searchResVal"
+        :key="'search' + index"
+        @mousemove="hoverMovie(item)"
+        @mouseleave="leavehoverMovie(item)"
+        :style="{ backgroundColor: item.ishover ? '#ececec' : null }"
+      >
         {{ item.title }}
       </span>
     </div>
@@ -77,6 +83,12 @@ export default {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => this.reqSearchAPI(), 500);
     },
+    hoverMovie(item) {
+      item.ishover = true;
+    },
+    leavehoverMovie(item) {
+      item.ishover = false;
+    },
     reqSearchAPI() {
       const reg = new RegExp(
         "[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"
@@ -92,6 +104,9 @@ export default {
       this.$store
         .dispatch("searchMovie", { key: this.searchVal })
         .then((res) => {
+          res.data.rows.forEach((ele) => {
+            ele.ishover = false;
+          });
           this.searchResVal = res.data.rows;
         });
     },
@@ -101,11 +116,11 @@ export default {
       const sWidth = searchInputObjPosition.right - searchInputObjPosition.left;
       const sX = searchInputObjPosition.left;
       const sY = searchInputObjPosition.bottom;
-      const searchPanelObj = document.getElementsByClassName(
+      this.searchPanelObj = document.getElementsByClassName(
         "nav-searchpanel"
       )[0];
-      searchPanelObj.style.cssText = `width: ${sWidth}px; left: ${sX}px; top: ${
-        5 + sY
+      this.searchPanelObj.style.cssText = `width: ${sWidth}px; left: ${sX}px; top: ${
+        1 + sY
       }px`;
     },
   },
@@ -207,12 +222,12 @@ export default {
   }
 
   .nav-search {
-    width: 18%;
+    width: 13%;
     display: flex;
-
     .el-input-group {
       .el-input__inner {
         height: 33px;
+        font-weight: 600;
       }
 
       .el-button {
@@ -226,8 +241,14 @@ export default {
     font-size: 0.9rem;
     background-color: #fff;
     color: #000;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 100;
     span {
       display: block;
+      line-height: 1.6rem;
+      margin-left: 2%;
+      cursor: pointer;
     }
   }
 }
