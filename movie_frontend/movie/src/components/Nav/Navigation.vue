@@ -31,12 +31,12 @@
         placeholder="搜索你感兴趣的电影"
         v-model="searchVal"
         @input="changeSearchVal"
-        @keyup.enter.native="changeSearchVal"
+        @keyup.enter.native="selectMovie()"
       >
         <el-button
           slot="append"
           icon="el-icon-search"
-          @click="changeSearchVal"
+          @click="selectMovie()"
         ></el-button>
       </el-input>
     </div>
@@ -47,6 +47,7 @@
         @mousemove="hoverMovie(item)"
         @mouseleave="leavehoverMovie(item)"
         :style="{ backgroundColor: item.ishover ? '#ececec' : null }"
+        @click="selectMovie($event)"
       >
         {{ item.title }}
       </span>
@@ -70,7 +71,24 @@ export default {
     };
   },
   methods: {
+    selectMovie(e) {
+      if (e) {
+        this.curSelectMovie = e.target.textContent.trim() || "";
+      } else {
+        this.curSelectMovie = this.searchVal;
+      }
+      if (this.curSelectMovie.length === 0) return;
+      this.movieObj = this.searchResVal.filter(
+        (ele) => ele.title === this.curSelectMovie
+      )[0];
+      if (!this.movieObj) return;
+      this.$store.commit("getSelectedMovie", this.movieObj);
+      this.searchResVal = [];
+      this.searchVal = "";
+    },
     changePage(val) {
+      this.searchResVal = [];
+      this.searchVal = "";
       this.$store.commit("getCurPage", val.target.textContent);
     },
     enterNav(e) {
@@ -126,6 +144,11 @@ export default {
   },
   mounted() {
     this.putSearchPanel();
+    const mainSelector = document.getElementsByClassName("main")[0];
+    if (!mainSelector) return;
+    mainSelector.addEventListener("click", () => {
+      this.searchResVal = [];
+    });
   },
   destroyed() {
     this.timer = null;
@@ -215,6 +238,7 @@ export default {
       text-align: center;
       border-radius: 10px;
       border: 0px solid #000;
+      width: 8%;
     }
     .nav-classify-1 {
       margin-left: 15%;
@@ -244,13 +268,39 @@ export default {
     border-radius: 3px;
     font-size: 0.7rem;
     font-weight: 100;
+    max-height: 20rem;
+    overflow: auto;
     span {
       display: block;
       line-height: 1.6rem;
       margin-left: 2%;
       cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    span:hover {
+      overflow: visible;
+      white-space: normal;
     }
   }
+}
+
+.nav-searchpanel::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.nav-searchpanel::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.nav-searchpanel::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #9e9e9e;
 }
 
 .nav::after {

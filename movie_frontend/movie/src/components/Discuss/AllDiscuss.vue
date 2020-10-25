@@ -81,7 +81,8 @@ export default {
         limit: 20,
       },
       totalDiscuss: 0,
-      tipBoard: "Only in their dreams can men be truly free",
+      // tipBoard: "Only in their dreams can men be truly free",
+      tipBorard: "",
     };
   },
   methods: {
@@ -131,7 +132,7 @@ export default {
   }
 
   .alldiscuss-container {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     min-height: 52vh;
 
     .alldiscuss-container-nav {
@@ -165,7 +166,7 @@ export default {
 
       .alldiscuss-title {
         height: 4vh;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: #44464f;
       }
     }

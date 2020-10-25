@@ -97,9 +97,9 @@ export default {
   .movie-detail-info {
     width: 60%;
     text-align: justify;
-    line-height: 1.8rem;
-    font-size: 1.1rem;
-    opacity: 0.9;
+    line-height: 1.4rem;
+    font-size: 1rem;
+    opacity: 1;
 
     p {
       width: 86%;
