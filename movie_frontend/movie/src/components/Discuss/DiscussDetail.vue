@@ -51,7 +51,7 @@
           <span
             :style="{
               backgroundColor: item.mouseover ? '#fff' : null,
-              fontSize: '0.7rem',
+              fontSize: '0.8rem',
             }"
             @mousemove="hoverRereply($event, item)"
             @mouseleave="leaveRereply($event, item)"
@@ -328,7 +328,7 @@ export default {
 
     .discuss-detail-reply-info {
       background-color: #b3b3b3;
-      font-size: 0.7rem;
+      font-size: 0.9rem;
       font-weight: 400;
       opacity: 0.7;
       display: flex;

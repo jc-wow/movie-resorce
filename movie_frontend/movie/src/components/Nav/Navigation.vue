@@ -128,7 +128,7 @@ export default {
           this.searchResVal = res.data.rows;
         });
     },
-    putSearchPanel() {
+    getSearchPanelPosition() {
       const searchInputObj = document.getElementsByClassName("nav-search")[0];
       const searchInputObjPosition = searchInputObj.getBoundingClientRect();
       const sWidth = searchInputObjPosition.right - searchInputObjPosition.left;
@@ -137,18 +137,27 @@ export default {
       this.searchPanelObj = document.getElementsByClassName(
         "nav-searchpanel"
       )[0];
+      this.putSearchPanel(sWidth, sX, sY);
+    },
+    putSearchPanel(sWidth, sX, sY) {
       this.searchPanelObj.style.cssText = `width: ${sWidth}px; left: ${sX}px; top: ${
         1 + sY
       }px`;
     },
   },
+  watch: {
+    $route(to, from) {
+      this.getSearchPanelPosition();
+    },
+  },
   mounted() {
-    this.putSearchPanel();
+    this.getSearchPanelPosition();
     const mainSelector = document.getElementsByClassName("main")[0];
     if (!mainSelector) return;
     mainSelector.addEventListener("click", () => {
       this.searchResVal = [];
     });
+    window.onresize = () => this.getSearchPanelPosition();
   },
   destroyed() {
     this.timer = null;
@@ -246,12 +255,13 @@ export default {
   }
 
   .nav-search {
-    width: 13%;
+    width: 14%;
     display: flex;
     .el-input-group {
       .el-input__inner {
         height: 33px;
-        font-weight: 600;
+        font-weight: 400;
+        font-size: 0.9rem;
       }
 
       .el-button {

@@ -35,7 +35,11 @@
           @click="showDetailDiscuss(discuss)"
         >
           <el-divider></el-divider>
-          <el-row type="flex" style="height: 100%; cursor: pointer">
+          <el-row
+            type="flex"
+            style="height: 100%; cursor: pointer"
+            align="middle"
+          >
             <el-col :span="12">{{ discuss.title }}</el-col>
             <el-col class="col-2" :span="5">{{ discuss.author }}</el-col>
             <el-col class="col-3" :span="3" style="font-size: 0.8rem">{{
@@ -132,7 +136,7 @@ export default {
   }
 
   .alldiscuss-container {
-    font-size: 0.8rem;
+    font-size: 1rem;
     min-height: 52vh;
 
     .alldiscuss-container-nav {
