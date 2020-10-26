@@ -144,6 +144,25 @@ export default {
         1 + sY
       }px`;
     },
+    listenElementChange() {
+      const ele = document.getElementsByClassName("nav")[0];
+      let eleWidth = ele.clientWidth;
+      const config = { attributes: true };
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+					debugger
+          if (
+            mutation.target === ele &&
+            mutation.attributeName === "style" &&
+            eleWidth !== ele.style.width
+          ) {
+            console.log("Width Changed!");
+            eleWidth = ele.style.width;
+          }
+        });
+      });
+      observer.observe(ele, config);
+    },
   },
   watch: {
     $route(to, from) {
@@ -158,6 +177,7 @@ export default {
       this.searchResVal = [];
     });
     window.onresize = () => this.getSearchPanelPosition();
+    this.listenElementChange();
   },
   destroyed() {
     this.timer = null;
