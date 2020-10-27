@@ -74,6 +74,7 @@
 </template>
 
 <script>
+
 export default {
   name: "alldiscuss",
   data() {
@@ -98,7 +99,7 @@ export default {
       if (curPage) this.reqParam.page = parseInt(curPage);
       this.$store.dispatch("getAllDiscuss", this.reqParam).then((res) => {
         this.discussList = res.data.rows;
-				this.totalDiscuss = res.data.count;
+        this.totalDiscuss = res.data.count;
       });
     },
     showDetailDiscuss(val) {

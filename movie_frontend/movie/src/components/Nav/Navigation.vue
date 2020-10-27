@@ -41,7 +41,8 @@
       </el-input>
     </div>
     <div class="nav-searchpanel">
-      <span
+      <div
+        :id="'nav-searchpanel-' + index"
         v-for="(item, index) in searchResVal"
         :key="'search' + index"
         @mousemove="hoverMovie(item)"
@@ -50,7 +51,7 @@
         @click="selectMovie($event)"
       >
         {{ item.title }}
-      </span>
+      </div>
     </div>
     <Drawer :showDrawer="showDrawer"></Drawer>
   </div>
@@ -140,33 +141,16 @@ export default {
       this.putSearchPanel(sWidth, sX, sY);
     },
     putSearchPanel(sWidth, sX, sY) {
+      this.searchResVal = [];
+      this.searchVal = "";
       this.searchPanelObj.style.cssText = `width: ${sWidth}px; left: ${sX}px; top: ${
         1 + sY
       }px`;
     },
-    listenElementChange() {
-      const ele = document.getElementsByClassName("nav")[0];
-      let eleWidth = ele.clientWidth;
-      const config = { attributes: true };
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-					debugger
-          if (
-            mutation.target === ele &&
-            mutation.attributeName === "style" &&
-            eleWidth !== ele.style.width
-          ) {
-            console.log("Width Changed!");
-            eleWidth = ele.style.width;
-          }
-        });
-      });
-      observer.observe(ele, config);
-    },
   },
   watch: {
     $route(to, from) {
-      this.getSearchPanelPosition();
+      this.$nextTick(() => this.getSearchPanelPosition());
     },
   },
   mounted() {
@@ -177,7 +161,6 @@ export default {
       this.searchResVal = [];
     });
     window.onresize = () => this.getSearchPanelPosition();
-    this.listenElementChange();
   },
   destroyed() {
     this.timer = null;
@@ -296,12 +279,12 @@ export default {
     background-color: #fff;
     color: #000;
     border-radius: 3px;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 100;
     max-height: 20rem;
     overflow: auto;
-    span {
-      display: block;
+    div {
+      // display: block;
       line-height: 1.6rem;
       margin-left: 2%;
       cursor: pointer;
@@ -309,7 +292,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    span:hover {
+    div:hover {
       overflow: visible;
       white-space: normal;
     }

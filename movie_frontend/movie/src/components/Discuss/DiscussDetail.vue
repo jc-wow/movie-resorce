@@ -263,7 +263,7 @@ export default {
       this.discuss =
         Object.keys(this.$store.state.selectedDiscuss).length === 0
           ? JSON.parse(sessionStorage.getItem("curdiscuss"))
-					: this.$store.state.selectedDiscuss;
+          : this.$store.state.selectedDiscuss;
       this.getReply();
     },
     clearEditor() {
