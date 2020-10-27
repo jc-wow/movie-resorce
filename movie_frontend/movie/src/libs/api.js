@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "development") {
 } else if (process.env.NODE_ENV === "debug") {
   instance.defaults.baseURL = "";
 } else if (process.env.NODE_ENV === "production") {
-  instance.defaults.baseURL = "https://39.97.177.60/api/";
+  instance.defaults.baseURL = "https://1994movie.xyz/api/";
 }
 
 instance.defaults.timeout = 100000;
