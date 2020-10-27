@@ -32,6 +32,8 @@
         v-model="searchVal"
         @input="changeSearchVal"
         @keyup.enter.native="selectMovie()"
+        @keydown.down.native="keyControlMovie($event)"
+        @keydown.up.native="keyControlMovie($event)"
       >
         <el-button
           slot="append"
@@ -69,6 +71,7 @@ export default {
       searchVal: "",
       timer: null,
       searchResVal: [],
+      keyPosition: -1,
     };
   },
   methods: {
@@ -76,7 +79,11 @@ export default {
       if (e) {
         this.curSelectMovie = e.target.textContent.trim() || "";
       } else {
-        this.curSelectMovie = this.searchVal;
+        if (this.keyPosition !== -1) {
+					this.curSelectMovie = this.searchResVal[this.keyPosition].title;
+        } else {
+          this.curSelectMovie = this.searchVal;
+        }
       }
       if (this.curSelectMovie.length === 0) return;
       this.movieObj = this.searchResVal.filter(
@@ -84,12 +91,9 @@ export default {
       )[0];
       if (!this.movieObj) return;
       this.$store.commit("getSelectedMovie", this.movieObj);
-      this.searchResVal = [];
-      this.searchVal = "";
     },
     changePage(val) {
-      this.searchResVal = [];
-      this.searchVal = "";
+      // this.initData()
       this.$store.commit("getCurPage", val.target.textContent);
     },
     enterNav(e) {
@@ -101,6 +105,44 @@ export default {
     changeSearchVal() {
       clearTimeout(this.timer);
       this.timer = setTimeout(() => this.reqSearchAPI(), 500);
+    },
+    keyControlMovie(event) {
+      const searchResValLength = this.searchResVal.length;
+      if (searchResValLength === 0 || !event.code) return;
+      const curClassName = event.currentTarget.className;
+      if (!curClassName.includes("el-input")) return;
+
+      if (
+        event.code === "ArrowDown" &&
+        this.keyPosition + 1 < searchResValLength
+      ) {
+        if (this.keyPosition !== -1) {
+          this.searchResVal[this.keyPosition].ishover = false;
+        }
+        this.keyPosition++;
+      } else if (event.code === "ArrowUp" && this.keyPosition >= 0) {
+        this.searchResVal[this.keyPosition].ishover = false;
+        this.keyPosition--;
+        if (this.keyPosition === -1) return;
+      }
+      this.checkKeyPosition();
+      this.searchResVal[this.keyPosition].ishover = true;
+    },
+    checkKeyPosition() {
+      if (this.keyPosition === -1) return;
+      const searchPanel = document.getElementsByClassName("nav-searchpanel")[0];
+      const searchPanelObj = searchPanel.getBoundingClientRect();
+      const searchPanelBottom = searchPanelObj.bottom;
+      const curKeyObj = document
+        .getElementById(`nav-searchpanel-${this.keyPosition}`)
+        .getBoundingClientRect();
+      const curKeyBottom = curKeyObj.bottom;
+      const curItemHeight = curKeyObj.height;
+      if (curKeyBottom > searchPanelBottom) {
+        searchPanel.scrollBy(0, curItemHeight);
+      } else if (curKeyObj.top < searchPanelObj.top) {
+        searchPanel.scrollBy(0, -curItemHeight);
+      }
     },
     hoverMovie(item) {
       item.ishover = true;
@@ -117,7 +159,7 @@ export default {
         this.searchVal.trim().length === 0 ||
         this.searchVal.trim().match(reg)
       ) {
-        this.searchResVal = [];
+        this.initData();
         return;
       }
       this.$store
@@ -141,15 +183,19 @@ export default {
       this.putSearchPanel(sWidth, sX, sY);
     },
     putSearchPanel(sWidth, sX, sY) {
-      this.searchResVal = [];
-      this.searchVal = "";
       this.searchPanelObj.style.cssText = `width: ${sWidth}px; left: ${sX}px; top: ${
         1 + sY
       }px`;
     },
+    initData() {
+      this.keyPosition = -1;
+      this.searchResVal = [];
+      this.searchVal = "";
+    },
   },
   watch: {
     $route(to, from) {
+      this.initData();
       this.$nextTick(() => this.getSearchPanelPosition());
     },
   },
@@ -159,6 +205,7 @@ export default {
     if (!mainSelector) return;
     mainSelector.addEventListener("click", () => {
       this.searchResVal = [];
+      this.keyPosition === -1;
     });
     window.onresize = () => this.getSearchPanelPosition();
   },
