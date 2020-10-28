@@ -2,17 +2,19 @@
   <div class="main">
     <SideBar class="sbar"></SideBar>
     <StartPage class="st"></StartPage>
-    <MovieMain class="mv-main"></MovieMain>
+		<AllVideoBook></AllVideoBook>
+    <!-- <MovieMain class="mv-main"></MovieMain> -->
     <!-- <Music class="mu-main"></Music> -->
   </div>
 </template>
 
 <script>
 import StartPage from "./StartPage";
-import MovieMain from "../Movie/MovieMain";
+// import MovieMain from "../Movie/MovieMain";
 import Discuss from "../Discuss/Discuss";
 import Music from "../Music/MusicMain";
 import SideBar from "../Nav/SideBar";
+import AllVideoBook from "../Movie/AllVideoBook";
 
 export default {
   name: "Main",
@@ -25,9 +27,10 @@ export default {
   },
   components: {
     StartPage,
-    MovieMain,
+    // MovieMain,
     Music,
     SideBar,
+    AllVideoBook,
   },
   methods: {
     scrollEvent() {
@@ -39,9 +42,9 @@ export default {
     },
     getHeightOfComp() {
       this.heightOfst = document.getElementsByClassName("st")[0].clientHeight;
-      this.heightOfmv = document.getElementsByClassName(
-        "mv-main"
-      )[0].clientHeight;
+      // this.heightOfmv = document.getElementsByClassName(
+      //   "mv-main"
+      // )[0].clientHeight;
     },
     jumpToPage(val) {
       this.height = 0;

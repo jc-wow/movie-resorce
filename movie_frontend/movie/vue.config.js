@@ -48,7 +48,7 @@ module.exports = {
     },
     extensions: [".js", ".vue"]
   },
-  entry: {
+  vendors: {
     index: [
       "eventsource-polyfill",
       "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000",
