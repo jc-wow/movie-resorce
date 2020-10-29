@@ -1,7 +1,7 @@
 <template>
   <div class="alldiscuss">
     <div class="alldiscuss-tipboard">
-      <h1>{{ tipBoard }}</h1>
+      <!-- <h1>{{ tipBoard }}</h1> -->
     </div>
     <div class="alldiscuss-container">
       <div class="alldiscuss-container-nav">

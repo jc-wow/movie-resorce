@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <SideBar class="sbar"></SideBar>
-    <StartPage class="st"></StartPage>
+    <!-- <SideBar class="sbar"></SideBar> -->
+    <!-- <StartPage class="st"></StartPage> -->
 		<AllVideoBook></AllVideoBook>
     <!-- <MovieMain class="mv-main"></MovieMain> -->
     <!-- <Music class="mu-main"></Music> -->
@@ -42,9 +42,9 @@ export default {
     },
     getHeightOfComp() {
       this.heightOfst = document.getElementsByClassName("st")[0].clientHeight;
-      // this.heightOfmv = document.getElementsByClassName(
-      //   "mv-main"
-      // )[0].clientHeight;
+      this.heightOfmv = document.getElementsByClassName(
+        "mv-main"
+      )[0].clientHeight;
     },
     jumpToPage(val) {
       this.height = 0;
@@ -85,7 +85,7 @@ export default {
     },
   },
   mounted() {
-    this.getHeightOfComp();
+    // this.getHeightOfComp();
     this.checkCurScrollPosition();
   },
   destroyed() {
@@ -95,4 +95,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.main {
+	overflow: hidden;
+}
 </style>

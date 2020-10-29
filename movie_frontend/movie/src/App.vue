@@ -85,21 +85,4 @@ html {
     }
   }
 }
-
-:root {
-  /* colors */
-  --body-bg: #fafafa;
-  --page-bg: #f5f5f5;
-  --dark-text: #2a2935;
-
-  /* spacing */
-  /* this is what defines the global scale */
-  --baseline: 12px;
-
-  /* fonts */
-  --book-title: "Tulpen One", sans-serif;
-  --title: "Cormorant Garamond", serif;
-  --body: "Cormorant Garamond", serif;
-  --base-size: var(--baseline) * 1.2;
-}
 </style>

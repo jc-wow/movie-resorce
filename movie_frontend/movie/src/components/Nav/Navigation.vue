@@ -55,16 +55,16 @@
         {{ item.title }}
       </div>
     </div>
-    <Drawer :showDrawer="showDrawer"></Drawer>
+    <!-- <Drawer :showDrawer="showDrawer"></Drawer> -->
   </div>
 </template>
 
 <script>
-import Drawer from "@/components/common/Drawer";
+// import Drawer from "@/components/common/Drawer";
 
 export default {
   name: "Navigation",
-  components: { Drawer },
+  // components: { Drawer },
   data() {
     return {
       showDrawer: false,
