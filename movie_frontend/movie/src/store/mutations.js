@@ -30,6 +30,9 @@ const mutations = {
     const key = Object.keys(val)[0];
     state.userInfo[key] = val[key];
 	},
+	getMovieInfoByTime(state, val) {
+		state.movieInfoByTime = val;
+	}
 };
 
 export default mutations;

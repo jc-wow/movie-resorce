@@ -95,7 +95,19 @@ const actions = {
   },
   searchMovie({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.get(`/searchmovie`, param).then(res => {
+      this._vm.get("/searchmovie", param).then(res => {
+        if (res.success) {
+          resolve(res);
+        } else {
+          this._vm.$message.error("抱歉，程序猿开了小差~");
+        }
+      });
+    });
+  },
+  /* video */
+  getMovieInfoByTime({ commit }, param) {
+    return new Promise((resolve, reject) => {
+      this._vm.get("movieinfo_bytime", param).then(res => {
         if (res.success) {
           resolve(res);
         } else {
