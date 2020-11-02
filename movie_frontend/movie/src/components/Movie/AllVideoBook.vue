@@ -8,7 +8,7 @@
           @click="selectPage($event)"
         ></div>
         <div class="book__page book__page--4" @click="selectPage($event)">
-          <div class="page__content">ask公开撒娇感觉</div>
+          <div class="page__content"></div>
         </div>
         <div
           class="book__page book__page--2"
@@ -27,21 +27,18 @@
             </div>
           </transition>
           <div class="book__page-back" @click="selectPage($event)">
-            <div class="page__content">
+            <div class="page__content" v-show="showBackPageAni">
               <div
                 class="video-img-content"
                 v-for="(item, index) in movieInfo"
                 :key="'movie_' + index"
               >
-                <transition name="loadimage">
-                  <el-image
-                    v-show="item.load"
-                    :src="item.cover"
-                    referrerpolicy="no-referrer"
-                    fit="cover"
-                    @load="loadedImg(item, index)"
-                  ></el-image>
-                </transition>
+                <h4>{{ item.title }}</h4>
+                <img
+                  :src="item.cover"
+                  onerror="this.style.display='none'"
+                  referrerpolicy="no-referrer"
+                />
               </div>
             </div>
           </div>
@@ -53,6 +50,8 @@
 
 <script>
 import AllVideosCategory from "./AllVideosCategory";
+import "../../style/waterfall.scss";
+import { nextTick } from "process";
 
 export default {
   name: "AllVideoBook",
@@ -62,6 +61,7 @@ export default {
       paging: false,
       loaded: false,
       movieInfo: [],
+      showBackPageAni: false,
     };
   },
   methods: {
@@ -69,19 +69,41 @@ export default {
       const curClassName = e.currentTarget.className;
       if (curClassName.includes("front") || curClassName.includes("1")) {
         this.paging = true;
+        this.showBackPageAni = true;
       } else {
         this.paging = false;
+        if (this.backpageAni) clearTimeout(this.backpageAni);
+        this.backpageAni = setTimeout(() => {
+          this.showBackPageAni = false;
+        }, 900);
       }
     },
-    loadedImg(ele, index) {
-      setTimeout(() => (ele.load = true), 150 * index);
-    },
     getMovieInfo() {
-      this.movieInfo = [];
+      const movieCount = this.$store.state.movieInfoByTime.length;
       this.movieInfo = this.$store.state.movieInfoByTime.slice(0, 20);
-      this.movieInfo.forEach((ele) => {
-        this.$set(ele, "load", false);
-      });
+      let start = 0,
+        end = 20;
+      if (this.getMovieInfoByTime) clearInterval(this.getMovieInfoByTime);
+      this.getMovieInfoByTime = setInterval(() => {
+        start += 20;
+        end += 20;
+        if (end > movieCount) {
+          start = 0;
+          end = 20;
+        }
+        this.movieInfo = this.$store.state.movieInfoByTime.slice(start, end);
+      }, 30000);
+    },
+    removeCheckFinishPageAnimation() {
+      if (this.pageBackListen) {
+        this.pageObj.removeEventListener(
+          "transitionend",
+          this.finishPageAnimationCallback()
+        );
+      }
+    },
+    finishPageAnimationCallback() {
+      this.paging = false;
     },
   },
   created() {
@@ -133,18 +155,6 @@ export default {
 
 .load-enter-to {
   opacity: 1;
-}
-
-.loadimage-enter {
-  width: 80%;
-}
-
-.loadimage-active {
-  transition: width 1s ease;
-}
-
-.loadimage-to {
-  width: 50%;
 }
 
 .allvideobook {
@@ -235,18 +245,10 @@ export default {
 
           .page__content {
             padding: var(--baseline);
+            width: 100%;
             height: 100%;
             position: relative;
             text-align: center;
-
-            .page-content-container {
-              height: 100%;
-              width: 100%;
-            }
-
-            .el-image {
-              position: absolute;
-            }
           }
         }
       }
@@ -257,15 +259,6 @@ export default {
         font-family: var(--title);
         font-size: calc(var(--base-size) * 0.67);
         text-align: center;
-      }
-    }
-
-    input[type="radio"] {
-      display: none;
-
-      &:checked + .book__page {
-        transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
-        transform: rotateY(-180deg);
       }
     }
   }
