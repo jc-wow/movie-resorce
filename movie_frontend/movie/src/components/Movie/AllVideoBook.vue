@@ -3,20 +3,20 @@
     <div class="cover">
       <div class="book">
         <div
-          class="book__page book__page--1"
+          class="book-page book-page-1"
           :class="{ 'allvideobook-load': loaded }"
           @click="selectPage($event)"
         ></div>
-        <div class="book__page book__page--4" @click="selectPage($event)">
-          <div class="page__content"></div>
+        <div class="book-page book-page-4" @click="selectPage($event)">
+          <div class="page-content-4"></div>
         </div>
         <div
-          class="book__page book__page--2"
+          class="book-page book-page-2"
           :class="{ 'allvideobook-page': paging }"
         >
           <transition name="load">
             <div
-              class="book__page-front"
+              class="book-page-front"
               @click="selectPage($event)"
               v-show="loaded"
             >
@@ -26,8 +26,8 @@
               ></AllVideosCategory>
             </div>
           </transition>
-          <div class="book__page-back" @click="selectPage($event)">
-            <div class="page__content" v-show="showBackPageAni">
+          <div class="book-page-back" @click="selectPage($event)">
+            <div class="page-content" v-show="showBackPageAni">
               <div
                 class="video-img-content"
                 v-for="(item, index) in movieInfo"
@@ -92,7 +92,7 @@ export default {
           end = 20;
         }
         this.movieInfo = this.$store.state.movieInfoByTime.slice(start, end);
-      }, 30000);
+      }, 60000);
     },
     removeCheckFinishPageAnimation() {
       if (this.pageBackListen) {
@@ -105,6 +105,7 @@ export default {
     finishPageAnimationCallback() {
       this.paging = false;
     },
+			
   },
   created() {
     this.categoryRight = [
@@ -165,7 +166,7 @@ export default {
   --base-size: var(--baseline) * 1.2;
   height: 92vh;
   margin-top: 8vh;
-  background-color: #000;
+  background-color: rgb(0, 0, 0);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -182,7 +183,7 @@ export default {
       display: flex;
       perspective: 1200px;
 
-      &__page {
+      &-page {
         position: relative;
         width: 50%;
         height: 100%;
@@ -205,14 +206,14 @@ export default {
           );
         }
 
-        &--1 {
+        &-1 {
           cursor: pointer;
           overflow: hidden;
           transform: rotateY(180deg);
           transform-origin: 100%;
         }
 
-        &--2 {
+        &-2 {
           padding: 0 calc(var(--baseline) * 3);
           position: absolute;
           right: 0;
@@ -225,9 +226,12 @@ export default {
           );
         }
 
-        &--4 {
+        &-4 {
           cursor: pointer;
           padding: 0 calc(var(--baseline) * 3);
+
+          .page-content-4 {
+          }
         }
 
         &-front {
@@ -243,7 +247,7 @@ export default {
           padding: 0 calc(var(--baseline) * 1.8);
           transform: rotateY(180deg) translateZ(1px);
 
-          .page__content {
+          .page-content {
             padding: var(--baseline);
             width: 100%;
             height: 100%;

@@ -1,12 +1,14 @@
 <template>
   <div class="allvideos-category">
-    <div
-      class="category"
-      v-for="(item, index) in category"
-      :key="'category_' + index"
-      @click="selectCat($event)"
-    >
-      {{ item }}
+    <div class="allvideos-category-time">
+      <span
+        class="category"
+        v-for="(item, index) in category"
+        :key="'category_' + index"
+        @click="selectCat($event)"
+      >
+        {{ item }}
+      </span>
     </div>
   </div>
 </template>
@@ -43,11 +45,16 @@ export default {
 <style scoped lang='scss'>
 .allvideos-category {
   height: 100%;
-  .category {
-    height: calc(100% / 14);
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  .allvideos-category-time {
+		height: 30%;
+		width: 100%;
+    .category {
+      width: calc(100% / 7);
+			cursor: pointer;
+			display: inline-block;
+			line-height: 3rem;
+			text-align: center;
+    }
   }
 }
 </style>
