@@ -5,7 +5,16 @@ const { Op } = require("sequelize");
 
 class MovieInfo extends Service {
   async getMovieInfoByTime(time) {
-    let whereClause = {};
+		let whereClause = {};
+		// get info by year
+		if (time.length === 4) {
+			whereClause = {
+				release_date: {
+					[Op.like]: `${time}%`
+				}
+			}
+		}
+		// get info by time
     if (parseInt(time) >= 196) {
       whereClause = {
         release_date: {

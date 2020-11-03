@@ -2,7 +2,7 @@ const actions = {
   /* movie api */
   getMovieInfo({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.get("movie", param).then(res => {
+      this._vm.get("movie", param).then((res) => {
         if (res.success) {
           commit("getMovieInfo", res.data);
           resolve(res);
@@ -12,7 +12,7 @@ const actions = {
   },
   getResSelectedMovie({ commit }, id) {
     return new Promise((resolve, reject) => {
-      this._vm.get(`movie/${id}`, { id: id }).then(res => {
+      this._vm.get(`movie/${id}`, { id: id }).then((res) => {
         if (res.success) {
           commit("getResSelectedMovie", res.data);
           resolve(res);
@@ -23,7 +23,7 @@ const actions = {
   /* discuss api */
   postDiscuss({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.post("/discuss", param).then(res => {
+      this._vm.post("/discuss", param).then((res) => {
         if (res.success) {
           commit("getResPostDiscuss", res.data);
           resolve(res);
@@ -35,7 +35,7 @@ const actions = {
   },
   getAllDiscuss({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.get("/discuss", param).then(res => {
+      this._vm.get("/discuss", param).then((res) => {
         if (res.success) {
           commit("getAllDiscuss", res.data);
           resolve(res);
@@ -47,7 +47,7 @@ const actions = {
   },
   updateDiscuss({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.put(`/discuss/${param.id}`, param).then(res => {
+      this._vm.put(`/discuss/${param.id}`, param).then((res) => {
         if (res.success) {
           commit("getResPostDiscuss", res.data);
           resolve(res);
@@ -60,7 +60,7 @@ const actions = {
   /* discuss reply api */
   getDiscussReply({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.get(`/discuss_reply/${param.rid}`, param).then(res => {
+      this._vm.get(`/discuss_reply/${param.rid}`, param).then((res) => {
         if (res.success) {
           commit("getDiscussReply", res.data);
           resolve(res);
@@ -72,7 +72,7 @@ const actions = {
   },
   createDiscussReply({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.post(`/discuss_reply/${param.rid}`, param).then(res => {
+      this._vm.post(`/discuss_reply/${param.rid}`, param).then((res) => {
         if (res.success) {
           commit("getDiscussReply", res.data);
           resolve(res);
@@ -84,7 +84,7 @@ const actions = {
   },
   updateDiscussReply({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.post(`/discuss_reply/${param.id}/update`, param).then(res => {
+      this._vm.post(`/discuss_reply/${param.id}/update`, param).then((res) => {
         if (res.success) {
           resolve(res);
         } else {
@@ -95,7 +95,7 @@ const actions = {
   },
   searchMovie({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.get("/searchmovie", param).then(res => {
+      this._vm.get("/searchmovie", param).then((res) => {
         if (res.success) {
           resolve(res);
         } else {
@@ -107,7 +107,7 @@ const actions = {
   /* video */
   getMovieInfoByTime({ commit }, param) {
     return new Promise((resolve, reject) => {
-      this._vm.get("movieinfo_bytime", param).then(res => {
+      this._vm.get("movieinfo_bytime", param).then((res) => {
         if (res.success) {
           resolve(res);
         } else {
@@ -115,7 +115,7 @@ const actions = {
         }
       });
     });
-  }
+  },
 };
 
 export default actions;

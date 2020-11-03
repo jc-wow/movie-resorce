@@ -15,14 +15,10 @@
           :class="{ 'allvideobook-page': paging }"
         >
           <transition name="load">
-            <div
-              class="book-page-front"
-              @click="selectPage($event)"
-              v-show="loaded"
-            >
+            <div class="book-page-front" v-show="loaded">
               <AllVideosCategory
-                :category="categoryRight"
                 @getMovieInfo="getMovieInfo"
+                @selectPage="selectPage"
               ></AllVideosCategory>
             </div>
           </transition>
@@ -66,8 +62,7 @@ export default {
   },
   methods: {
     selectPage(e) {
-      const curClassName = e.currentTarget.className;
-      if (curClassName.includes("front") || curClassName.includes("1")) {
+      if (!e || e.currentTarget.className.includes("front") || e.currentTarget.className.includes("1")) {
         this.paging = true;
         this.showBackPageAni = true;
       } else {
@@ -105,25 +100,6 @@ export default {
     finishPageAnimationCallback() {
       this.paging = false;
     },
-			
-  },
-  created() {
-    this.categoryRight = [
-      "2020s",
-      "2010s",
-      "2000s",
-      "1990s",
-      "1980s",
-      "1970s",
-      "1960s",
-      "1950s",
-      "1940s",
-      "1930s",
-      "1920s",
-      "1910s",
-      "1900s",
-      "18th",
-    ];
   },
   mounted() {
     this.loaded = true;

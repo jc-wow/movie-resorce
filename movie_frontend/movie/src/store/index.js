@@ -20,7 +20,8 @@ export default new Vuex.Store({
       email: "",
       author: ""
 		},
-		movieInfoByTime: []
+		movieInfoByTime: [],
+		movieInfoByYear: []
   },
   mutations,
   actions,

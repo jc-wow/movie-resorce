@@ -32,6 +32,9 @@ const mutations = {
 	},
 	getMovieInfoByTime(state, val) {
 		state.movieInfoByTime = val;
+	},
+	getMovieInfoByYear(state, val) {
+		state.movieInfoByYear = val;
 	}
 };
 
