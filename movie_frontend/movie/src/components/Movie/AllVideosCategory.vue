@@ -36,7 +36,8 @@ export default {
   methods: {
     selectCat(e) {
       this.time = e.currentTarget.textContent.trim();
-      let param = "";
+			let param = "";
+			// TODO: not handle 18th yet
       if (this.time.startsWith("18")) {
         param = "18";
       } else {

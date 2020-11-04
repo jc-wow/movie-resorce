@@ -8,7 +8,9 @@
           @click="selectPage($event)"
         ></div>
         <div class="book-page book-page-4" @click="selectPage($event)">
-          <div class="page-content-4"></div>
+          <div class="page-content-4">
+						<AllVideosByYear></AllVideosByYear>
+					</div>
         </div>
         <div
           class="book-page book-page-2"
@@ -46,12 +48,13 @@
 
 <script>
 import AllVideosCategory from "./AllVideosCategory";
+import AllVideosByYear from "./AllVideosByYear"
 import "../../style/waterfall.scss";
 import { nextTick } from "process";
 
 export default {
   name: "AllVideoBook",
-  components: { AllVideosCategory },
+  components: { AllVideosCategory, AllVideosByYear },
   data() {
     return {
       paging: false,
@@ -207,6 +210,7 @@ export default {
           padding: 0 calc(var(--baseline) * 3);
 
           .page-content-4 {
+						overflow: hidden;
           }
         }
 
