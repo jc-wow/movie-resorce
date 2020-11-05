@@ -1,26 +1,31 @@
 <template>
   <div class="allvideoby-year">
-      <div class="center list flex-column">
-        <div class="card flex-row open" v-for="(video, index) in videoInfo" :key="'video_' + index">
-          <img class="book" />
-          <div class="flex-column info">
-            <div class="title">{{video.title}}</div>
-            <div class="author"></div>
-            <div class="hidden bottom summary">
-            </div>
-          </div>
-          <div class="flex-column group">
-            <!-- <div class="members">
+    <div class="center list flex-column">
+      <div
+        class="card flex-row"
+        :class="{ open: video.open }"
+        v-for="(video, index) in videoInfo"
+        :key="'video_' + index"
+        @click="showVideoDetail(video)"
+      >
+        <img class="book" :src="video.cover" />
+        <div class="flex-column info">
+          <div class="title">{{ video.title }}</div>
+          <div class="author"></div>
+          <div class="hidden bottom summary"></div>
+        </div>
+        <div class="flex-column group">
+          <!-- <div class="members">
               <span class="current">14</span> /
               <span class="max">30</span>
             </div>
             <div class="hidden bottom">
               <button class="simple">Join</button>
             </div> -->
-          </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -28,15 +33,31 @@ export default {
   name: "AllVideosByYear",
   data() {
     return {
-			videoInfo: []
-		};
-	},
-	watch: {
-		'$store.state.movieInfoByYear': function() {
-			this.videoInfo = this.$store.state.movieInfoByYear;
-		}
-	}
-	
+      videoInfo: [],
+    };
+  },
+  methods: {
+    showVideoDetail(e) {
+      if (!e.open) {
+        for (let l = this.videoInfo.length, i = 0; i < l; i++) {
+          if (this.videoInfo[i].open) {
+						this.videoInfo[i].open = false;
+						e.open = true;
+						return;
+          }
+				}
+        e.open = true;
+      }
+    },
+  },
+  watch: {
+    "$store.state.movieInfoByYear": function () {
+      this.videoInfo = this.$store.state.movieInfoByYear;
+      this.videoInfo.forEach((ele) => {
+        this.$set(ele, "open", false);
+      });
+    },
+  },
 };
 </script>
 
@@ -45,8 +66,8 @@ $dark: #131325;
 
 .allvideoby-year {
   height: 100%;
-	width: 100%;
-	overflow-y: auto;
+  width: 100%;
+  overflow-y: auto;
 
   .flex-row {
     display: flex;
@@ -58,19 +79,13 @@ $dark: #131325;
     flex-flow: column;
   }
   .center {
-		padding-top: 5%;
-    // align-items: center;
-    // position: absolute;
-    // top: 50%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
+    padding-top: 5%;
   }
   .list {
     border-radius: 3px;
     overflow: hidden;
     & .card {
       cursor: pointer;
-      // min-width: 700px;
       margin-bottom: 10px;
       perspective: 600px;
       transition: all 0.1s;

@@ -7,7 +7,7 @@
           :class="{ 'allvideobook-load': loaded }"
           @click="selectPage($event)"
         ></div>
-        <div class="book-page book-page-4" @click="selectPage($event)">
+        <div class="book-page book-page-4">
           <div class="page-content-4">
 						<AllVideosByYear></AllVideosByYear>
 					</div>
