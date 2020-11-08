@@ -9,8 +9,8 @@
         ></div>
         <div class="book-page book-page-4">
           <div class="page-content-4">
-						<AllVideosByYear></AllVideosByYear>
-					</div>
+            <AllVideosByYear></AllVideosByYear>
+          </div>
         </div>
         <div
           class="book-page book-page-2"
@@ -48,7 +48,7 @@
 
 <script>
 import AllVideosCategory from "./AllVideosCategory";
-import AllVideosByYear from "./AllVideosByYear"
+import AllVideosByYear from "./AllVideosByYear";
 import "../../style/waterfall.scss";
 import { nextTick } from "process";
 
@@ -65,7 +65,11 @@ export default {
   },
   methods: {
     selectPage(e) {
-      if (!e || e.currentTarget.className.includes("front") || e.currentTarget.className.includes("1")) {
+      if (
+        !e ||
+        e.currentTarget.className.includes("front") ||
+        e.currentTarget.className.includes("1")
+      ) {
         this.paging = true;
         this.showBackPageAni = true;
       } else {
@@ -78,9 +82,10 @@ export default {
     },
     getMovieInfo() {
       const movieCount = this.$store.state.movieInfoByTime.length;
-      this.movieInfo = this.$store.state.movieInfoByTime.slice(0, 20);
+      this.movieInfo = this.$store.state.movieInfoByTime.rows.slice(0, 20);
       let start = 0,
-        end = 20;
+				end = 20;
+      // get movie info every 60s
       if (this.getMovieInfoByTime) clearInterval(this.getMovieInfoByTime);
       this.getMovieInfoByTime = setInterval(() => {
         start += 20;
@@ -88,8 +93,8 @@ export default {
         if (end > movieCount) {
           start = 0;
           end = 20;
-        }
-        this.movieInfo = this.$store.state.movieInfoByTime.slice(start, end);
+				}
+        this.movieInfo = this.$store.state.movieInfoByTime.rows.slice(start, end);
       }, 60000);
     },
     removeCheckFinishPageAnimation() {
@@ -207,10 +212,10 @@ export default {
 
         &-4 {
           cursor: pointer;
-          padding: 0 calc(var(--baseline) * 3);
+          padding: 0 1% 0 calc(var(--baseline) * 5);
 
           .page-content-4 {
-						overflow: hidden;
+            overflow: hidden;
           }
         }
 

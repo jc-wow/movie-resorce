@@ -8,11 +8,16 @@
         :key="'video_' + index"
         @click="showVideoDetail(video)"
       >
-        <img class="book" :src="video.cover" />
+        <img class="book" :src="video.cover" referrerpolicy="no-referrer" />
         <div class="flex-column info">
           <div class="title">{{ video.title }}</div>
-          <div class="author"></div>
-          <div class="hidden bottom summary"></div>
+          <div class="director">
+            <span>导演：</span>{{ getPeopleInfo(video.director) }}
+          </div>
+          <div class="actor">
+            <span>演员：</span>{{ getPeopleInfo(video.actor) }}
+          </div>
+          <div class="hidden bottom summary">{{ video.summary }}</div>
         </div>
         <div class="flex-column group">
           <!-- <div class="members">
@@ -24,6 +29,9 @@
             </div> -->
         </div>
       </div>
+      <div class="card flex-flow load-video" v-show="showLoadVideo">
+        加载中...
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +42,8 @@ export default {
   data() {
     return {
       videoInfo: [],
+      showLoadVideo: false,
+      offset: 1,
     };
   },
   methods: {
@@ -41,28 +51,110 @@ export default {
       if (!e.open) {
         for (let l = this.videoInfo.length, i = 0; i < l; i++) {
           if (this.videoInfo[i].open) {
-						this.videoInfo[i].open = false;
-						e.open = true;
-						return;
+            this.videoInfo[i].open = false;
+            e.open = true;
+            return;
           }
-				}
+        }
         e.open = true;
       }
     },
-  },
-  watch: {
-    "$store.state.movieInfoByYear": function () {
-      this.videoInfo = this.$store.state.movieInfoByYear;
+    getPeopleInfo(item) {
+      return item.split("/").slice(0, 3).join("/");
+    },
+    checkScollToBottom() {
+      if (
+        this.videoInfo.length + 1 >=
+        this.$store.state.movieInfoByYear.count
+      ) {
+        return;
+      }
+
+      const ctop = this.containerObj.scrollTop;
+      if (
+        this.containerObj.scrollHeight -
+          this.containerObj.offsetHeight -
+          ctop <=
+        0
+      ) {
+        this.showLoadVideo = true;
+        this.getVideoByYear();
+      }
+    },
+    getVideoByYear() {
+      const year = this.$store.state.curSelectYear;
+      this.offset++;
+      this.$store
+        .dispatch("getMovieInfoByTime", {
+          time: year,
+          offset: this.offset,
+          limit: 20,
+        })
+        .then((res) => {
+					res.data.rows.forEach(ele => {
+						this.$set(ele, "open", false);
+						this.videoInfo.push(ele);
+					})
+					this.videoInfo.push(...res.data.rows);
+          this.showLoadVideo = false;
+        });
+    },
+    throttle(fn, time) {
+      let timer = null;
+      return function () {
+        if (!timer) {
+          timer = setTimeout(() => {
+            timer = null;
+            fn();
+          }, time);
+        }
+      };
+    },
+    listenScroll() {
+      this.containerObj = document.getElementsByClassName("allvideoby-year")[0];
+      this.containerObj.addEventListener(
+        "scroll",
+        this.throttle(this.checkScollToBottom, 500)
+      );
+      this.cbottom = this.containerObj.getBoundingClientRect().height;
+    },
+    setInfoToVideo() {
       this.videoInfo.forEach((ele) => {
         this.$set(ele, "open", false);
       });
     },
+  },
+  watch: {
+    "$store.state.movieInfoByYear": function () {
+			this.videoInfo = this.$store.state.movieInfoByYear.rows;
+			this.setInfoToVideo();
+    },
+  },
+  mounted() {
+    this.listenScroll();
   },
 };
 </script>
 
 <style lang="scss" scoped>
 $dark: #131325;
+
+.allvideoby-year::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.allvideoby-year::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+.allvideoby-year::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #9e9e9e;
+}
 
 .allvideoby-year {
   height: 100%;
@@ -79,7 +171,7 @@ $dark: #131325;
     flex-flow: column;
   }
   .center {
-    padding-top: 5%;
+    padding-top: 3%;
   }
   .list {
     border-radius: 3px;
@@ -92,9 +184,8 @@ $dark: #131325;
       & .bottom {
         height: 0px;
         overflow: hidden;
-        width: 200px;
-        font-size: 12px;
-        color: #777;
+        font-size: 0.7rem;
+        color: #888;
         font-weight: normal;
       }
       &.open {
@@ -150,16 +241,24 @@ $dark: #131325;
       & .info {
         transition: all 0.2s;
         min-width: 200px;
-        padding: 0px 30px;
+        padding: 0px 1.5rem;
         font-family: "Montserrat";
         font-weight: bold;
+        width: 65%;
+				line-height: 1.1rem;
         & .title {
-          font-size: 1em;
+          font-size: 0.9rem;
           color: #fff;
           letter-spacing: 1px;
         }
-        & .author {
-          font-size: 12px;
+        & .director {
+          margin-top: 3%;
+          font-size: 0.7rem;
+          font-weight: normal;
+          color: #888;
+        }
+        & .actor {
+          font-size: 0.7rem;
           font-weight: normal;
           color: #888;
         }
@@ -182,6 +281,13 @@ $dark: #131325;
           margin-left: 10px;
         }
       }
+    }
+
+    .load-video {
+      height: 4vh;
+      text-align: center;
+      line-height: 4vh;
+      color: #fff;
     }
   }
 }

@@ -21,8 +21,9 @@ export default new Vuex.Store({
       author: ""
 		},
 		movieInfoByTime: [],
-		movieInfoByYear: []
-  },
+		movieInfoByYear: [],
+		curSelectYear: ''
+	},
   mutations,
   actions,
   modules: {}

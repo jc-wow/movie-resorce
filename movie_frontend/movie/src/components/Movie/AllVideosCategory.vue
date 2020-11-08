@@ -36,15 +36,15 @@ export default {
   methods: {
     selectCat(e) {
       this.time = e.currentTarget.textContent.trim();
-			let param = "";
-			// TODO: not handle 18th yet
+      let param = "";
+      // TODO: not handle 18th yet
       if (this.time.startsWith("18")) {
         param = "18";
       } else {
         param = this.time.slice(0, 3);
       }
       this.$store
-        .dispatch("getMovieInfoByTime", { time: param })
+        .dispatch("getMovieInfoByTime", { time: param, offset: 1, limit: 500 })
         .then((res) => {
           this.$store.commit("getMovieInfoByTime", res.data);
           this.$emit("getMovieInfo");
@@ -56,9 +56,14 @@ export default {
         this.year = "18";
       }
       this.$store
-        .dispatch("getMovieInfoByTime", { time: this.year })
+        .dispatch("getMovieInfoByTime", {
+          time: this.year,
+          limit: 20,
+          offset: 1,
+        })
         .then((res) => {
           this.$store.commit("getMovieInfoByYear", res.data);
+          this.$store.commit("getCurSelectYear", this.year);
           this.$emit("getMovieInfo");
           this.$emit("selectPage");
         });

@@ -35,6 +35,9 @@ const mutations = {
 	},
 	getMovieInfoByYear(state, val) {
 		state.movieInfoByYear = val;
+	},
+	getCurSelectYear(state, val) {
+		state.curSelectYear = val;
 	}
 };
 

@@ -4,37 +4,37 @@ const Service = require("egg").Service;
 const { Op } = require("sequelize");
 
 class MovieInfo extends Service {
-  async getMovieInfoByTime(time) {
-		let whereClause = {};
-		// get info by year
-		if (time.length === 4) {
-			whereClause = {
-				release_date: {
-					[Op.like]: `${time}%`
-				}
-			}
-		}
-		// get info by time
-    if (parseInt(time) >= 196) {
-      whereClause = {
-        release_date: {
-          [Op.like]: time === "18" ? `${time}%` : `%${time}%`,
+  async getMovieInfoByTime(param) {
+    let options = {};
+    const { time, offset, limit } = param;
+    // get info by year
+    if (time.length === 4) {
+      options = {
+        attributes: ["title", "cover", "director", "actor", "summary"],
+        order: [["rate", "DESC"]],
+        offset: parseInt(offset),
+        limit: parseInt(limit),
+        where: {
+          release_date: {
+            [Op.like]: `${time}%`,
+          },
         },
-        tag: "电影",
       };
     } else {
-      whereClause = {
-        release_date: {
-          [Op.like]: time === "18" ? `${time}%` : `%${time}%`,
+      // get info by time
+      options = {
+        attributes: ["title", "cover"],
+        order: [["rate", "DESC"]],
+        offset: parseInt(offset),
+        limit: parseInt(limit),
+        where: {
+          release_date: {
+            [Op.like]: time === "18" ? `${time}%` : `%${time}%`,
+          },
         },
       };
     }
-    const options = {
-      attributes: ["title", "release_date", "cover"],
-      order: [["rate", "DESC"]],
-      where: whereClause,
-    };
-    return this.ctx.model.MovieInfo.findAll(options);
+    return this.ctx.model.MovieInfo.findAndCountAll(options);
   }
 }
 
