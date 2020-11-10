@@ -9,7 +9,7 @@
         ></div>
         <div class="book-page book-page-4">
           <div class="page-content-4">
-            <AllVideosByYear></AllVideosByYear>
+            <AllVideosByYear :isPreviewVideo="isPreviewVideo"></AllVideosByYear>
           </div>
         </div>
         <div
@@ -30,7 +30,7 @@
                 class="video-img-content"
                 v-for="(item, index) in movieInfo"
                 :key="'movie_' + index"
-								@click="selectMovie(item)"
+                @click="selectMovie(item)"
               >
                 <h4>{{ item.title }}</h4>
                 <img
@@ -61,7 +61,8 @@ export default {
       paging: false,
       loaded: false,
       movieInfo: [],
-      showBackPageAni: false,
+			showBackPageAni: false,
+			isPreviewVideo: false
     };
   },
   methods: {
@@ -82,10 +83,10 @@ export default {
       }
     },
     getMovieInfo() {
-      const movieCount = this.$store.state.movieInfoByTime.length;
+      const movieCount = this.$store.state.movieInfoByTime.rows.length;
       this.movieInfo = this.$store.state.movieInfoByTime.rows.slice(0, 20);
       let start = 0,
-				end = 20;
+        end = 20;
       // get movie info every 60s
       if (this.getMovieInfoByTime) clearInterval(this.getMovieInfoByTime);
       this.getMovieInfoByTime = setInterval(() => {
@@ -94,8 +95,11 @@ export default {
         if (end > movieCount) {
           start = 0;
           end = 20;
-				}
-        this.movieInfo = this.$store.state.movieInfoByTime.rows.slice(start, end);
+        }
+        this.movieInfo = this.$store.state.movieInfoByTime.rows.slice(
+          start,
+          end
+        );
       }, 60000);
     },
     removeCheckFinishPageAnimation() {
@@ -108,10 +112,15 @@ export default {
     },
     finishPageAnimationCallback() {
       this.paging = false;
-		},
-		selectMovie(item) {
-			debugger
-		}
+    },
+    selectMovie(item) {
+      this.$store.dispatch("getVideo", { id: item.id }).then((res) => {
+        if (res.success) {
+          this.$store.commit("getSearchVideo", res.data);
+          this.isPreviewVideo = true;
+        }
+      });
+    },
   },
   mounted() {
     this.loaded = true;

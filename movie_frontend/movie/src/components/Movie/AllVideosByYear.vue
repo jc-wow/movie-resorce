@@ -1,6 +1,26 @@
 <template>
   <div class="allvideoby-year">
-    <div class="center list flex-column">
+    <div class="allvideoby-year-view" v-show="isPreviewVideo">
+      <div class="view-video-container">
+        <img
+          class="view-video"
+          :src="$store.state.searchVideo.cover"
+          referrerpolicy="no-referrer"
+        />
+      </div>
+
+      <div class="view-video-info">
+        <div class="view-title">{{ $store.state.searchVideo.title }}</div>
+        <div class="view-director">
+          <span>导演：</span>{{ $store.state.searchVideo.director }}
+        </div>
+        <div class="view-actor">
+          <span>演员：</span>{{ $store.state.searchVideo.actor }}
+        </div>
+        <div class="view-summary">{{ $store.state.searchVideo.summary }}</div>
+      </div>
+    </div>
+    <div class="center list flex-column" v-show="!isPreviewVideo">
       <div
         class="card flex-row"
         :class="{ open: video.open }"
@@ -8,25 +28,16 @@
         :key="'video_' + index"
         @click="showVideoDetail(video)"
       >
-        <img class="book" :src="video.cover" referrerpolicy="no-referrer" />
+        <img class="video" :src="video.cover" referrerpolicy="no-referrer" />
         <div class="flex-column info">
           <div class="title">{{ video.title }}</div>
           <div class="director">
             <span>导演：</span>{{ getPeopleInfo(video.director) }}
           </div>
-          <div class="actor" >
+          <div class="actor">
             <span>演员：</span>{{ getPeopleInfo(video.actor) }}
           </div>
           <div class="hidden bottom summary">{{ video.summary }}</div>
-        </div>
-        <div class="flex-column group">
-          <!-- <div class="members">
-              <span class="current">14</span> /
-              <span class="max">30</span>
-            </div>
-            <div class="hidden bottom">
-              <button class="simple">Join</button>
-            </div> -->
         </div>
       </div>
       <div class="card flex-flow load-video" v-show="showLoadVideo">
@@ -39,11 +50,14 @@
 <script>
 export default {
   name: "AllVideosByYear",
+  props: {
+    isPreviewVideo: Boolean,
+  },
   data() {
     return {
       videoInfo: [],
       showLoadVideo: false,
-			offset: 1,
+      offset: 1,
     };
   },
   methods: {
@@ -70,7 +84,7 @@ export default {
         return;
       }
 
-			const ctop = this.containerObj.scrollTop;
+      const ctop = this.containerObj.scrollTop;
       if (
         this.containerObj.scrollHeight -
           this.containerObj.offsetHeight -
@@ -91,11 +105,11 @@ export default {
           limit: 20,
         })
         .then((res) => {
-					res.data.rows.forEach(ele => {
-						this.$set(ele, "open", false);
-						this.videoInfo.push(ele);
-					})
-					this.videoInfo.push(...res.data.rows);
+          res.data.rows.forEach((ele) => {
+            this.$set(ele, "open", false);
+            this.videoInfo.push(ele);
+          });
+          this.videoInfo.push(...res.data.rows);
           this.showLoadVideo = false;
         });
     },
@@ -126,10 +140,10 @@ export default {
   },
   watch: {
     "$store.state.movieInfoByYear": function () {
-			this.containerObj.scrollTo(0, 0);
-			this.videoInfo = this.$store.state.movieInfoByYear.rows;
-			this.offset = 1;
-			this.setInfoToVideo();
+      this.containerObj.scrollTo(0, 0);
+      this.videoInfo = this.$store.state.movieInfoByYear.rows;
+      this.offset = 1;
+      this.setInfoToVideo();
     },
   },
   mounted() {
@@ -162,6 +176,59 @@ $dark: #131325;
   height: 100%;
   width: 100%;
   overflow-y: auto;
+
+  .allvideoby-year-view {
+    height: 100%;
+    background-color: $dark;
+    display: flex;
+
+    .view-video-container {
+			padding-left: 3%;
+      .view-video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .view-video-info {
+      padding: 0px 1.5rem;
+      font-family: "Montserrat";
+      font-weight: bold;
+      width: 65%;
+      line-height: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .view-title {
+        font-size: 1rem;
+        color: #fff;
+        letter-spacing: 1px;
+      }
+
+      .view-director {
+        margin-top: 3%;
+        font-size: 0.8rem;
+        font-weight: normal;
+        color: rgb(201, 201, 201);
+      }
+
+      .view-actor {
+        font-size: 0.8rem;
+        font-weight: normal;
+        color: rgb(201, 201, 201);
+				margin-top: 2%;
+      }
+
+      .view-summary {
+        font-size: 0.8rem;
+        color: rgb(201, 201, 201);
+        font-weight: normal;
+				margin-top: 2%;
+      }
+    }
+  }
 
   .flex-row {
     display: flex;
@@ -198,7 +265,7 @@ $dark: #131325;
           height: 100%;
           overflow: visible;
         }
-        & .book {
+        & .video {
           transform: rotateY(50deg);
           box-shadow: -10px 10px 10px 2px rgba(0, 0, 0, 0.2),
             -2px 0px 0px 0px #888;
@@ -233,8 +300,8 @@ $dark: #131325;
       background-color: lighten($dark, 8%);
       box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
       overflow: hidden;
-      height: 90px;
-      & .book {
+      height: 10vh;
+      & .video {
         transition: all 0.5s;
         width: 120px;
         box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
@@ -247,7 +314,7 @@ $dark: #131325;
         font-family: "Montserrat";
         font-weight: bold;
         width: 65%;
-				line-height: 1.1rem;
+        line-height: 1.1rem;
         & .title {
           font-size: 1rem;
           color: #fff;
@@ -264,9 +331,6 @@ $dark: #131325;
           font-weight: normal;
           color: rgb(201, 201, 201);
         }
-      }
-      & .group {
-        margin-left: auto;
       }
       & .members {
         transition: all 0.1s;

@@ -27,10 +27,11 @@ export default {
     },
   },
   watch: {
-    "$store.state.selectedMovie.id": function (newVal, oldVal) {
-      if (!newVal) return;
-      this.routeToDetail();
-    },
+		// enter to movie detail page
+    // "$store.state.selectedMovie.id": function (newVal, oldVal) {
+    //   if (!newVal) return;
+    //   this.routeToDetail();
+    // },
     // back to main page when click '电影' and '首页'
     "$store.state.curPage": function (newVal, oldVal) {
       if (!newVal) return;

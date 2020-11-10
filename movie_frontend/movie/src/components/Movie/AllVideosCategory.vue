@@ -44,7 +44,7 @@ export default {
         param = this.time.slice(0, 3);
       }
       this.$store
-        .dispatch("getMovieInfoByTime", { time: param, offset: 1, limit: 500 })
+        .dispatch("getMovieInfoByTime", { time: param, offset: 1, limit: 50 })
         .then((res) => {
           this.$store.commit("getMovieInfoByTime", res.data);
           this.$emit("getMovieInfo");

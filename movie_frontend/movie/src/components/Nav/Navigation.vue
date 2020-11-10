@@ -11,13 +11,13 @@
         @mouseleave="leaveNav($event)"
         >首页</span
       >
-      <span
+      <!-- <span
         class="nav-classify-2"
         @click="changePage($event)"
         @mouseover="enterNav($event)"
         @mouseleave="leaveNav($event)"
         >电影</span
-      >
+      > -->
       <span
         class="nav-classify-3"
         @click="changePage($event)"

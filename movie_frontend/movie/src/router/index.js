@@ -14,11 +14,11 @@ const routes = [
     name: "main",
     component: Main
   },
-  {
-    path: "/movie/:id",
-    component: MovieDetail,
-    name: "movie"
-  },
+  // {
+  //   path: "/movie/:id",
+  //   component: MovieDetail,
+  //   name: "movie"
+  // },
   {
     path: "/discuss",
     component: Discuss,
