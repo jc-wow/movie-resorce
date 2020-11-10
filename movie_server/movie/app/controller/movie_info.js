@@ -12,6 +12,13 @@ class MovieInfoController extends Controller {
     });
     this.success(this.ctx.body);
   }
+
+  async getVideo() {
+    const ctx = this.ctx;
+    const { id } = ctx.query;
+    this.ctx.body = await this.ctx.service.movieInfo.getVideo(id);
+    this.success(this.ctx.body);
+  }
 }
 
 module.exports = MovieInfoController;

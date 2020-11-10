@@ -22,7 +22,8 @@ export default new Vuex.Store({
 		},
 		movieInfoByTime: [],
 		movieInfoByYear: [],
-		curSelectYear: ''
+		curSelectYear: '',
+		searchVideo: {}
 	},
   mutations,
   actions,

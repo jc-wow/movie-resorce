@@ -38,6 +38,9 @@ const mutations = {
 	},
 	getCurSelectYear(state, val) {
 		state.curSelectYear = val;
+	},
+	getSearchVideo(state, val) {
+		state.searchVideo = val;
 	}
 };
 

@@ -14,7 +14,7 @@
           <div class="director">
             <span>导演：</span>{{ getPeopleInfo(video.director) }}
           </div>
-          <div class="actor">
+          <div class="actor" >
             <span>演员：</span>{{ getPeopleInfo(video.actor) }}
           </div>
           <div class="hidden bottom summary">{{ video.summary }}</div>
@@ -43,7 +43,7 @@ export default {
     return {
       videoInfo: [],
       showLoadVideo: false,
-      offset: 1,
+			offset: 1,
     };
   },
   methods: {
@@ -70,12 +70,12 @@ export default {
         return;
       }
 
-      const ctop = this.containerObj.scrollTop;
+			const ctop = this.containerObj.scrollTop;
       if (
         this.containerObj.scrollHeight -
           this.containerObj.offsetHeight -
           ctop <=
-        0
+        10
       ) {
         this.showLoadVideo = true;
         this.getVideoByYear();
@@ -126,7 +126,9 @@ export default {
   },
   watch: {
     "$store.state.movieInfoByYear": function () {
+			this.containerObj.scrollTo(0, 0);
 			this.videoInfo = this.$store.state.movieInfoByYear.rows;
+			this.offset = 1;
 			this.setInfoToVideo();
     },
   },
@@ -184,8 +186,8 @@ $dark: #131325;
       & .bottom {
         height: 0px;
         overflow: hidden;
-        font-size: 0.7rem;
-        color: #888;
+        font-size: 0.8rem;
+        color: rgb(201, 201, 201);
         font-weight: normal;
       }
       &.open {
@@ -247,20 +249,20 @@ $dark: #131325;
         width: 65%;
 				line-height: 1.1rem;
         & .title {
-          font-size: 0.9rem;
+          font-size: 1rem;
           color: #fff;
           letter-spacing: 1px;
         }
         & .director {
           margin-top: 3%;
-          font-size: 0.7rem;
+          font-size: 0.8rem;
           font-weight: normal;
-          color: #888;
+          color: rgb(201, 201, 201);
         }
         & .actor {
-          font-size: 0.7rem;
+          font-size: 0.8rem;
           font-weight: normal;
-          color: #888;
+          color: rgb(201, 201, 201);
         }
       }
       & .group {

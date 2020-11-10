@@ -23,7 +23,7 @@ class MovieInfo extends Service {
     } else {
       // get info by time
       options = {
-        attributes: ["title", "cover"],
+        attributes: ["title", "cover", "id"],
         order: [["rate", "DESC"]],
         offset: parseInt(offset),
         limit: parseInt(limit),
@@ -35,6 +35,10 @@ class MovieInfo extends Service {
       };
     }
     return this.ctx.model.MovieInfo.findAndCountAll(options);
+  }
+
+  async getVideo(param) {
+    return this.ctx.model.MovieInfo.findByPk(param);
   }
 }
 

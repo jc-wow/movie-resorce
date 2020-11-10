@@ -17,4 +17,5 @@ module.exports = (app) => {
     controller.discussReply.update
   );
   router.get("movieInfo", "/api/movieinfo_bytime", controller.movieInfo.getMovieInfoByTime);
+  router.get("movieInfo", "/api/video", controller.movieInfo.getVideo);
 };

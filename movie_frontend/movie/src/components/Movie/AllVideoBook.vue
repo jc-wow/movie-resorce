@@ -24,12 +24,13 @@
               ></AllVideosCategory>
             </div>
           </transition>
-          <div class="book-page-back" @click="selectPage($event)">
+          <div class="book-page-back">
             <div class="page-content" v-show="showBackPageAni">
               <div
                 class="video-img-content"
                 v-for="(item, index) in movieInfo"
                 :key="'movie_' + index"
+								@click="selectMovie(item)"
               >
                 <h4>{{ item.title }}</h4>
                 <img
@@ -107,7 +108,10 @@ export default {
     },
     finishPageAnimationCallback() {
       this.paging = false;
-    },
+		},
+		selectMovie(item) {
+			debugger
+		}
   },
   mounted() {
     this.loaded = true;
