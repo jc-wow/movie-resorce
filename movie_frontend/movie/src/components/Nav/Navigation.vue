@@ -76,6 +76,7 @@ export default {
   },
   methods: {
     selectMovie(e) {
+			// check click searchpanel item or search button 
       if (e) {
         this.curSelectMovie = e.target.textContent.trim() || "";
       } else {

@@ -86,7 +86,7 @@ export default {
   },
   mounted() {
     // this.getHeightOfComp();
-    this.checkCurScrollPosition();
+    // this.checkCurScrollPosition();
   },
   destroyed() {
     window.clearInterval(this.checkScroll);

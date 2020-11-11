@@ -1,26 +1,32 @@
 <template>
   <div class="allvideoby-year">
-    <div class="allvideoby-year-view" v-show="isPreviewVideo">
-      <div class="view-video-container">
+      <div class="allvideoby-year-view" v-if="previewVideo">
         <img
-          class="view-video"
-          :src="$store.state.searchVideo.cover"
-          referrerpolicy="no-referrer"
+          class="view-back"
+          src="../../assets/back.svg"
+          @click="backToVideo"
         />
-      </div>
-
-      <div class="view-video-info">
-        <div class="view-title">{{ $store.state.searchVideo.title }}</div>
-        <div class="view-director">
-          <span>导演：</span>{{ $store.state.searchVideo.director }}
+        <div class="view-video-container">
+          <img
+            class="view-video"
+            :src="$store.state.searchVideo.cover"
+            referrerpolicy="no-referrer"
+          />
         </div>
-        <div class="view-actor">
-          <span>演员：</span>{{ $store.state.searchVideo.actor }}
+        <div class="view-video-info">
+          <div class="view-title">{{ $store.state.searchVideo.title }}</div>
+          <div class="view-director">
+            <span>导演：</span>{{ $store.state.searchVideo.director }}
+          </div>
+          <div class="view-actor">
+            <span>演员：</span>{{ $store.state.searchVideo.actor }}
+          </div>
+          <div class="view-summary">
+            <span></span>{{ $store.state.searchVideo.summary }}
+          </div>
         </div>
-        <div class="view-summary">{{ $store.state.searchVideo.summary }}</div>
       </div>
-    </div>
-    <div class="center list flex-column" v-show="!isPreviewVideo">
+    <div class="center list flex-column" v-show="!previewVideo">
       <div
         class="card flex-row"
         :class="{ open: video.open }"
@@ -31,10 +37,16 @@
         <img class="video" :src="video.cover" referrerpolicy="no-referrer" />
         <div class="flex-column info">
           <div class="title">{{ video.title }}</div>
-          <div class="director">
+          <div
+            class="director"
+            :style="video.open ? openInfoStyle : closeInfoStyle"
+          >
             <span>导演：</span>{{ getPeopleInfo(video.director) }}
           </div>
-          <div class="actor">
+          <div
+            class="actor"
+            :style="video.open ? openInfoStyle : closeInfoStyle"
+          >
             <span>演员：</span>{{ getPeopleInfo(video.actor) }}
           </div>
           <div class="hidden bottom summary">{{ video.summary }}</div>
@@ -58,6 +70,23 @@ export default {
       videoInfo: [],
       showLoadVideo: false,
       offset: 1,
+      previewVideo: this.isPreviewVideo,
+      openInfoStyle: {
+        fontSize: "0.8rem",
+        fontWeight: "normal",
+        color: "rgb(201, 201, 201)",
+        textOverflow: "unset",
+        whiteSpace: "unset",
+        overflow: "unset",
+      },
+      closeInfoStyle: {
+        fontSize: "0.8rem",
+        fontWeight: "normal",
+        color: "rgb(201, 201, 201)",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+      },
     };
   },
   methods: {
@@ -72,6 +101,10 @@ export default {
         }
         e.open = true;
       }
+    },
+    backToVideo() {
+      this.previewVideo = false;
+      this.$emit("changePreviewVideo", this.previewVideo);
     },
     getPeopleInfo(item) {
       return item.split("/").slice(0, 3).join("/");
@@ -145,6 +178,9 @@ export default {
       this.offset = 1;
       this.setInfoToVideo();
     },
+    isPreviewVideo: function () {
+      this.previewVideo = this.isPreviewVideo;
+    },
   },
   mounted() {
     this.listenScroll();
@@ -176,14 +212,24 @@ $dark: #131325;
   height: 100%;
   width: 100%;
   overflow-y: auto;
+  position: relative;
+
+  .view-back {
+    position: absolute;
+    left: 5%;
+    width: 1.5rem;
+    cursor: pointer;
+  }
 
   .allvideoby-year-view {
-    height: 100%;
+    min-height: 94%;
     background-color: $dark;
     display: flex;
+    padding-top: 3%;
+    padding-bottom: 3%;
 
     .view-video-container {
-			padding-left: 3%;
+      padding-left: 3%;
       .view-video {
         width: 100%;
         height: 100%;
@@ -218,14 +264,14 @@ $dark: #131325;
         font-size: 0.8rem;
         font-weight: normal;
         color: rgb(201, 201, 201);
-				margin-top: 2%;
+        margin-top: 2%;
       }
 
       .view-summary {
         font-size: 0.8rem;
         color: rgb(201, 201, 201);
         font-weight: normal;
-				margin-top: 2%;
+        margin-top: 2%;
       }
     }
   }
@@ -325,11 +371,27 @@ $dark: #131325;
           font-size: 0.8rem;
           font-weight: normal;
           color: rgb(201, 201, 201);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+        &.director:hover {
+          text-overflow: none;
+          white-space: none;
+          overflow: none;
         }
         & .actor {
           font-size: 0.8rem;
           font-weight: normal;
           color: rgb(201, 201, 201);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+        &.actor:hover {
+          text-overflow: none;
+          white-space: none;
+          overflow: none;
         }
       }
       & .members {

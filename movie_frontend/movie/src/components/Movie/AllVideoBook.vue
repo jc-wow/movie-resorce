@@ -9,7 +9,10 @@
         ></div>
         <div class="book-page book-page-4">
           <div class="page-content-4">
-            <AllVideosByYear :isPreviewVideo="isPreviewVideo"></AllVideosByYear>
+            <AllVideosByYear
+              :isPreviewVideo="isPreviewVideo"
+              @changePreviewVideo="changePreviewVideo"
+            ></AllVideosByYear>
           </div>
         </div>
         <div
@@ -61,11 +64,14 @@ export default {
       paging: false,
       loaded: false,
       movieInfo: [],
-			showBackPageAni: false,
-			isPreviewVideo: false
+      showBackPageAni: false,
+      isPreviewVideo: false,
     };
   },
   methods: {
+		changePreviewVideo(e) {
+			this.isPreviewVideo = e;
+		},
     selectPage(e) {
       if (
         !e ||
@@ -224,7 +230,7 @@ export default {
         }
 
         &-4 {
-          cursor: pointer;
+          // cursor: pointer;
           padding: 0 1% 0 calc(var(--baseline) * 5);
 
           .page-content-4 {
