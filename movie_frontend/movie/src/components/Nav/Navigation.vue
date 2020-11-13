@@ -76,12 +76,12 @@ export default {
   },
   methods: {
     selectMovie(e) {
-			// check click searchpanel item or search button 
+      // check click searchpanel item or search button
       if (e) {
         this.curSelectMovie = e.target.textContent.trim() || "";
       } else {
         if (this.keyPosition !== -1) {
-					this.curSelectMovie = this.searchResVal[this.keyPosition].title;
+          this.curSelectMovie = this.searchResVal[this.keyPosition].title;
         } else {
           this.curSelectMovie = this.searchVal;
         }
@@ -91,7 +91,7 @@ export default {
         (ele) => ele.title === this.curSelectMovie
       )[0];
       if (!this.movieObj) return;
-      this.$store.commit("getSelectedMovie", this.movieObj);
+			this.$store.commit("getSelectedMovie", this.movieObj);
     },
     changePage(val) {
       // this.initData()
@@ -124,13 +124,12 @@ export default {
       } else if (event.code === "ArrowUp" && this.keyPosition >= 0) {
         this.searchResVal[this.keyPosition].ishover = false;
         this.keyPosition--;
-        if (this.keyPosition === -1) return;
       }
+      if (this.keyPosition === -1) return;
       this.checkKeyPosition();
       this.searchResVal[this.keyPosition].ishover = true;
     },
     checkKeyPosition() {
-      if (this.keyPosition === -1) return;
       const searchPanel = document.getElementsByClassName("nav-searchpanel")[0];
       const searchPanelObj = searchPanel.getBoundingClientRect();
       const searchPanelBottom = searchPanelObj.bottom;
@@ -138,7 +137,8 @@ export default {
         .getElementById(`nav-searchpanel-${this.keyPosition}`)
         .getBoundingClientRect();
       const curKeyBottom = curKeyObj.bottom;
-      const curItemHeight = curKeyObj.height;
+			const curItemHeight = curKeyObj.height;
+			
       if (curKeyBottom > searchPanelBottom) {
         searchPanel.scrollBy(0, curItemHeight);
       } else if (curKeyObj.top < searchPanelObj.top) {

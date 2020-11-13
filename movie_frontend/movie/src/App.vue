@@ -2,7 +2,8 @@
   <div id="app">
     <Navigation></Navigation>
     <keep-alive include="Main">
-      <router-view :key="$store.state.selectedMovie.title"></router-view>
+			<router-view></router-view>
+      <!-- <router-view :key="$store.state.selectedMovie.title"></router-view> -->
     </keep-alive>
   </div>
 </template>

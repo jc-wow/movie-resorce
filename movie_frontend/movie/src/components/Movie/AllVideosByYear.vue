@@ -1,32 +1,28 @@
 <template>
   <div class="allvideoby-year">
-      <div class="allvideoby-year-view" v-if="previewVideo">
+    <div class="allvideoby-year-view" v-if="isPreviewVideo">
+      <img class="view-back" src="../../assets/back.svg" @click="backToVideo" />
+      <div class="view-video-container">
         <img
-          class="view-back"
-          src="../../assets/back.svg"
-          @click="backToVideo"
+          class="view-video"
+          :src="$store.state.searchVideo.cover"
+          referrerpolicy="no-referrer"
         />
-        <div class="view-video-container">
-          <img
-            class="view-video"
-            :src="$store.state.searchVideo.cover"
-            referrerpolicy="no-referrer"
-          />
+      </div>
+      <div class="view-video-info">
+        <div class="view-title">{{ $store.state.searchVideo.title }}</div>
+        <div class="view-director">
+          <span>导演：</span>{{ $store.state.searchVideo.director }}
         </div>
-        <div class="view-video-info">
-          <div class="view-title">{{ $store.state.searchVideo.title }}</div>
-          <div class="view-director">
-            <span>导演：</span>{{ $store.state.searchVideo.director }}
-          </div>
-          <div class="view-actor">
-            <span>演员：</span>{{ $store.state.searchVideo.actor }}
-          </div>
-          <div class="view-summary">
-            <span></span>{{ $store.state.searchVideo.summary }}
-          </div>
+        <div class="view-actor">
+          <span>演员：</span>{{ $store.state.searchVideo.actor }}
+        </div>
+        <div class="view-summary">
+          <span></span>{{ $store.state.searchVideo.summary }}
         </div>
       </div>
-    <div class="center list flex-column" v-show="!previewVideo">
+    </div>
+    <div class="center list flex-column" v-show="!isPreviewVideo">
       <div
         class="card flex-row"
         :class="{ open: video.open }"
@@ -62,15 +58,12 @@
 <script>
 export default {
   name: "AllVideosByYear",
-  props: {
-    isPreviewVideo: Boolean,
-  },
   data() {
     return {
       videoInfo: [],
       showLoadVideo: false,
       offset: 1,
-      previewVideo: this.isPreviewVideo,
+      isPreviewVideo: false,
       openInfoStyle: {
         fontSize: "0.8rem",
         fontWeight: "normal",
@@ -103,8 +96,7 @@ export default {
       }
     },
     backToVideo() {
-      this.previewVideo = false;
-      this.$emit("changePreviewVideo", this.previewVideo);
+      this.$store.commit("getIsPreviewVideoState", false);
     },
     getPeopleInfo(item) {
       return item.split("/").slice(0, 3).join("/");
@@ -178,8 +170,8 @@ export default {
       this.offset = 1;
       this.setInfoToVideo();
     },
-    isPreviewVideo: function () {
-      this.previewVideo = this.isPreviewVideo;
+    "$store.state.isPreviewVideo": function () {
+      this.isPreviewVideo = this.$store.state.isPreviewVideo;
     },
   },
   mounted() {

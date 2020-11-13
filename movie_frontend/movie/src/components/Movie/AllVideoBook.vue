@@ -10,7 +10,6 @@
         <div class="book-page book-page-4">
           <div class="page-content-4">
             <AllVideosByYear
-              :isPreviewVideo="isPreviewVideo"
               @changePreviewVideo="changePreviewVideo"
             ></AllVideosByYear>
           </div>
@@ -69,9 +68,9 @@ export default {
     };
   },
   methods: {
-		changePreviewVideo(e) {
-			this.isPreviewVideo = e;
-		},
+    changePreviewVideo(e) {
+      this.isPreviewVideo = e;
+    },
     selectPage(e) {
       if (
         !e ||
@@ -123,13 +122,22 @@ export default {
       this.$store.dispatch("getVideo", { id: item.id }).then((res) => {
         if (res.success) {
           this.$store.commit("getSearchVideo", res.data);
-          this.isPreviewVideo = true;
+          this.$store.commit("getIsPreviewVideoState", true);
         }
       });
     },
   },
+  watch: {
+    "$store.state.isPreviewVideo": function () {
+			this.isPreviewVideo = this.$store.state.isPreviewVideo;
+			const curPreviewVideo = this.$store.state.selectedMovie;
+			if (Object.keys(curPreviewVideo).length !== 0) {		
+			}
+    },
+  },
   mounted() {
     this.loaded = true;
+    this.isPreviewVideo = this.$store.state.isPreviewVideo;
   },
 };
 </script>

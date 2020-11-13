@@ -41,6 +41,9 @@ const mutations = {
 	},
 	getSearchVideo(state, val) {
 		state.searchVideo = val;
+	},
+	getIsPreviewVideoState(state, val) {
+		state.isPreviewVideo = val;
 	}
 };
 

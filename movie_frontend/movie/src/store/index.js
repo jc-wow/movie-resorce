@@ -23,7 +23,8 @@ export default new Vuex.Store({
 		movieInfoByTime: [],
 		movieInfoByYear: [],
 		curSelectYear: '',
-		searchVideo: {}
+		searchVideo: {},
+		isPreviewVideo: false // select video state when click water fall or select video on search panel and button 
 	},
   mutations,
   actions,
