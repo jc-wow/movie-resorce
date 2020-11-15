@@ -23,7 +23,7 @@ class MovieInfo extends Service {
     } else {
       // get info by time
       options = {
-        attributes: ["title", "cover", "id"],
+        attributes: ["title", "cover", "id", "release_date"],
         order: [["rate", "DESC"]],
         offset: parseInt(offset),
         limit: parseInt(limit),

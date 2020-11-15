@@ -5,7 +5,6 @@
         <div
           class="book-page book-page-1"
           :class="{ 'allvideobook-load': loaded }"
-          @click="selectPage($event)"
         ></div>
         <div class="book-page book-page-4">
           <div class="page-content-4">
@@ -32,9 +31,9 @@
                 class="video-img-content"
                 v-for="(item, index) in movieInfo"
                 :key="'movie_' + index"
-                @click="selectMovie(item)"
+                @click="selectMovie(item.id)"
               >
-                <h4>{{ item.title }}</h4>
+                <h4>{{ item.title + getReleaseYear(item.release_date) }}</h4>
                 <img
                   :src="item.cover"
                   onerror="this.style.display='none'"
@@ -46,6 +45,18 @@
         </div>
       </div>
     </div>
+    <img
+      class="allvideobook-pageleft allvideobook-page-icon"
+      src="../../assets/leftPage.svg"
+      @click="page('left')"
+      v-show="paging"
+    />
+    <img
+      class="allvideobook-pageright allvideobook-page-icon"
+      src="../../assets/rightPage.svg"
+      @click="page('right')"
+      v-show="!paging"
+    />
   </div>
 </template>
 
@@ -71,21 +82,23 @@ export default {
     changePreviewVideo(e) {
       this.isPreviewVideo = e;
     },
-    selectPage(e) {
-      if (
-        !e ||
-        e.currentTarget.className.includes("front") ||
-        e.currentTarget.className.includes("1")
-      ) {
-        this.paging = true;
-        this.showBackPageAni = true;
-      } else {
-        this.paging = false;
-        if (this.backpageAni) clearTimeout(this.backpageAni);
-        this.backpageAni = setTimeout(() => {
-          this.showBackPageAni = false;
-        }, 900);
-      }
+    selectPage(pageState) {
+      this.paging = pageState;
+      this.showBackPageAni = true;
+      // if (
+      //   !e ||
+      //   e.currentTarget.className.includes("front") ||
+      //   e.currentTarget.className.includes("1")
+      // ) {
+      //   this.paging = pageState;
+      //   this.showBackPageAni = true;
+      // } else {
+      //   this.paging = false;
+      //   if (this.backpageAni) clearTimeout(this.backpageAni);
+      //   this.backpageAni = setTimeout(() => {
+      //     this.showBackPageAni = false;
+      //   }, 900);
+      // }
     },
     getMovieInfo() {
       const movieCount = this.$store.state.movieInfoByTime.rows.length;
@@ -107,32 +120,38 @@ export default {
         );
       }, 60000);
     },
-    removeCheckFinishPageAnimation() {
-      if (this.pageBackListen) {
-        this.pageObj.removeEventListener(
-          "transitionend",
-          this.finishPageAnimationCallback()
-        );
-      }
-    },
-    finishPageAnimationCallback() {
-      this.paging = false;
-    },
-    selectMovie(item) {
-      this.$store.dispatch("getVideo", { id: item.id }).then((res) => {
+    selectMovie(id) {
+      this.$store.dispatch("getVideo", { id }).then((res) => {
         if (res.success) {
           this.$store.commit("getSearchVideo", res.data);
           this.$store.commit("getIsPreviewVideoState", true);
         }
       });
     },
+    // paging button
+    page(direc) {
+      if (direc === "left") {
+        this.selectPage(false);
+      } else {
+        this.selectPage(true);
+      }
+    },
+    getReleaseYear(releaseDate) {
+      return " (" + releaseDate.split("-")[0] + ")" || "";
+    },
+    previewVideo() {
+      this.isPreviewVideo = this.$store.state.isPreviewVideo;
+      const curPreviewVideo = this.$store.state.selectedMovie;
+      if (Object.keys(curPreviewVideo).length !== 0) {
+        const videoID = curPreviewVideo.id;
+        this.selectMovie(videoID);
+        this.paging = true;
+      }
+    },
   },
   watch: {
-    "$store.state.isPreviewVideo": function () {
-			this.isPreviewVideo = this.$store.state.isPreviewVideo;
-			const curPreviewVideo = this.$store.state.selectedMovie;
-			if (Object.keys(curPreviewVideo).length !== 0) {		
-			}
+    "$store.state.selectedMovie": function () {
+      this.previewVideo();
     },
   },
   mounted() {
@@ -182,6 +201,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+	position: relative;
 
   .cover {
     width: 70%;
@@ -278,5 +298,19 @@ export default {
       }
     }
   }
+
+	.allvideobook-page-icon {
+		position: absolute;
+		cursor: pointer;
+	}
+
+	.allvideobook-pageleft {
+		left: 10%;
+	}
+
+	.allvideobook-pageright {
+		right: 10%;
+	}
+
 }
 </style>

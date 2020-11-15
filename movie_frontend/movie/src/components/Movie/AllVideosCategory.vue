@@ -64,8 +64,9 @@ export default {
         .then((res) => {
           this.$store.commit("getMovieInfoByYear", res.data);
           this.$store.commit("getCurSelectYear", this.year);
+          this.$store.commit("getIsPreviewVideoState", false);
           this.$emit("getMovieInfo");
-          this.$emit("selectPage");
+          this.$emit("selectPage", true);
         });
     },
   },

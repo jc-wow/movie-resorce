@@ -42,7 +42,7 @@
         ></el-button>
       </el-input>
     </div>
-    <div class="nav-searchpanel">
+    <div class="nav-searchpanel" v-show="!isSelected">
       <div
         :id="'nav-searchpanel-' + index"
         v-for="(item, index) in searchResVal"
@@ -55,23 +55,19 @@
         {{ item.title }}
       </div>
     </div>
-    <!-- <Drawer :showDrawer="showDrawer"></Drawer> -->
   </div>
 </template>
 
 <script>
-// import Drawer from "@/components/common/Drawer";
-
 export default {
   name: "Navigation",
-  // components: { Drawer },
   data() {
     return {
-      showDrawer: false,
       searchVal: "",
       timer: null,
       searchResVal: [],
       keyPosition: -1,
+      isSelected: false,
     };
   },
   methods: {
@@ -91,10 +87,13 @@ export default {
         (ele) => ele.title === this.curSelectMovie
       )[0];
       if (!this.movieObj) return;
-			this.$store.commit("getSelectedMovie", this.movieObj);
+			this.isSelected = true;
+      this.$store.commit("getSelectedMovie", this.movieObj);
+			this.$store.commit("getIsPreviewVideoState", true);
+			this.$store.commit('getCurPage', '首页');
     },
     changePage(val) {
-      // this.initData()
+      this.initData()
       this.$store.commit("getCurPage", val.target.textContent);
     },
     enterNav(e) {
@@ -104,6 +103,7 @@ export default {
       e.target.style = "background-color: none";
     },
     changeSearchVal() {
+      this.isSelected = false;
       clearTimeout(this.timer);
       this.timer = setTimeout(() => this.reqSearchAPI(), 500);
     },
@@ -137,8 +137,8 @@ export default {
         .getElementById(`nav-searchpanel-${this.keyPosition}`)
         .getBoundingClientRect();
       const curKeyBottom = curKeyObj.bottom;
-			const curItemHeight = curKeyObj.height;
-			
+      const curItemHeight = curKeyObj.height;
+
       if (curKeyBottom > searchPanelBottom) {
         searchPanel.scrollBy(0, curItemHeight);
       } else if (curKeyObj.top < searchPanelObj.top) {
@@ -152,6 +152,7 @@ export default {
       item.ishover = false;
     },
     reqSearchAPI() {
+      this.getSearchPanelPosition();
       const reg = new RegExp(
         "[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"
       );
@@ -197,7 +198,6 @@ export default {
   watch: {
     $route(to, from) {
       this.initData();
-      this.$nextTick(() => this.getSearchPanelPosition());
     },
   },
   mounted() {

@@ -24,7 +24,6 @@ export default {
     },
     returnToMainPage() {
       this.$router.push({ path: "/" }).catch((err) => err);
-      this.$store.commit("getSelectedMovie", {});
     },
   },
   watch: {

@@ -1,7 +1,12 @@
 <template>
   <div class="allvideoby-year">
     <div class="allvideoby-year-view" v-if="isPreviewVideo">
-      <img class="view-back" src="../../assets/back.svg" @click="backToVideo" />
+      <img
+        class="view-back"
+        src="../../assets/back.svg"
+        @click="backToVideo"
+        v-show="videoInfo.length !== 0"
+      />
       <div class="view-video-container">
         <img
           class="view-video"
@@ -17,8 +22,11 @@
         <div class="view-actor">
           <span>演员：</span>{{ $store.state.searchVideo.actor }}
         </div>
+        <div class="view-release-date">
+          <span>上映日期：</span>{{ $store.state.searchVideo.release_date }}
+        </div>
         <div class="view-summary">
-          <span></span>{{ $store.state.searchVideo.summary }}
+          {{ $store.state.searchVideo.summary }}
         </div>
       </div>
     </div>
@@ -45,7 +53,7 @@
           >
             <span>演员：</span>{{ getPeopleInfo(video.actor) }}
           </div>
-          <div class="hidden bottom summary">{{ video.summary }}</div>
+          <div class="bottom">{{ video.summary }}</div>
         </div>
       </div>
       <div class="card flex-flow load-video" v-show="showLoadVideo">
@@ -263,6 +271,13 @@ $dark: #131325;
         font-size: 0.8rem;
         color: rgb(201, 201, 201);
         font-weight: normal;
+        margin-top: 2%;
+      }
+
+      .view-release-date {
+        font-size: 0.8rem;
+        font-weight: normal;
+        color: rgb(201, 201, 201);
         margin-top: 2%;
       }
     }
