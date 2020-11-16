@@ -238,7 +238,7 @@ export default {
         }
 
         &-1 {
-          cursor: pointer;
+          // cursor: pointer;
           overflow: hidden;
           transform: rotateY(180deg);
           transform-origin: 100%;
