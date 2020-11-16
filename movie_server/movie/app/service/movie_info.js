@@ -6,7 +6,8 @@ const { Op } = require("sequelize");
 class MovieInfo extends Service {
   async getMovieInfoByTime(param) {
     let options = {};
-    const { time, offset, limit } = param;
+    let { time, offset, limit } = param;
+    offset = limit * (offset - 1);
     // get info by year
     if (time.length === 4) {
       options = {
