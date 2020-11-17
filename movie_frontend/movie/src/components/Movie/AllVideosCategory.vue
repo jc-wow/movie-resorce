@@ -21,19 +21,20 @@
           {{ year }}
         </div>
       </div>
-      <Notes></Notes>
+      <!-- <Notes></Notes> -->
     </div>
     <div class="allvideo-category-year"></div>
+		<Bubble></Bubble>
   </div>
 </template>
 
 <script>
 import Notes from "../common/MusicNotes";
-import "../../style/fontAnim.scss";
+import Bubble from "../common/Bubble";
 
 export default {
   name: "AllVideosCategory",
-  components: { Notes },
+  components: { Notes, Bubble },
   props: {},
   data() {
     return {
@@ -105,6 +106,7 @@ export default {
 <style scoped lang='scss'>
 .allvideos-category {
   height: 100%;
+	position: relative;
   .allvideos-category-time {
     height: 50%;
     width: 97%;
@@ -125,11 +127,12 @@ export default {
       align-items: center;
       justify-content: center;
       margin: 1%;
-      // border: #fff solid;
-      // background-color: #fff;
+      border: #fff solid;
+      border-radius: 10px;
     }
     .year:hover {
       cursor: pointer;
+      background-color: #fff;
     }
   }
 }
