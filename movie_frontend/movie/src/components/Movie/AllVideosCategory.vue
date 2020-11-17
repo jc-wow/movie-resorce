@@ -7,7 +7,9 @@
           v-for="(year, index) in leftColtimes"
           :key="'leftColtimes' + index"
         >
-          {{ year }}
+          <span class="year-container">
+            {{ year }}
+          </span>
         </div>
       </div>
       <div class="allvideos-category-time-right">
@@ -27,6 +29,7 @@
 
 <script>
 import Notes from "../common/MusicNotes";
+import "../../style/fontAnim.scss";
 
 export default {
   name: "AllVideosCategory",
@@ -107,7 +110,7 @@ export default {
     width: 97%;
     display: flex;
     padding: 3% 3%;
-		position: relative;
+    position: relative;
     .allvideos-category-time-left {
       width: 50%;
       height: 100%;
@@ -122,7 +125,7 @@ export default {
       align-items: center;
       justify-content: center;
       margin: 1%;
-			border: #fff solid;
+      // border: #fff solid;
       // background-color: #fff;
     }
     .year:hover {
