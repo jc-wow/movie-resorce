@@ -64,7 +64,6 @@
 import AllVideosCategory from "./AllVideosCategory";
 import AllVideosByYear from "./AllVideosByYear";
 import "../../style/waterfall.scss";
-import { nextTick } from "process";
 
 export default {
   name: "AllVideoBook",
