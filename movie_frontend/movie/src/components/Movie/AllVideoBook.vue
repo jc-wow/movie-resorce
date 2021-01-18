@@ -84,20 +84,6 @@ export default {
     selectPage(pageState) {
       this.paging = pageState;
       this.showBackPageAni = true;
-      // if (
-      //   !e ||
-      //   e.currentTarget.className.includes("front") ||
-      //   e.currentTarget.className.includes("1")
-      // ) {
-      //   this.paging = pageState;
-      //   this.showBackPageAni = true;
-      // } else {
-      //   this.paging = false;
-      //   if (this.backpageAni) clearTimeout(this.backpageAni);
-      //   this.backpageAni = setTimeout(() => {
-      //     this.showBackPageAni = false;
-      //   }, 900);
-      // }
     },
     getMovieInfo() {
       const movieCount = this.$store.state.movieInfoByTime.rows.length;
@@ -244,7 +230,7 @@ export default {
         }
 
         &-2 {
-          padding: 0 calc(var(--baseline) * 3);
+          padding: 0 0 0 calc(var(--baseline) * 3);
           position: absolute;
           right: 0;
           transform-style: preserve-3d;
@@ -269,6 +255,7 @@ export default {
           width: 100%;
           height: 100%;
           transform: rotateY(0deg) translateZ(1px);
+          background-color: #000;
         }
 
         &-back {

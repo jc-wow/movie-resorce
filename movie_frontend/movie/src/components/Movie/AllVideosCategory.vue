@@ -1,50 +1,58 @@
 <template>
   <div class="allvideos-category">
-    <div class="allvideos-category-time">
-      <DropDown></DropDown>
-    </div>
-    <!-- <div class="allvideo-category-year">
-    </div> -->
+    <el-image
+      class="allvideos-category-cover"
+      :src="cover"
+      referrerpolicy="no-referrer"
+      fit="fill"
+    ></el-image>
+    <el-cascader
+      class="allvideos-category-years"
+      v-model="value"
+      :options="options"
+      :show-all-levels="false"
+      :props="{ expandTrigger: 'hover' }"
+      @change="handleChange"
+    ></el-cascader>
   </div>
 </template>
 
 <script>
-import DropDown from '../common/DropDown'
-
 export default {
   name: "AllVideosCategory",
-  components: {
-    DropDown
-  },
   props: {},
   data() {
     return {
-      time: "",
-      year: "",
+      cover: "",
+      value: "",
     };
   },
   methods: {
-    selectCat(e) {
-      this.time = e.currentTarget.textContent.trim();
-      let param = "";
-      // TODO: not handle 18th yet
-      if (this.time.startsWith("18")) {
-        param = "18";
+    handleChange(e) {
+      if (!e || e.length === 0) return;
+      if (e.length === 1) {
+        this.years = e[0];
+        this.year = e[0];
       } else {
-        param = this.time.slice(0, 3);
+        this.years = e[1] || "";
+        this.year = e[2] || "";
       }
+      this.getMoviesByYears();
+      this.getMoviesByYear();
+    },
+    getMoviesByYears() {
       this.$store
-        .dispatch("getMovieInfoByTime", { time: param, offset: 1, limit: 50 })
+        .dispatch("getMovieInfoByTime", {
+          time: this.years,
+          offset: 1,
+          limit: 50,
+        })
         .then((res) => {
           this.$store.commit("getMovieInfoByTime", res.data);
           this.$emit("getMovieInfo");
         });
     },
-    selectYear(e) {
-      this.year = e.currentTarget.textContent.trim();
-      if (this.year.startsWith("18")) {
-        this.year = "18";
-      }
+    getMoviesByYear() {
       this.$store
         .dispatch("getMovieInfoByTime", {
           time: this.year,
@@ -55,37 +63,131 @@ export default {
           this.$store.commit("getMovieInfoByYear", res.data);
           this.$store.commit("getCurSelectYear", this.year);
           this.$store.commit("getIsPreviewVideoState", false);
-          this.$emit("getMovieInfo");
+          // this.$emit("getMovieInfo");
           this.$emit("selectPage", true);
         });
     },
+    getOptions() {
+      const date = new Date();
+      const curYear = date.getFullYear();
+      this.options.forEach((century) => {
+        if (century.children)
+          century.children.forEach((year) => {
+            const curYears = year.value;
+            let years = 0;
+            if (curYears === "2020s") {
+              years = curYear - 2020 + 1;
+            } else {
+              years = 10;
+            }
+            year.children = new Array(years).fill(0).map((ele, index) => {
+              return {
+                value: curYears.slice(0, 3) + index,
+                label: curYears.slice(0, 3) + index,
+              };
+            });
+          });
+      });
+    },
+    // random change cover
+    changeCover() {
+
+    }
+  },
+  beforeMount() {
+    this.options = [
+      {
+        value: "21th",
+        label: "21th",
+        children: [
+          {
+            value: "2020s",
+            label: "2020s",
+          },
+          {
+            value: "2010s",
+            label: "2010s",
+          },
+          {
+            value: "2000s",
+            label: "2000s",
+          },
+        ],
+      },
+      {
+        value: "20th",
+        label: "20th",
+        children: [
+          {
+            value: "1990s",
+            label: "1990s",
+          },
+          {
+            value: "1980s",
+            label: "1980s",
+          },
+          {
+            value: "1970s",
+            label: "1970s",
+          },
+          {
+            value: "1960s",
+            label: "1960s",
+          },
+          {
+            value: "1950s",
+            label: "1950s",
+          },
+          {
+            value: "1940s",
+            label: "1940s",
+          },
+          {
+            value: "1930s",
+            label: "1930s",
+          },
+          {
+            value: "1920s",
+            label: "1910s",
+          },
+          {
+            value: "1910s",
+            label: "1910s",
+          },
+          {
+            value: "1900s",
+            label: "1900s",
+          },
+        ],
+      },
+      {
+        value: "19th",
+        label: "19th",
+      },
+    ];
+    this.getOptions();
+  },
+  mounted() {
+    this.$store.dispatch("getResSelectedMovie", "1292226").then((res) => {
+      this.cover = res.data.cover;
+    });
   },
 };
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss'>
 .allvideos-category {
   height: 100%;
   position: relative;
-  .allvideos-category-time {
-    height: 50%;
-    width: 97%;
-    display: flex;
-    padding: 3% 3%;
-    position: relative;
-    .year {
-      height: calc(90% / 7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 1%;
-      border: #fff solid;
-      border-radius: 10px;
-    }
-    .year:hover {
-      cursor: pointer;
-      background-color: #fff;
-    }
+  display: flex;
+  justify-content: center;
+  .allvideos-category-cover {
+    height: 100%;
+    width: 80%;
+    opacity: 0.5;
+  }
+  .allvideos-category-years {
+    position: absolute;
   }
 }
 </style>

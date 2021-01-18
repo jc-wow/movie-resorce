@@ -126,6 +126,17 @@ const actions = {
         }
       });
     });
+  },
+  getRandomMovie({ commit }, param) {
+    return new Promise((resolve, reject) => {
+      this._vm.get("randomMovieInfo").then(res => {
+        if (res.success) {
+          resolve(res);
+        } else {
+          this._vm.$message.error("抱歉，程序猿开了小差~");
+        }
+      })
+    })
   }
 };
 

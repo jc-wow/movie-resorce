@@ -19,6 +19,10 @@ class MovieInfoController extends Controller {
     this.ctx.body = await this.ctx.service.movieInfo.getVideo(id);
     this.success(this.ctx.body);
   }
+
+  async getRandomMovie() {
+    this.ctx.body = await this.ctx.service.movieInfo.getRandomMovie();
+  }
 }
 
 module.exports = MovieInfoController;

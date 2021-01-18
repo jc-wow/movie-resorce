@@ -97,7 +97,7 @@ export default {
     getDiscuss() {
       const curPage = sessionStorage.getItem("alldiscussOffset");
       if (curPage) this.reqParam.page = parseInt(curPage);
-      this.$store.dispatch("getAllDiscuss", this.reqParam).then((res) => {
+      ("getAllDiscuss", this.reqParam).then((res) => {
         this.discussList = res.data.rows;
         this.totalDiscuss = res.data.count;
       });

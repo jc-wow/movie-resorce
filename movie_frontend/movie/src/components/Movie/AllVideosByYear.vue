@@ -107,6 +107,7 @@ export default {
       this.$store.commit("getIsPreviewVideoState", false);
     },
     getPeopleInfo(item) {
+      if (item.length === 0) return '';
       return item.split("/").slice(0, 3).join("/");
     },
     checkScollToBottom() {
@@ -353,7 +354,7 @@ $dark: #131325;
       background-color: lighten($dark, 8%);
       box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
       overflow: hidden;
-      height: 10vh;
+      height: 12vh;
       & .video {
         transition: all 0.5s;
         width: 120px;

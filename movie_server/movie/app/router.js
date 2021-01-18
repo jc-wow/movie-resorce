@@ -16,6 +16,15 @@ module.exports = (app) => {
     "/api/discuss_reply/:id/update",
     controller.discussReply.update
   );
-  router.get("movieInfo", "/api/movieinfo_bytime", controller.movieInfo.getMovieInfoByTime);
+  router.get(
+    "movieInfo",
+    "/api/movieinfo_bytime",
+    controller.movieInfo.getMovieInfoByTime
+  );
   router.get("movieInfo", "/api/video", controller.movieInfo.getVideo);
+  router.get(
+    "randomMovieInfo",
+    "/api/randomMovieInfo",
+    controller.movieInfo.getRandomMovie
+  );
 };
