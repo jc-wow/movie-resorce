@@ -90,9 +90,17 @@ export default {
       });
     },
     // random change cover
+    getCover() {
+      this.$store.dispatch("getRandomMovie").then((res) => {
+        if (res.success) {
+          this.cover = res.data[0].cover;
+        }
+      });
+    },
     changeCover() {
-
-    }
+			if (this.randomCoverTimer) clearInterval(this.getCover);
+      this.randomCoverTimer = setInterval(this.getCover, 15000);
+    },
   },
   beforeMount() {
     this.options = [
@@ -165,12 +173,12 @@ export default {
         label: "19th",
       },
     ];
-    this.getOptions();
+		this.getOptions();
+		this.getCover();
+    this.changeCover();
   },
-  mounted() {
-    this.$store.dispatch("getResSelectedMovie", "1292226").then((res) => {
-      this.cover = res.data.cover;
-    });
+  destroyed() {
+    if (this.randomCoverTimer) clearInterval(this.randomCoverTimer);
   },
 };
 </script>

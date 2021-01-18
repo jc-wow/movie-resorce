@@ -45,11 +45,10 @@ class MovieInfo extends Service {
   }
 
   async getRandomMovie() {
-    return this.ctx.model.MovieInfo.query(
+    return this.app.model.query(
       "select cover FROM movies_info order by rand() limit 1",
       { type: Sequelize.QueryTypes.SELECT }
     );
   }
 }
-
 module.exports = MovieInfo;
