@@ -46,7 +46,7 @@ class MovieInfo extends Service {
 
   async getRandomMovie() {
     return this.app.model.query(
-      "select cover FROM movies_info order by rand() limit 1",
+      "select * FROM movies_info order by rand() limit 1",
       { type: Sequelize.QueryTypes.SELECT }
     );
   }

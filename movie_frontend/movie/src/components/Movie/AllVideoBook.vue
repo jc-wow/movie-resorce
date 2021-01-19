@@ -5,7 +5,9 @@
         <div
           class="book-page book-page-1"
           :class="{ 'allvideobook-load': loaded }"
-        ></div>
+        >
+          <PageOne></PageOne>
+        </div>
         <div class="book-page book-page-4">
           <div class="page-content-4">
             <AllVideosByYear
@@ -63,11 +65,12 @@
 <script>
 import AllVideosCategory from "./AllVideosCategory";
 import AllVideosByYear from "./AllVideosByYear";
+import PageOne from "./PageOne";
 import "../../style/waterfall.scss";
 
 export default {
   name: "AllVideoBook",
-  components: { AllVideosCategory, AllVideosByYear },
+  components: { AllVideosCategory, AllVideosByYear, PageOne },
   data() {
     return {
       paging: false,
@@ -255,7 +258,8 @@ export default {
           width: 100%;
           height: 100%;
           transform: rotateY(0deg) translateZ(1px);
-          background-color: #000;
+          //background-color: #000;
+          background-image: linear-gradient(to left, #000 90%, #fff);
         }
 
         &-back {
