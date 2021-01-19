@@ -226,14 +226,12 @@ export default {
         }
 
         &-1 {
-          // cursor: pointer;
           overflow: hidden;
           transform: rotateY(180deg);
           transform-origin: 100%;
         }
 
         &-2 {
-         // padding: 0 0 0 calc(var(--baseline) * 3);
           position: absolute;
           right: 0;
           transform-style: preserve-3d;
@@ -246,7 +244,6 @@ export default {
         }
 
         &-4 {
-          // cursor: pointer;
           padding: 0 1% 0 calc(var(--baseline) * 5);
 
           .page-content-4 {
@@ -258,8 +255,7 @@ export default {
           width: 100%;
           height: 100%;
           transform: rotateY(0deg) translateZ(1px);
-          //background-color: #000;
-          background-image: linear-gradient(to left, #000 75%, #fff);
+          background-image: linear-gradient(to left, #000 80%, #fff);
         }
 
         &-back {

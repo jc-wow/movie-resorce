@@ -245,9 +245,9 @@ export default {
     height: 10%;
     display: flex;
     position: absolute;
+    margin-left: 20%;
 
     .allvideos-category-content-title {
-      margin-left: 20%;
       width: 100%;
       span {
         display: block;

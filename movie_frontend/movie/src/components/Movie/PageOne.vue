@@ -11,6 +11,6 @@ export default {
 <style lang="scss" scoped>
 .page-one {
   width: 100%;
-  background-image: linear-gradient(to right, #000 75%, #fff);
+  background-image: linear-gradient(to right, #000 80%, #fff);
 }
 </style>
