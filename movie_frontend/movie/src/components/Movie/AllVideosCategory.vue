@@ -247,6 +247,7 @@ export default {
     position: absolute;
 
     .allvideos-category-content-title {
+      margin-left: 20%;
       width: 100%;
       span {
         display: block;
@@ -274,6 +275,7 @@ export default {
     opacity: 0.5;
     position: absolute;
     top: 10%;
+    margin-left: 20%;
   }
   .fadein {
     animation: fadein 6s ease;

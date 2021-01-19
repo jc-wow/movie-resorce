@@ -233,7 +233,7 @@ export default {
         }
 
         &-2 {
-          padding: 0 0 0 calc(var(--baseline) * 3);
+         // padding: 0 0 0 calc(var(--baseline) * 3);
           position: absolute;
           right: 0;
           transform-style: preserve-3d;
@@ -259,7 +259,7 @@ export default {
           height: 100%;
           transform: rotateY(0deg) translateZ(1px);
           //background-color: #000;
-          background-image: linear-gradient(to left, #000 90%, #fff);
+          background-image: linear-gradient(to left, #000 75%, #fff);
         }
 
         &-back {
