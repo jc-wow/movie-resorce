@@ -245,13 +245,13 @@ export default {
     height: 10%;
     display: flex;
     position: absolute;
-    margin-left: 20%;
+    margin-left: 10%;
 
     .allvideos-category-content-title {
       width: 100%;
       span {
         display: block;
-        color: #fff;
+        color: #f52ef9;
         text-align: center;
         font-size: 1rem;
         text-overflow: ellipsis;
@@ -270,12 +270,12 @@ export default {
     animation: textfadein 6s ease;
   }
   .allvideos-category-cover {
-    height: 80%;
+    height: 88%;
     width: 80%;
     opacity: 0.5;
     position: absolute;
     top: 10%;
-    margin-left: 20%;
+    margin-left: 10%;
   }
   .fadein {
     animation: fadein 6s ease;

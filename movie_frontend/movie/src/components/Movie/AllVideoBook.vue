@@ -255,7 +255,7 @@ export default {
           width: 100%;
           height: 100%;
           transform: rotateY(0deg) translateZ(1px);
-          background-image: linear-gradient(to left, #000 80%, #fff);
+					background-color: #000;
         }
 
         &-back {
