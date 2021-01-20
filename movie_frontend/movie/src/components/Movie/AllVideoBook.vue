@@ -6,7 +6,10 @@
           class="book-page book-page-1"
           :class="{ 'allvideobook-load': loaded }"
         >
-          <PageOne></PageOne>
+          <PageOne
+            @selectPage="selectPage"
+            @getMovieInfo="getMovieInfo"
+          ></PageOne>
         </div>
         <div class="book-page book-page-4">
           <div class="page-content-4">
@@ -21,10 +24,7 @@
         >
           <transition name="load">
             <div class="book-page-front" v-show="loaded">
-              <AllVideosCategory
-                @getMovieInfo="getMovieInfo"
-                @selectPage="selectPage"
-              ></AllVideosCategory>
+              <AllVideosCategory></AllVideosCategory>
             </div>
           </transition>
           <div class="book-page-back">
@@ -189,7 +189,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-	position: relative;
+  position: relative;
 
   .cover {
     width: 70%;
@@ -255,7 +255,7 @@ export default {
           width: 100%;
           height: 100%;
           transform: rotateY(0deg) translateZ(1px);
-					background-color: #000;
+          background-color: #000;
         }
 
         &-back {
@@ -285,18 +285,17 @@ export default {
     }
   }
 
-	.allvideobook-page-icon {
-		position: absolute;
-		cursor: pointer;
-	}
+  .allvideobook-page-icon {
+    position: absolute;
+    cursor: pointer;
+  }
 
-	.allvideobook-pageleft {
-		left: 10%;
-	}
+  .allvideobook-pageleft {
+    left: 10%;
+  }
 
-	.allvideobook-pageright {
-		right: 10%;
-	}
-
+  .allvideobook-pageright {
+    right: 10%;
+  }
 }
 </style>
