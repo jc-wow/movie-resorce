@@ -1,26 +1,26 @@
 <template>
   <div class="page-one">
-      <div class="page-one-back" v-if="load">
-        <section class="page-one-desc">
-          <p class="page-one-desc1">让影视在时间中穿梭</p>
-          <p class="page-one-desc2">
-            <span>一个影视爱好者按时间收集影视的网站</span>
-          </p>
-          <p class="page-one-desc3">
-            “Roads? Where we're going <br />
-            we don't need roads.”
-          </p>
-        </section>
-        <el-cascader
-          class="page-one-years"
-          v-model="value"
-          :options="options"
-          :show-all-levels="false"
-          :props="{ expandTrigger: 'hover' }"
-          @change="handleChange"
-          placeholder="请选择年份"
-        ></el-cascader>
-      </div>
+    <div class="page-one-back" v-if="load">
+      <section class="page-one-desc">
+        <p class="page-one-desc1">让影视在时间中穿梭</p>
+        <p class="page-one-desc2">
+          <span>一个影视爱好者按时间收集影视的网站</span>
+        </p>
+        <p class="page-one-desc3">
+          “Roads? Where we're going <br />
+          we don't need roads.”
+        </p>
+      </section>
+      <el-cascader
+        class="page-one-years"
+        v-model="value"
+        :options="options"
+        :show-all-levels="false"
+        :props="{ expandTrigger: 'hover' }"
+        @change="handleChange"
+        placeholder="请选择年份"
+      ></el-cascader>
+    </div>
   </div>
 </template>
 
@@ -236,20 +236,20 @@ export default {
   .el-cascader-panel {
     font-size: 1rem;
     width: 70%;
-  }
 
-  .el-cascader-menu {
-    min-width: 10vw;
+    .el-cascader-menu {
+      min-width: 10vw;
 
-    .el-cascader-menu__wrap {
-      .el-cascader-menu__list {
-        color: #fff;
-        font-weight: 700;
-        .el-cascader-node:hover {
-          color: #409eff !important;
-        }
-        .el-icon-arrow-right {
-          font-size: 0.9rem;
+      .el-cascader-menu__wrap {
+        .el-cascader-menu__list {
+          color: #fff;
+          font-weight: 700;
+          .el-cascader-node:hover {
+            color: #409eff !important;
+          }
+          .el-icon-arrow-right {
+            font-size: 0.9rem;
+          }
         }
       }
     }

@@ -31,14 +31,14 @@
         placeholder="搜索你感兴趣的电影"
         v-model="searchVal"
         @input="changeSearchVal"
-        @keyup.enter.native="selectMovie()"
+        @keyup.enter.native="selectMovie"
         @keydown.down.native="keyControlMovie($event)"
         @keydown.up.native="keyControlMovie($event)"
       >
         <el-button
           slot="append"
           icon="el-icon-search"
-          @click="selectMovie()"
+          @click="selectMovie"
         ></el-button>
       </el-input>
     </div>
@@ -50,7 +50,7 @@
         @mousemove="hoverMovie(item)"
         @mouseleave="leavehoverMovie(item)"
         :style="{ backgroundColor: item.ishover ? '#ececec' : null }"
-        @click="selectMovie($event)"
+        @click="selectMovie"
       >
         {{ item.title }}
       </div>
@@ -71,29 +71,46 @@ export default {
     };
   },
   methods: {
-    selectMovie(e) {
-      // check click searchpanel item or search button
-      if (e) {
-        this.curSelectMovie = e.target.textContent.trim() || "";
+    selectMovieByEnter(e) {
+      if (this.keyPosition !== -1) {
+        this.curSelectMovie = this.searchResVal[this.keyPosition].title;
       } else {
+        this.curSelectMovie = this.searchVal;
+      }
+    },
+    selectMovie(e) {
+      if (e.type === "keyup") {
+        // keyup event
         if (this.keyPosition !== -1) {
           this.curSelectMovie = this.searchResVal[this.keyPosition].title;
         } else {
           this.curSelectMovie = this.searchVal;
         }
+      } else {
+        const curSelectRes = e.target.textContent;
+        if (curSelectRes.length !== 0) {
+          // click search panel
+          this.curSelectMovie = e.target.textContent.trim() || "";
+        } else {
+          // click search button
+          this.curSelectMovie = this.searchVal;
+        }
       }
+      this.handleSelectMovie();
+    },
+    handleSelectMovie() {
       if (this.curSelectMovie.length === 0) return;
       this.movieObj = this.searchResVal.filter(
         (ele) => ele.title === this.curSelectMovie
       )[0];
       if (!this.movieObj) return;
-			this.isSelected = true;
+      this.isSelected = true;
       this.$store.commit("getSelectedMovie", this.movieObj);
-			this.$store.commit("getIsPreviewVideoState", true);
-			this.$store.commit('getCurPage', '首页');
+      //this.$store.commit("getIsPreviewVideoState", true);
+      //this.$store.commit("getCurPage", "首页");
     },
     changePage(val) {
-      this.initData()
+      this.initData();
       this.$store.commit("getCurPage", val.target.textContent);
     },
     enterNav(e) {
@@ -171,7 +188,16 @@ export default {
             ele.ishover = false;
           });
           this.searchResVal = res.data.rows;
+          this.getSearchPanel(res.data.count);
         });
+    },
+    getSearchPanel(count) {
+      if (count > 20) {
+        this.searchResVal.push({
+          ishover: false,
+          title: "点击查看更多...",
+        });
+      }
     },
     getSearchPanelPosition() {
       const searchInputObj = document.getElementsByClassName("nav-search")[0];
