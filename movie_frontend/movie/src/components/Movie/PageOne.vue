@@ -1,24 +1,26 @@
 <template>
   <div class="page-one">
-    <section class="page-one-desc">
-      <p class="page-one-desc1">让影视在时间中穿梭</p>
-      <p class="page-one-desc2">
-        <span>一个影视爱好者按时间收集影视的网站</span>
-      </p>
-      <p class="page-one-desc3">
-        “Roads? Where we're going <br />
-        we don't need roads.”
-      </p>
-    </section>
-    <el-cascader
-      class="page-one-years"
-      v-model="value"
-      :options="options"
-      :show-all-levels="false"
-      :props="{ expandTrigger: 'hover' }"
-      @change="handleChange"
-      placeholder="请选择年份"
-    ></el-cascader>
+      <div class="page-one-back" v-if="load">
+        <section class="page-one-desc">
+          <p class="page-one-desc1">让影视在时间中穿梭</p>
+          <p class="page-one-desc2">
+            <span>一个影视爱好者按时间收集影视的网站</span>
+          </p>
+          <p class="page-one-desc3">
+            “Roads? Where we're going <br />
+            we don't need roads.”
+          </p>
+        </section>
+        <el-cascader
+          class="page-one-years"
+          v-model="value"
+          :options="options"
+          :show-all-levels="false"
+          :props="{ expandTrigger: 'hover' }"
+          @change="handleChange"
+          placeholder="请选择年份"
+        ></el-cascader>
+      </div>
   </div>
 </template>
 
@@ -163,6 +165,7 @@ export default {
         label: "19th",
       },
     ];
+    this.load = true;
     this.getOptions();
   },
 };
@@ -177,7 +180,7 @@ export default {
     text-align: center;
     perspective: 60;
     -webkit-perspective: 60;
-    margin-top: 20%;
+    margin-top: 15%;
 
     .page-one-desc1 {
       font-size: 2rem;
@@ -193,7 +196,7 @@ export default {
       }
     }
     .page-one-desc3 {
-      margin-top: 30%;
+      margin-top: 35%;
       font-size: 2.2rem;
       transform: rotateX(45deg);
       opacity: 0.5;
@@ -205,14 +208,19 @@ export default {
     top: 46%;
     left: 30%;
     .el-input--suffix {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
+      font-weight: 700;
       width: 80%;
-
+      .el-input__inner::-webkit-input-placeholder {
+        color: rgb(10, 10, 10) !important;
+        font-size: 1rem;
+      }
       .el-input__inner {
         border-radius: 1.5rem;
         border: none;
         text-align: center;
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: #f3f9a7;
+        color: #000;
       }
       .el-input__inner:focus {
         border-color: #fff;
@@ -223,17 +231,27 @@ export default {
 
 .el-cascader__dropdown {
   border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.8);
 
   .el-cascader-panel {
-    font-size: 1.2rem;
+    font-size: 1rem;
     width: 70%;
   }
 
   .el-cascader-menu {
     min-width: 10vw;
 
-    .el-icon-arrow-right {
-      font-size: 0.9rem;
+    .el-cascader-menu__wrap {
+      .el-cascader-menu__list {
+        color: #fff;
+        font-weight: 700;
+        .el-cascader-node:hover {
+          color: #409eff !important;
+        }
+        .el-icon-arrow-right {
+          font-size: 0.9rem;
+        }
+      }
     }
   }
 }
