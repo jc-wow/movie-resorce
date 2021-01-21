@@ -2,9 +2,9 @@
   <div class="page-one">
     <div class="page-one-back" v-if="load">
       <section class="page-one-desc">
-        <p class="page-one-desc1">让影视在时间中穿梭</p>
+        <p class="page-one-desc1">影视收藏夹</p>
         <p class="page-one-desc2">
-          <span>一个影视爱好者按时间收集影视的网站</span>
+          <span>一个按时间收藏电影的网站</span>
         </p>
         <p class="page-one-desc3">
           “Roads? Where we're going <br />
@@ -208,12 +208,12 @@ export default {
     top: 46%;
     left: 30%;
     .el-input--suffix {
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: 700;
       width: 80%;
       .el-input__inner::-webkit-input-placeholder {
         color: rgb(10, 10, 10) !important;
-        font-size: 1rem;
+        font-size: 0.9rem;
       }
       .el-input__inner {
         border-radius: 1.5rem;
