@@ -10,28 +10,23 @@ class MovieInfo extends Service {
     offset = limit * (offset - 1);
     const options = {
       attributes: [],
-      order: [["rate", "DESC"]],
+      order: [
+        ["rate", "DESC"],
+        ["id", "DESC"],
+      ],
       limit: parseInt(limit),
       offset: parseInt(offset),
-      where: {
-        release_date: {},
-      },
+      where: {},
     };
+
+    // get info by year or by years
+    const reqTime = time.replace(/[a-z]+/, "");
+
     // check if has searchMovieKey
     if (searchMovieKey && searchMovieKey.length !== 0) {
       options.where.title = {
         [Op.substring]: searchMovieKey,
       };
-    }
-
-    // get info by year or by years
-    const reqTime = time.replace(/[a-z]+/, "");
-    if (time.endsWith("s")) {
-      options.attributes = ["title", "cover", "id", "release_date"];
-      options.where.release_date = {
-        [Sequelize.Op.like]: `${reqTime.slice(0, 3)}%`,
-      };
-    } else if (!time.endsWith("s") || reqTime === "19") {
       options.attributes = [
         "title",
         "cover",
@@ -41,10 +36,28 @@ class MovieInfo extends Service {
         "release_date",
         "id",
       ];
-      options.where.release_date = {
-        [Sequelize.Op.like]: reqTime === "19" ? `${18}%` : `${reqTime}%`,
-      };
+    } else {
+      if (time.endsWith("s")) {
+        options.attributes = ["title", "cover", "id", "release_date"];
+        options.where.release_date = {
+          [Sequelize.Op.like]: `${reqTime.slice(0, 3)}%`,
+        };
+      } else if (!time.endsWith("s") || reqTime === "19") {
+        options.attributes = [
+          "title",
+          "cover",
+          "director",
+          "actor",
+          "summary",
+          "release_date",
+          "id",
+        ];
+        options.where.release_date = {
+          [Sequelize.Op.like]: reqTime === "19" ? `${18}%` : `${reqTime}%`,
+        };
+      }
     }
+
     return this.ctx.model.MovieInfo.findAndCountAll(options);
   }
 

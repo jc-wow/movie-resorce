@@ -23,6 +23,12 @@
           >
             <span>演员：</span>{{ getPeopleInfo(video.actor) }}
           </div>
+          <div
+            class="release-date"
+            :style="video.open ? openInfoStyle : closeInfoStyle"
+          >
+            <span>上映日期: </span>{{ video.release_date }}
+          </div>
           <div class="bottom">{{ video.summary }}</div>
         </div>
       </div>
@@ -89,9 +95,7 @@ export default {
 
       const ctop = this.container.scrollTop;
       if (
-        this.container.scrollHeight -
-          this.container.offsetHeight -
-          ctop <=
+        this.container.scrollHeight - this.container.offsetHeight - ctop <=
         10
       ) {
         this.$emit("changeShowLoadVideoState", true);

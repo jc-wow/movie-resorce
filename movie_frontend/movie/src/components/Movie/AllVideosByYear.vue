@@ -33,7 +33,7 @@ export default {
       this.offset++;
       this.$store
         .dispatch("getMovieInfoByTime", {
-          time: year,
+          time: year ? searchMovieKey.length > 0 : '',
           offset: this.offset,
           limit: 20,
           searchMovieKey,

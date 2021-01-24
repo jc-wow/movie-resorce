@@ -81,11 +81,8 @@ export default {
     changePreviewVideo(e) {
       this.isPreviewVideo = e;
     },
-    selectPage() {
-      this.paging = this.$store.state.pageState;
-      this.showBackPageAni = true;
-    },
     getMovieInfo() {
+      this.showBackPageAni = true;
       const movieCount = this.$store.state.movieInfoByTime.rows.length;
       this.movieInfo = this.$store.state.movieInfoByTime.rows.slice(0, 20);
       let start = 0,
@@ -131,7 +128,9 @@ export default {
       if (Object.keys(curPreviewVideo).length !== 0) {
         const videoID = curPreviewVideo.id;
         this.selectMovie(videoID);
-        this.paging = true;
+        if (this.$store.state.pageState) {
+          this.$store.commit("selectPage", false); // page
+        }
       }
     },
   },
@@ -139,9 +138,9 @@ export default {
     "$store.state.selectedMovie": function () {
       this.previewVideo();
     },
-    "$store.state.pageState": function() {
+    "$store.state.pageState": function () {
       this.paging = this.$store.state.pageState;
-    }
+    },
   },
   mounted() {
     this.loaded = true;

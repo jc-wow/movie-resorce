@@ -83,7 +83,10 @@ export default {
       if (!this.movieObj || this.movieObj.title === "点击查看更多...") {
         this.getSearchDetail();
         this.$store.commit("searchMovieKey", this.searchVal);
-        this.$store.commit("selectPage", false); // page
+        this.$store.commit("getIsPreviewVideoState", false);
+        if (this.$store.state.pageState) {
+          this.$store.commit("selectPage", false); // page
+        }
       } else {
         this.$store.commit("getSelectedMovie", this.movieObj);
       }

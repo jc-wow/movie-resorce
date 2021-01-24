@@ -4,11 +4,12 @@ const Controller = require("./base");
 
 class MovieInfoController extends Controller {
   async getMovieInfoByTime() {
-    const { time, offset, limit } = this.ctx.query;
+    const { time, offset, limit, searchMovieKey } = this.ctx.query;
     this.ctx.body = await this.ctx.service.movieInfo.getMovieInfoByTime({
       time,
       offset,
       limit,
+      searchMovieKey,
     });
     this.success(this.ctx.body);
   }
