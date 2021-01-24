@@ -3,29 +3,6 @@
     <div class="nav-logo">
       <img src="../../assets/text.png" style="object-fit: cover" />
     </div>
-    <div class="nav-classify">
-      <!-- <span
-        class="nav-classify-1"
-        @click="changePage($event)"
-        @mouseover="enterNav($event)"
-        @mouseleave="leaveNav($event)"
-        >首页</span
-      >
-      <span
-        class="nav-classify-2"
-        @click="changePage($event)"
-        @mouseover="enterNav($event)"
-        @mouseleave="leaveNav($event)"
-        >电影</span
-      >
-      <span
-        class="nav-classify-3"
-        @click="changePage($event)"
-        @mouseover="enterNav($event)"
-        @mouseleave="leaveNav($event)"
-        >想法</span
-      > -->
-    </div>
     <div class="nav-search">
       <el-input
         placeholder="搜索你感兴趣的电影"
@@ -103,26 +80,26 @@ export default {
       this.movieObj = this.searchResVal.filter(
         (ele) => ele.title === this.curSelectMovie
       )[0];
-      if (!this.movieObj) return;
+      if (!this.movieObj || this.movieObj.title === "点击查看更多...") {
+        this.getSearchDetail();
+        this.$store.commit("searchMovieKey", this.searchVal);
+        this.$store.commit("selectPage", false); // page
+      } else {
+        this.$store.commit("getSelectedMovie", this.movieObj);
+      }
       this.isSelected = true;
-      this.$store.commit("getSelectedMovie", this.movieObj);
-      //this.$store.commit("getIsPreviewVideoState", true);
-      //this.$store.commit("getCurPage", "首页");
     },
-    changePage(val) {
-      this.initData();
-      this.$store.commit("getCurPage", val.target.textContent);
+    getSearchDetail() {
+      this.reqSearchAPI().then((res) => {
+        this.$store.commit("getMovieInfoByYear", res.data);
+      });
     },
-    enterNav(e) {
-      e.target.style = "background-color: #2b2929";
-    },
-    leaveNav(e) {
-      e.target.style = "background-color: none";
-    },
+
     changeSearchVal() {
+      if (this.searchVal.length === 0) return;
       this.isSelected = false;
       clearTimeout(this.timer);
-      this.timer = setTimeout(() => this.reqSearchAPI(), 500);
+      this.timer = setTimeout(() => this.getSearchPanelData(), 500);
     },
     keyControlMovie(event) {
       const searchResValLength = this.searchResVal.length;
@@ -168,8 +145,18 @@ export default {
     leavehoverMovie(item) {
       item.ishover = false;
     },
-    reqSearchAPI() {
+    // get panel data
+    async getSearchPanelData() {
       this.getSearchPanelPosition();
+      const panelData = await this.reqSearchAPI();
+      if (!panelData) return;
+      panelData.data.rows.forEach((ele) => {
+        ele.ishover = false;
+      });
+      this.searchResVal = panelData.data.rows;
+      this.getSearchPanel(panelData.data.count);
+    },
+    reqSearchAPI() {
       const reg = new RegExp(
         "[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]"
       );
@@ -181,15 +168,13 @@ export default {
         this.initData();
         return;
       }
-      this.$store
-        .dispatch("searchMovie", { key: this.searchVal })
-        .then((res) => {
-          res.data.rows.forEach((ele) => {
-            ele.ishover = false;
-          });
-          this.searchResVal = res.data.rows;
-          this.getSearchPanel(res.data.count);
-        });
+      return new Promise((resolve) => {
+        this.$store
+          .dispatch("searchMovie", {
+            key: this.searchVal,
+          })
+          .then((res) => resolve(res));
+      });
     },
     getSearchPanel(count) {
       if (count > 20) {
@@ -310,29 +295,9 @@ export default {
     }
   }
 
-  .nav-classify {
-    height: 100%;
-    width: 45%;
-    display: flex;
-    align-items: center;
-
-    span {
-      cursor: pointer;
-      margin-left: 8%;
-      color: #e3dbdf;
-      line-height: 2.5rem;
-      text-align: center;
-      border-radius: 10px;
-      border: 0px solid #000;
-      width: 8%;
-    }
-    .nav-classify-1 {
-      margin-left: 15%;
-    }
-  }
-
   .nav-search {
     width: 14%;
+    margin-left: 50%;
     display: flex;
     .el-input-group {
       .el-input__inner {
@@ -358,7 +323,6 @@ export default {
     max-height: 20rem;
     overflow: auto;
     div {
-      // display: block;
       line-height: 1.6rem;
       margin-left: 2%;
       cursor: pointer;
@@ -369,6 +333,10 @@ export default {
     div:hover {
       overflow: visible;
       white-space: normal;
+    }
+    #nav-searchpanel-20 {
+      font-weight: 600;
+      text-align: center;
     }
   }
 }

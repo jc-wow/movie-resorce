@@ -2,10 +2,11 @@
 
 const Service = require("egg").Service;
 const Sequelize = require("sequelize");
+const { Op } = require("sequelize");
 
 class MovieInfo extends Service {
   async getMovieInfoByTime(param) {
-    let { time, offset, limit } = param;
+    let { time, offset, limit, searchMovieKey } = param;
     offset = limit * (offset - 1);
     const options = {
       attributes: [],
@@ -16,6 +17,13 @@ class MovieInfo extends Service {
         release_date: {},
       },
     };
+    // check if has searchMovieKey
+    if (searchMovieKey && searchMovieKey.length !== 0) {
+      options.where.title = {
+        [Op.substring]: searchMovieKey,
+      };
+    }
+
     // get info by year or by years
     const reqTime = time.replace(/[a-z]+/, "");
     if (time.endsWith("s")) {

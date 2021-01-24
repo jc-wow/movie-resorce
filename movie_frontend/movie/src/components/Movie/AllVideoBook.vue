@@ -6,10 +6,7 @@
           class="book-page book-page-1"
           :class="{ 'allvideobook-load': loaded }"
         >
-          <PageOne
-            @selectPage="selectPage"
-            @getMovieInfo="getMovieInfo"
-          ></PageOne>
+          <PageOne @getMovieInfo="getMovieInfo"></PageOne>
         </div>
         <div class="book-page book-page-4">
           <div class="page-content-4">
@@ -20,7 +17,7 @@
         </div>
         <div
           class="book-page book-page-2"
-          :class="{ 'allvideobook-page': paging }"
+          :class="{ 'allvideobook-page': !paging }"
         >
           <transition name="load">
             <div class="book-page-front" v-show="loaded">
@@ -51,13 +48,13 @@
       class="allvideobook-pageleft allvideobook-page-icon"
       src="../../assets/leftPage.svg"
       @click="page('left')"
-      v-show="paging"
+      v-show="!paging"
     />
     <img
       class="allvideobook-pageright allvideobook-page-icon"
       src="../../assets/rightPage.svg"
       @click="page('right')"
-      v-show="!paging"
+      v-show="paging"
     />
   </div>
 </template>
@@ -73,7 +70,7 @@ export default {
   components: { AllVideosCategory, AllVideosByYear, PageOne },
   data() {
     return {
-      paging: false,
+      paging: true,
       loaded: false,
       movieInfo: [],
       showBackPageAni: false,
@@ -84,8 +81,8 @@ export default {
     changePreviewVideo(e) {
       this.isPreviewVideo = e;
     },
-    selectPage(pageState) {
-      this.paging = pageState;
+    selectPage() {
+      this.paging = this.$store.state.pageState;
       this.showBackPageAni = true;
     },
     getMovieInfo() {
@@ -119,10 +116,11 @@ export default {
     // paging button
     page(direc) {
       if (direc === "left") {
-        this.selectPage(false);
+        this.$store.commit("selectPage", true);
       } else {
-        this.selectPage(true);
+        this.$store.commit("selectPage", false);
       }
+      this.selectPage();
     },
     getReleaseYear(releaseDate) {
       return " (" + releaseDate.split("-")[0] + ")" || "";
@@ -141,6 +139,9 @@ export default {
     "$store.state.selectedMovie": function () {
       this.previewVideo();
     },
+    "$store.state.pageState": function() {
+      this.paging = this.$store.state.pageState;
+    }
   },
   mounted() {
     this.loaded = true;

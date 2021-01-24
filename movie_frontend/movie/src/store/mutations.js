@@ -44,7 +44,15 @@ const mutations = {
 	},
 	getIsPreviewVideoState(state, val) {
 		state.isPreviewVideo = val;
-	}
+  },
+  // page state
+  selectPage(state, val) {
+    state.pageState = val;
+  },
+  // search movie key
+  searchMovieKey(state, val) {
+    state.searchMovieKey = val;
+  }
 };
 
 export default mutations;

@@ -19,13 +19,15 @@ export default new Vuex.Store({
     userInfo: {
       email: "",
       author: ""
-		},
-		movieInfoByTime: [],
-		movieInfoByYear: [],
-		curSelectYear: '',
-		searchVideo: {},
-		isPreviewVideo: false // select video state when click water fall or select video on search panel and button 
-	},
+    },
+    movieInfoByTime: [],
+    movieInfoByYear: [],
+    curSelectYear: "",
+    searchVideo: {},
+    isPreviewVideo: false, // select video state when click water fall or select video on search panel and button
+    pageState: true,
+    searchMovieKey: ''
+  },
   mutations,
   actions,
   modules: {}

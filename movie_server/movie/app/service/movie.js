@@ -29,7 +29,15 @@ class MovieInfo extends Service {
   async search(param) {
     const { key } = param;
     return this.ctx.model.MovieInfo.findAndCountAll({
-      attributes: ["id", "title"],
+      attributes: [
+        "id",
+        "title",
+        "actor",
+        "cover",
+        "director",
+        "release_date",
+        "summary",
+      ],
       order: [
         ["rate", "DESC"],
         ["id", "DESC"],
