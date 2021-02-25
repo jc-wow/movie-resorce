@@ -1,18 +1,12 @@
 <template>
   <div class="main">
-    <!-- <SideBar class="sbar"></SideBar> -->
-    <!-- <StartPage class="st"></StartPage> -->
 		<AllVideoBook></AllVideoBook>
-    <!-- <MovieMain class="mv-main"></MovieMain> -->
-    <!-- <Music class="mu-main"></Music> -->
   </div>
 </template>
 
 <script>
 import StartPage from "./StartPage";
-// import MovieMain from "../Movie/MovieMain";
 import Discuss from "../Discuss/Discuss";
-import Music from "../Music/MusicMain";
 import SideBar from "../Nav/SideBar";
 import AllVideoBook from "../Movie/AllVideoBook";
 
@@ -27,8 +21,6 @@ export default {
   },
   components: {
     StartPage,
-    // MovieMain,
-    Music,
     SideBar,
     AllVideoBook,
   },

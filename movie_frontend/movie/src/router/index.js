@@ -1,10 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Main from "@/components/Main/Main";
-import MovieDetail from "@/components/Movie/MovieDetail";
-import Discuss from "@/components/Discuss/Discuss";
-import EditDiscuss from "@/components/Discuss/EditDiscuss";
-import DiscussDetail from "@/components/Discuss/DiscussDetail";
+
+
+const Main = () => import("@/components/Main/Main");
+const Discuss = () => import("@/components/Discuss/Discuss");
+const EditDiscuss = () => import("@/components/Discuss/EditDiscuss");
+const DiscussDetail = () => import("@/components/Discuss/DiscussDetail");
 
 Vue.use(VueRouter);
 
@@ -14,11 +15,6 @@ const routes = [
     name: "main",
     component: Main
   },
-  // {
-  //   path: "/movie/:id",
-  //   component: MovieDetail,
-  //   name: "movie"
-  // },
   {
     path: "/discuss",
     component: Discuss,

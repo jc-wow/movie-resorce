@@ -117,7 +117,6 @@ export default {
       } else {
         this.$store.commit("selectPage", false);
       }
-      this.selectPage();
     },
     getReleaseYear(releaseDate) {
       return " (" + releaseDate.split("-")[0] + ")" || "";

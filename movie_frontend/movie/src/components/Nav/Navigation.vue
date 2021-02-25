@@ -338,7 +338,7 @@ export default {
       white-space: normal;
     }
     #nav-searchpanel-20 {
-      font-weight: 600;
+      font-weight: 500;
       text-align: center;
     }
   }

@@ -2,44 +2,16 @@
   <div class="start-page">
     <div class="video-head"></div>
     <div class="video-container">
-      <video class="start-page-video" autoplay loop muted>
-        <source src="../../assets/ep1.mp4" type="video/mp4" />
-      </video>
     </div>
-    <!-- <div class="start-page-sidebar-container">
-      <div class="start-page-sidebar">
-        <img
-          src="../../assets/projector.svg"
-          class="start-page-projector"
-          @load="getProjectPosition"
-        />
-      </div>
-      <Light
-        :position="projectorPosition"
-        :content="menuContent"
-        @getCurMoviedetail="getMoviedetail"
-      ></Light>
-    </div> -->
   </div>
 </template>
 
 <script>
-// import Light from "@/components/common/Light";
 
 export default {
   name: "startPage",
   data() {
     return {
-      movies: [
-        {
-          title: "天堂电影院",
-          cover: "../../assets/ep1.mp4",
-          id: "1291828",
-        },
-      ],
-      // projectorPosition: {
-      //   x1: 0,
-      // },
       menuContent: ["切换首页", "关于首页"],
     };
   },
