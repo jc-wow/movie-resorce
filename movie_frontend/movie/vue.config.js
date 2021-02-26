@@ -6,6 +6,7 @@ const path = require("path"),
 
 module.exports = {
   lintOnSave: false,
+  productionSourceMap: false,
   output: {
     path: path.join(__dirname, "dist"),
     publicPath: "/",
@@ -13,6 +14,19 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          "file-loader",
+          {
+            loader: "image-webpack-loader",
+            options: {
+              bypassOnDebug: true, // webpack@1.x
+              disable: true // webpack@2.x and newer
+            }
+          }
+        ]
+      },
       {
         test: /\.vue$/,
         loader: "vue",

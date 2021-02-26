@@ -210,7 +210,7 @@ $dark: #131325;
     background-color: lighten($dark, 8%);
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    height: 12vh;
+    height: 16vh;
     & .video {
       transition: all 0.5s;
       width: 120px;
