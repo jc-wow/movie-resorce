@@ -22,8 +22,12 @@ class MovieInfoController extends Controller {
   }
 
   async getRandomMovie() {
-    this.ctx.body = await this.ctx.service.movieInfo.getRandomMovie();
-    this.success(this.ctx.body);
+    try {
+      this.ctx.body = await this.ctx.service.movieInfo.getRandomMovie();
+      this.success(this.ctx.body);
+    } catch (err) {
+      this.logger.error(err);
+    }
   }
 }
 
