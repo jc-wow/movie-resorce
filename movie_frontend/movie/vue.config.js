@@ -2,7 +2,8 @@ const path = require("path"),
   webpack = require("webpack"),
   ExtractTextPlugin = require("extract-text-webpack-plugin"),
   CopyWebpackPlugin = require("copy-webpack-plugin"),
-  CompressionPlugin = require("compression-webpack-plugin");
+  CompressionPlugin = require("compression-webpack-plugin"),
+  ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 module.exports = {
   lintOnSave: false,
@@ -54,12 +55,31 @@ module.exports = {
         options: {
           name: "assets/images/[name].[ext]?[hash]"
         }
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10000,
+              name: utils.assetsPath("img/[name].[hash:7].[ext]")
+            }
+          },
+          {
+            loader: "image-webpack-loader",
+            options: {
+              bypassOnDebug: true
+            }
+          }
+        ]
       }
     ]
   },
   resolve: {
     alias: {
-      vue$: "vue/dist/vue"
+      vue$: "vue/dist/vue",
+      comp: path.resolve(__dirname, "src/components/")
     },
     extensions: [".js", ".vue"]
   },
@@ -76,6 +96,27 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new CopyWebpackPlugin([{ from: "src/index.html" }], { copyUnmodified: true }),
+    new ImageMinimizerPlugin({
+      minimizerOptions: {
+        // Lossless optimization with custom option
+        // Feel free to experiment with options for better result for you
+        plugins: [
+          ["gifsicle", { interlaced: true }],
+          ["jpegtran", { progressive: true }],
+          ["optipng", { optimizationLevel: 5 }],
+          [
+            "svgo",
+            {
+              plugins: [
+                {
+                  removeViewBox: false
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    }),
     new CompressionPlugin({
       /* [file]被替换为原始资产文件名。
          [path]替换为原始资产的路径。
@@ -93,6 +134,21 @@ module.exports = {
       minRatio: 0.8,
       //删除原始文件只保留压缩后的文件
       deleteOriginalAssets: true
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "vendor",
+      minChunks: function(module, count) {
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.resource.indexOf(path.join(__dirname, "../node_modules")) === 0
+        );
+      }
+    }),
+    // 抽取出代码模块的映射关系
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "manifest",
+      chunks: ["vendor"]
     })
   ]
 };

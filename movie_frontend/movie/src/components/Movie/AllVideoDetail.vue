@@ -10,7 +10,25 @@
       >
         <img class="video" :src="video.cover" referrerpolicy="no-referrer" />
         <div class="flex-column info">
-          <div class="title">{{ video.title }}</div>
+          <div class="title">
+            {{ video.title }}
+            <a
+              class="allvideo-detail-doubanlink"
+              :href="video.url"
+              target="_blank"
+              v-if="video.url"
+            >
+              <img src="../../assets/douban.jpg" width="23" height="23" />
+            </a>
+            <a
+              class="allvideo-detail-imdblink"
+              :href="video.imdb"
+              target="_blank"
+              v-if="video.imdb"
+            >
+              <img src="../../assets/imdb.jpg" width="23" height="23" />
+            </a>
+          </div>
           <div
             class="director"
             :style="video.open ? openInfoStyle : closeInfoStyle"
@@ -185,11 +203,6 @@ $dark: #131325;
       & .info {
         transform: translate(0, -10px);
       }
-      & .members {
-        padding: 15px 20px;
-        border-radius: 4px;
-        align-self: flex-start;
-      }
     }
     & button.simple {
       cursor: pointer;
@@ -210,8 +223,9 @@ $dark: #131325;
     background-color: lighten($dark, 8%);
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    height: 16vh;
+    height: 18vh;
     & .video {
+      margin-left: 1%;
       transition: all 0.5s;
       width: 120px;
       box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
@@ -229,6 +243,13 @@ $dark: #131325;
         font-size: 1rem;
         color: #fff;
         letter-spacing: 1px;
+        display: flex;
+        img {
+          border-radius: 11.5px;
+        }
+        a {
+          margin-left: 1%;
+        }
       }
       & .director {
         margin-top: 3%;
@@ -256,21 +277,6 @@ $dark: #131325;
         text-overflow: none;
         white-space: none;
         overflow: none;
-      }
-    }
-    & .members {
-      transition: all 0.1s;
-      padding: 40px;
-      font-family: "Montserrat";
-      color: #ccc;
-      background-color: lighten($dark, 5%);
-      & .current {
-        font-weight: bold;
-        margin-right: 10px;
-      }
-      & .max {
-        opacity: 0.5;
-        margin-left: 10px;
       }
     }
   }
