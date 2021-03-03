@@ -133,7 +133,7 @@ export default {
     }
     .page-one-desc3 {
       margin-top: 35%;
-      font-size: 2.2rem;
+      font-size: 2rem;
       transform: rotateX(45deg);
       opacity: 0.5;
     }

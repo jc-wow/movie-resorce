@@ -3,7 +3,8 @@ const path = require("path"),
   ExtractTextPlugin = require("extract-text-webpack-plugin"),
   CopyWebpackPlugin = require("copy-webpack-plugin"),
   CompressionPlugin = require("compression-webpack-plugin"),
-  ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+  ImageMinimizerPlugin = require("image-minimizer-webpack-plugin"),
+  BundleAnalyzerPlugin = require("webpack-bundle-analyzer");
 
 module.exports = {
   lintOnSave: false,
@@ -93,6 +94,7 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin("/assets/css/style.css"),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new BundleAnalyzerPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new CopyWebpackPlugin([{ from: "src/index.html" }], { copyUnmodified: true }),

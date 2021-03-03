@@ -99,7 +99,10 @@ export default {
     },
 
     changeSearchVal() {
-      if (this.searchVal.length === 0) return;
+      if (this.searchVal.length === 0) {
+        this.isSelected = true;
+        return;
+      }
       this.isSelected = false;
       clearTimeout(this.timer);
       this.timer = setTimeout(() => this.getSearchPanelData(), 500);
