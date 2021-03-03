@@ -21,10 +21,12 @@
         >
           <transition name="load">
             <div class="book-page-front" v-show="loaded">
+              <PageCorner :pageState="'front'" @page="page"></PageCorner>
               <AllVideosCategory></AllVideosCategory>
             </div>
           </transition>
           <div class="book-page-back">
+            <PageCorner :pageState="'back'" @page="page"></PageCorner>
             <div class="page-content" v-show="showBackPageAni">
               <div
                 class="video-img-content"
@@ -44,18 +46,6 @@
         </div>
       </div>
     </div>
-    <img
-      class="allvideobook-pageleft allvideobook-page-icon"
-      src="../../assets/leftPage.svg"
-      @click="page('left')"
-      v-show="!paging"
-    />
-    <img
-      class="allvideobook-pageright allvideobook-page-icon"
-      src="../../assets/rightPage.svg"
-      @click="page('right')"
-      v-show="paging"
-    />
   </div>
 </template>
 
@@ -64,10 +54,11 @@ import AllVideosCategory from "./AllVideosCategory";
 import AllVideosByYear from "./AllVideosByYear";
 import PageOne from "./PageOne";
 import "../../style/waterfall.scss";
+import PageCorner from "@/components/common/PageCorner.vue";
 
 export default {
   name: "AllVideoBook",
-  components: { AllVideosCategory, AllVideosByYear, PageOne },
+  components: { AllVideosCategory, AllVideosByYear, PageOne, PageCorner },
   data() {
     return {
       paging: true,
@@ -110,9 +101,9 @@ export default {
         }
       });
     },
-    // paging button
+    // select page corner
     page(direc) {
-      if (direc === "left") {
+      if (direc === "back") {
         this.$store.commit("selectPage", true);
       } else {
         this.$store.commit("selectPage", false);
@@ -261,7 +252,7 @@ export default {
           position: absolute;
           width: 100%;
           height: 100%;
-          padding: 0 calc(var(--baseline) * 1.8);
+          padding-left: 1vw;
           transform: rotateY(180deg) translateZ(1px);
 
           .page-content {
@@ -282,19 +273,6 @@ export default {
         text-align: center;
       }
     }
-  }
-
-  .allvideobook-page-icon {
-    position: absolute;
-    cursor: pointer;
-  }
-
-  .allvideobook-pageleft {
-    left: 10%;
-  }
-
-  .allvideobook-pageright {
-    right: 10%;
   }
 }
 </style>

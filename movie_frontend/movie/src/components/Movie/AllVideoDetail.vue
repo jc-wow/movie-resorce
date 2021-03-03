@@ -58,6 +58,7 @@
 </template>
 
 <script>
+
 export default {
   name: "AllVideoDetail",
   props: {
