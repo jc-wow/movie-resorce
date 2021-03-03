@@ -8,8 +8,19 @@ class MovieInfo extends Service {
   async getMovieInfoByTime(param) {
     let { time, offset, limit, searchMovieKey } = param;
     offset = limit * (offset - 1);
+
     const options = {
-      attributes: [],
+      attributes: [
+        "title",
+        "cover",
+        "director",
+        "actor",
+        "summary",
+        "release_date",
+        "id",
+        "url",
+        "imdb",
+      ],
       order: [
         ["rate", "DESC"],
         ["id", "DESC"],
@@ -27,15 +38,6 @@ class MovieInfo extends Service {
       options.where.title = {
         [Op.substring]: searchMovieKey,
       };
-      options.attributes = [
-        "title",
-        "cover",
-        "director",
-        "actor",
-        "summary",
-        "release_date",
-        "id",
-      ];
     } else {
       if (time.endsWith("s")) {
         options.attributes = ["title", "cover", "id", "release_date"];
@@ -43,15 +45,6 @@ class MovieInfo extends Service {
           [Sequelize.Op.like]: `${reqTime.slice(0, 3)}%`,
         };
       } else if (!time.endsWith("s") || reqTime === "19") {
-        options.attributes = [
-          "title",
-          "cover",
-          "director",
-          "actor",
-          "summary",
-          "release_date",
-          "id",
-        ];
         options.where.release_date = {
           [Sequelize.Op.like]: reqTime === "19" ? `${18}%` : `${reqTime}%`,
         };
