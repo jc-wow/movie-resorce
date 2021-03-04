@@ -245,7 +245,8 @@ export default {
           width: 100%;
           height: 100%;
           transform: rotateY(0deg) translateZ(1px);
-          background-color: #000;
+          background: linear-gradient(to left, #000 90%, #c2bfbf);
+          border: 1px solid rgba(148, 148, 148, 0.5)
         }
 
         &-back {

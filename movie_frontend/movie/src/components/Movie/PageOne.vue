@@ -1,15 +1,15 @@
 <template>
-  <div class="page-one">
-    <div class="page-one-back" v-if="load">
+  <div class="page-one" v-if="load">
+    <div class="page-one-back">
       <section class="page-one-desc">
         <p class="page-one-desc1">影视收藏夹</p>
-        <p class="page-one-desc2">
+        <!-- <p class="page-one-desc2">
           <span>一个按时间收藏电影的网站</span>
         </p>
         <p class="page-one-desc3">
           “Roads? Where we're going <br />
           we don't need roads.”
-        </p>
+        </p> -->
       </section>
       <el-cascader
         class="page-one-years"
@@ -33,6 +33,7 @@ export default {
     return {
       value: "",
       options: options,
+      load: false,
     };
   },
   methods: {
@@ -100,18 +101,23 @@ export default {
       });
     },
   },
-  beforeMount() {
+  created() {
     this.load = true;
+  },
+  beforeMount() {
     this.getOptions();
   },
+  destroyed() {},
 };
 </script>
 
 <style lang="scss">
 .page-one {
   width: 100%;
-  background-image: linear-gradient(45deg, #cac531, #f3f9a7);
   position: relative;
+  border: 1px solid rgba(148, 148, 148, 0.5);
+  background: linear-gradient(to right, #000 90%, #c2bfbf);
+
   .page-one-desc {
     text-align: center;
     perspective: 60;
@@ -123,14 +129,14 @@ export default {
       font-weight: 800;
       margin-bottom: 0;
     }
-    .page-one-desc2 {
-      font-size: 1.1rem;
-      font-weight: 500;
+    // .page-one-desc2 {
+    //   font-size: 1.1rem;
+    //   font-weight: 500;
 
-      span {
-        padding-left: 32%;
-      }
-    }
+    //   span {
+    //     padding-left: 32%;
+    //   }
+    // }
     .page-one-desc3 {
       margin-top: 35%;
       font-size: 2rem;
@@ -155,7 +161,7 @@ export default {
         border-radius: 1.5rem;
         border: none;
         text-align: center;
-        background-color: #f3f9a7;
+        // background-color: #f3f9a7;
         color: #000;
       }
       .el-input__inner:focus {
