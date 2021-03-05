@@ -2,14 +2,10 @@
   <div class="page-one" v-if="load">
     <div class="page-one-back">
       <section class="page-one-desc">
-        <p class="page-one-desc1">影视收藏夹</p>
-        <!-- <p class="page-one-desc2">
-          <span>一个按时间收藏电影的网站</span>
+        <p class="page-one-desc1">Movie File</p>
+        <p class="page-one-desc2">
+          <span>Search By Time</span>
         </p>
-        <p class="page-one-desc3">
-          “Roads? Where we're going <br />
-          we don't need roads.”
-        </p> -->
       </section>
       <el-cascader
         class="page-one-years"
@@ -21,6 +17,8 @@
         placeholder="请选择年份"
       ></el-cascader>
     </div>
+    <div class="page-one-record"></div>
+    <div class="page-one-button" @click="selectYear">{{buttonValue}}</div>
   </div>
 </template>
 
@@ -34,6 +32,7 @@ export default {
       value: "",
       options: options,
       load: false,
+      buttonValue: '请选择年份'
     };
   },
   methods: {
@@ -46,8 +45,12 @@ export default {
         this.years = e[1] || "";
         this.year = e[2] || "";
       }
+      this.setTextToSelectButton();
       this.getMoviesByYears();
       this.getMoviesByYear();
+    },
+    setTextToSelectButton() {
+      this.buttonValue = this.year;
     },
     getMoviesByYears() {
       this.$store
@@ -100,6 +103,9 @@ export default {
           });
       });
     },
+    selectYear() {
+      document.getElementsByClassName("page-one-years")[0].click();
+    }
   },
   created() {
     this.load = true;
@@ -107,11 +113,16 @@ export default {
   beforeMount() {
     this.getOptions();
   },
-  destroyed() {},
 };
 </script>
 
 <style lang="scss">
+@keyframes recordRotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .page-one {
   width: 100%;
   position: relative;
@@ -122,33 +133,31 @@ export default {
     text-align: center;
     perspective: 60;
     -webkit-perspective: 60;
-    margin-top: 15%;
+    margin-top: 10%;
+    color: #fff;
 
     .page-one-desc1 {
       font-size: 2rem;
       font-weight: 800;
       margin-bottom: 0;
     }
-    // .page-one-desc2 {
-    //   font-size: 1.1rem;
-    //   font-weight: 500;
+    .page-one-desc2 {
+      font-size: 1.1rem;
+      font-weight: 500;
 
-    //   span {
-    //     padding-left: 32%;
-    //   }
-    // }
-    .page-one-desc3 {
-      margin-top: 35%;
-      font-size: 2rem;
-      transform: rotateX(45deg);
-      opacity: 0.5;
+      span {
+        padding-left: 32%;
+      }
     }
   }
 
   .page-one-years {
     position: absolute;
-    top: 46%;
+    top: 40%;
     left: 30%;
+    z-index: -1;
+    visibility: hidden;
+    margin-top: 21%;
     .el-input--suffix {
       font-size: 1rem;
       font-weight: 700;
@@ -161,7 +170,6 @@ export default {
         border-radius: 1.5rem;
         border: none;
         text-align: center;
-        // background-color: #f3f9a7;
         color: #000;
       }
       .el-input__inner:focus {
@@ -169,18 +177,58 @@ export default {
       }
     }
   }
+  .page-one-record {
+    position: absolute;
+    top: 23%;
+    margin-left: 13%;
+    background-image: url("../../assets/record.png");
+    width: 70%;
+    height: 70%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: recordRotate 30s infinite linear;
+  }
+  .page-one-record:hover {
+    animation-play-state: paused;
+  }
+  .page-one-button {
+    position: absolute;
+    left: 37%;
+    top: 48%;
+    display: inline-block;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    width: 22%;
+    height: 19%;
+    line-height: 120px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+    background-image: -webkit-linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
+    background-image: linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
+    transition: 0.4s;
+    font-size: 1.1rem;
+  }
+  .page-one-button:hover {
+    -webkit-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    transform: rotate(10deg);
+    cursor: pointer;
+  }
 }
 
 .el-cascader__dropdown {
   border-radius: 1rem;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.1);
 
   .el-cascader-panel {
     font-size: 1rem;
     width: 70%;
 
     .el-cascader-menu {
-      min-width: 10vw;
+      min-width: 8vw;
 
       .el-cascader-menu__wrap {
         .el-cascader-menu__list {
@@ -195,6 +243,9 @@ export default {
         }
       }
     }
+  }
+  .popper__arrow {
+    display: none;
   }
 }
 </style>
