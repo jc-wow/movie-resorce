@@ -15,6 +15,7 @@
       :src="coverData.cover"
       referrerpolicy="no-referrer"
       fit="contain"
+      lazy
     ></el-image>
   </div>
 </template>
