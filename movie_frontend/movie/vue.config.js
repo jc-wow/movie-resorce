@@ -50,7 +50,7 @@ module.exports = {
         .test(/\.vue$/)
         .use("css-loader")
         .loader("css-loader")
-        .end();
+        .end()
 
       // 打包分析
       config.plugin("webpack-report").use(BundleAnalyzerPlugin, [

@@ -1,11 +1,10 @@
 <template>
   <div class="allvideoby-year-view" v-if="isPreviewVideo">
-    <img
-      class="view-back"
-      src="../../assets/back.svg"
-      @click="backToVideo"
-      v-show="videoInfo.length !== 0"
-    />
+    <div class="outer" @click="backToVideo">
+      <div class="inner">
+        <label>Back</label>
+      </div>
+    </div>
     <div class="view-video-container">
       <img
         class="view-video"
@@ -56,6 +55,67 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.outer {
+  position: relative;
+  margin: auto;
+  width: 2rem;
+  cursor: pointer;
+  position: absolute;
+  left: 2%;
+}
+
+.inner {
+  width: inherit;
+  text-align: center;
+}
+
+label {
+  font-size: 0.8em;
+  line-height: 2.5em;
+  text-transform: uppercase;
+  color: #fff;
+  transition: all 0.3s ease-in;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.inner:before,
+.inner:after {
+  position: absolute;
+  content: "";
+  height: 1px;
+  width: inherit;
+  background: #ffc107;
+  left: 0;
+  transition: all 0.3s ease-in;
+}
+
+.inner:before {
+  top: 50%;
+  transform: rotate(45deg);
+}
+
+.inner:after {
+  bottom: 50%;
+  transform: rotate(-45deg);
+}
+
+.outer:hover label {
+  opacity: 1;
+}
+
+.outer:hover .inner:before,
+.outer:hover .inner:after {
+  transform: rotate(0);
+}
+
+.outer:hover .inner:before {
+  top: 0;
+}
+
+.outer:hover .inner:after {
+  bottom: 0;
+}
 .allvideoby-year-view {
   min-height: 94%;
   background-color: #131325;
