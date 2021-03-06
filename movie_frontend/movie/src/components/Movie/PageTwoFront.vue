@@ -9,14 +9,13 @@
         <span id="cover-rd">{{ coverData.release_date }}</span>
       </div>
     </div>
-    <el-image
+    <img
       class="allvideos-category-cover"
       :class="{ fadein: isFadein }"
       :src="coverData.cover"
       referrerpolicy="no-referrer"
       fit="contain"
-      lazy
-    ></el-image>
+    />
   </div>
 </template>
 
