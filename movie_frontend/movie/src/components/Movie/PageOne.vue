@@ -17,8 +17,10 @@
         placeholder="请选择年份"
       ></el-cascader>
     </div>
-    <div class="page-one-record"></div>
-    <div class="page-one-button" @click="selectYear">{{ buttonValue }}</div>
+    <div class="page-one-square">
+      <div class="page-one-record"></div>
+      <div class="page-one-button" @click="selectYear">{{ buttonValue }}</div>
+    </div>
   </div>
 </template>
 
@@ -124,10 +126,17 @@ export default {
 }
 
 .page-one {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   position: relative;
-  border: 1px solid rgba(148, 148, 148, 0.5);
+  border-top: 1px solid rgba(148, 148, 148, 0.5);
   background: linear-gradient(to right, #000 90%, #c2bfbf);
+
+  .page-one-back {
+    width: 100%;
+  }
 
   .page-one-desc {
     text-align: center;
@@ -157,7 +166,7 @@ export default {
     left: 30%;
     z-index: -1;
     visibility: hidden;
-    margin-top: 21%;
+    margin-top: 28%;
     .el-input--suffix {
       font-size: 1rem;
       font-weight: 700;
@@ -177,47 +186,51 @@ export default {
       }
     }
   }
-  .page-one-record {
-    position: absolute;
-    top: 23%;
-    margin-left: 13%;
-    background-image: url("../../assets/record.png");
-    width: 70%;
-    height: 70%;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    animation: recordRotate 30s infinite linear;
+  .page-one-square {
+    width: 80%;
+    position: relative;
+    .page-one-record {
+      position: absolute;
+      background-image: url("../../assets/record.png");
+      width: 100%;
+      height: 100%;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      animation: recordRotate 30s infinite linear;
+    }
+    .page-one-record:hover {
+      animation-play-state: paused;
+    }
+    .page-one-button {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+      text-decoration: none;
+      color: rgb(0, 0, 0);
+      width: 31%;
+      height: 31%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      text-align: center;
+      vertical-align: middle;
+      overflow: hidden;
+      background-image: linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
+      transition: 0.4s;
+      font-size: 1.1rem;
+    }
+    .page-one-button:hover {
+      cursor: pointer;
+    }
   }
-  .page-one-record:hover {
-    animation-play-state: paused;
-  }
-  .page-one-button {
-    position: absolute;
-    left: 37%;
-    top: 48%;
-    display: inline-block;
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-    width: 22%;
-    height: 19%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    text-align: center;
-    vertical-align: middle;
-    overflow: hidden;
-    background-image: -webkit-linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
-    background-image: linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
-    transition: 0.4s;
-    font-size: 1.1rem;
-  }
-  .page-one-button:hover {
-    -webkit-transform: rotate(10deg);
-    -ms-transform: rotate(10deg);
-    transform: rotate(10deg);
-    cursor: pointer;
+  .page-one-square:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
   }
 }
 
