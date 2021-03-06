@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import AllVideosCategory from "./AllVideosCategory";
-import AllVideosByYear from "./AllVideosByYear";
+import AllVideosCategory from "./PageTwoFront";
+import AllVideosByYear from "./PageFour";
 import PageOne from "./PageOne";
 import "../../style/waterfall.scss";
 import PageCorner from "@/components/common/PageCorner.vue";

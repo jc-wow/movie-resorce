@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import AllvideobyYearView from "./AllVideoView";
-import AllVideoDetail from "./AllVideoDetail";
+import AllvideobyYearView from "./PageFourVideoDetail";
+import AllVideoDetail from "./PageFourAllVideos";
 
 export default {
   name: "AllVideosByYear",

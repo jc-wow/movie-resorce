@@ -5,10 +5,8 @@
 </template>
 
 <script>
-import StartPage from "./StartPage";
-import Discuss from "../Discuss/Discuss";
 import SideBar from "../Nav/SideBar";
-import AllVideoBook from "../Movie/AllVideoBook";
+import AllVideoBook from "../Movie/PageTwo";
 
 export default {
   name: "Main",
@@ -20,7 +18,6 @@ export default {
     };
   },
   components: {
-    StartPage,
     SideBar,
     AllVideoBook,
   },
