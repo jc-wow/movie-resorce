@@ -18,7 +18,7 @@
       ></el-cascader>
     </div>
     <div class="page-one-record"></div>
-    <div class="page-one-button" @click="selectYear">{{buttonValue}}</div>
+    <div class="page-one-button" @click="selectYear">{{ buttonValue }}</div>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
       value: "",
       options: options,
       load: false,
-      buttonValue: '请选择年份'
+      buttonValue: "请选择年份",
     };
   },
   methods: {
@@ -105,7 +105,7 @@ export default {
     },
     selectYear() {
       document.getElementsByClassName("page-one-years")[0].click();
-    }
+    },
   },
   created() {
     this.load = true;
@@ -201,7 +201,9 @@ export default {
     color: rgb(0, 0, 0);
     width: 22%;
     height: 19%;
-    line-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     text-align: center;
     vertical-align: middle;
