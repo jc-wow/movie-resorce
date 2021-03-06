@@ -189,6 +189,9 @@ export default {
   .page-one-square {
     width: 80%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .page-one-record {
       position: absolute;
       background-image: url("../../assets/record.png");
@@ -203,10 +206,7 @@ export default {
       animation-play-state: paused;
     }
     .page-one-button {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      z-index: 999;
       display: inline-block;
       text-decoration: none;
       color: rgb(0, 0, 0);
@@ -221,10 +221,11 @@ export default {
       overflow: hidden;
       background-image: linear-gradient(45deg, #709dff 0%, #91fdb7 100%);
       transition: 0.4s;
-      font-size: 1.1rem;
+      font-size: 1.3rem;
     }
     .page-one-button:hover {
       cursor: pointer;
+      transform: rotate(10deg);
     }
   }
   .page-one-square:after {
