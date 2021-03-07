@@ -13,7 +13,25 @@
       />
     </div>
     <div class="view-video-info">
-      <div class="view-title">{{ $store.state.searchVideo.title }}</div>
+      <div class="view-title">
+        {{ $store.state.searchVideo.title }}
+        <a
+          class="allvideo-detail-doubanlink"
+          :href="$store.state.searchVideo.url"
+          target="_blank"
+          v-if="$store.state.searchVideo.url"
+        >
+          <img src="../../assets/douban.jpg" width="23" height="23" />
+        </a>
+        <a
+          class="allvideo-detail-imdblink"
+          :href="$store.state.searchVideo.imdb"
+          target="_blank"
+          v-if="$store.state.searchVideo.imdb"
+        >
+          <img src="../../assets/imdb.jpg" width="23" height="23" />
+        </a>
+      </div>
       <div class="view-director">
         <span>导演：</span>{{ $store.state.searchVideo.director }}
       </div>
@@ -153,6 +171,13 @@ label {
       font-size: 1rem;
       color: #fff;
       letter-spacing: 1px;
+      display: flex;
+      img {
+        border-radius: 11.5px;
+      }
+      a {
+        margin-left: 1%;
+      }
     }
 
     .view-director {
