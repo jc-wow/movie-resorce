@@ -37,6 +37,8 @@ class MovieInfo extends Service {
         "director",
         "release_date",
         "summary",
+        "url",
+        "imdb",
       ],
       order: [
         ["rate", "DESC"],

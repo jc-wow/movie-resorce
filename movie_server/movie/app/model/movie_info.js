@@ -26,6 +26,7 @@ module.exports = (app) => {
       award: STRING,
       short_comment: STRING,
       tag: STRING,
+      url: STRING,
     },
     {
       tableName: "movies_info",
