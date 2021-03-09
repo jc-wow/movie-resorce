@@ -159,27 +159,15 @@ export default {
       }
     }
   }
-  @media screen and (max-height: 800px) {
-    .page-one-years {
-      position: absolute;
-      top: 34%;
-      left: 30%;
-      z-index: -1;
-      visibility: hidden;
-      margin-top: 28%;
-    }
-  }
-  @media screen and (min-height: 800px) {
-    .page-one-years {
-      position: absolute;
-      top: 40%;
-      left: 30%;
-      z-index: -1;
-      visibility: hidden;
-      margin-top: 28%;
-    }
-  }
+
   .page-one-years {
+    position: absolute;
+    top: 34%;
+    left: 30%;
+    z-index: -1;
+    visibility: hidden;
+    margin-top: 28%;
+
     .el-input--suffix {
       font-size: 1rem;
       font-weight: 700;
