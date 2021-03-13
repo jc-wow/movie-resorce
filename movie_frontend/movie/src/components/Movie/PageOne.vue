@@ -7,6 +7,10 @@
           <span>Search By Time</span>
         </p>
       </section>
+    </div>
+    <div class="page-one-square">
+      <div class="page-one-record"></div>
+      <div class="page-one-button" @click="selectYear">{{ buttonValue }}</div>
       <el-cascader
         class="page-one-years"
         v-model="value"
@@ -16,10 +20,6 @@
         @change="handleChange"
         placeholder="请选择年份"
       ></el-cascader>
-    </div>
-    <div class="page-one-square">
-      <div class="page-one-record"></div>
-      <div class="page-one-button" @click="selectYear">{{ buttonValue }}</div>
     </div>
   </div>
 </template>
@@ -162,11 +162,9 @@ export default {
 
   .page-one-years {
     position: absolute;
-    top: 34%;
-    left: 30%;
     z-index: -1;
     visibility: hidden;
-    margin-top: 28%;
+    margin-top: 20%;
 
     .el-input--suffix {
       font-size: 1rem;
