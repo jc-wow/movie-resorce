@@ -12,6 +12,7 @@
       <div class="page-one-record"></div>
       <div class="page-one-button" @click="selectYear">{{ buttonValue }}</div>
       <el-cascader
+        :append-to-body="false"
         class="page-one-years"
         v-model="value"
         :options="options"
@@ -108,12 +109,18 @@ export default {
     selectYear() {
       document.getElementsByClassName("page-one-years")[0].click();
     },
+    insertDropDownToSelect() {
+      // $('.el-cascader__dropdown').insertAfter('.page-one-years');
+    },
   },
   created() {
     this.load = true;
   },
   beforeMount() {
     this.getOptions();
+  },
+  mounted() {
+    this.insertDropDownToSelect();
   },
 };
 </script>
@@ -162,14 +169,13 @@ export default {
 
   .page-one-years {
     position: absolute;
-    z-index: -1;
-    visibility: hidden;
     margin-top: 20%;
 
     .el-input--suffix {
       font-size: 1rem;
       font-weight: 700;
       width: 80%;
+      visibility: hidden;
       .el-input__inner::-webkit-input-placeholder {
         color: rgb(10, 10, 10) !important;
         font-size: 0.9rem;
@@ -237,14 +243,31 @@ export default {
 .el-cascader__dropdown {
   border-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.1);
+  left: 0 !important;
 
   .el-cascader-panel {
     font-size: 1rem;
     width: 70%;
 
-    .el-cascader-menu {
-      min-width: 8vw;
+    @media screen and (min-width: 1024px) {
+      .el-cascader-menu {
+        min-width: 8vw;
+      }
+    }
 
+    @media only screen and (min-width: 700px) and (max-width: 1024px) {
+      .el-cascader-menu {
+        min-width: 14vw;
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      .el-cascader-menu {
+        min-width: 25vw;
+      }
+    }
+
+    .el-cascader-menu {
       .el-cascader-menu__wrap {
         .el-cascader-menu__list {
           color: #fff;
