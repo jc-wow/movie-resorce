@@ -109,9 +109,6 @@ export default {
     selectYear() {
       document.getElementsByClassName("page-one-years")[0].click();
     },
-    insertDropDownToSelect() {
-      // $('.el-cascader__dropdown').insertAfter('.page-one-years');
-    },
   },
   created() {
     this.load = true;
@@ -244,6 +241,7 @@ export default {
   border-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.1);
   left: 0 !important;
+  top: 0 !important;
 
   .el-cascader-panel {
     font-size: 1rem;
