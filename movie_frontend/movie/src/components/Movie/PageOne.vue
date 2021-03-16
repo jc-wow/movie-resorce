@@ -116,9 +116,6 @@ export default {
   beforeMount() {
     this.getOptions();
   },
-  mounted() {
-    this.insertDropDownToSelect();
-  },
 };
 </script>
 
@@ -241,7 +238,6 @@ export default {
   border-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.1);
   left: 0 !important;
-  top: 0 !important;
 
   .el-cascader-panel {
     font-size: 1rem;
@@ -261,7 +257,7 @@ export default {
 
     @media screen and (max-width: 700px) {
       .el-cascader-menu {
-        min-width: 25vw;
+        min-width: 33vw;
       }
     }
 
