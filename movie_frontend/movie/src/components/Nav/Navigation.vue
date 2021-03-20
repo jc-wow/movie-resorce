@@ -288,32 +288,64 @@ export default {
   align-items: center;
   background-color: #000;
 
-  .nav-logo {
-    height: 100%;
-    width: 10%;
-    margin-left: 20%;
+  @media screen and (max-width: 800px) {
+    .nav-logo {
+      height: 100%;
+      width: 20%;
+      margin-left: 10%;
 
-    img {
-      object-fit: cover;
-      height: 97%;
-      width: 100%;
-      margin-top: 2%;
+      img {
+        object-fit: cover;
+        height: 97%;
+        width: 100%;
+        margin-top: 2%;
+      }
+    }
+    .nav-search {
+      width: 50%;
+      margin-left: 15%;
+      display: flex;
+      .el-input-group {
+        .el-input__inner {
+          height: 33px;
+          font-weight: 400;
+          font-size: 0.9rem;
+        }
+
+        .el-button {
+          padding: 10px 12px;
+        }
+      }
     }
   }
 
-  .nav-search {
-    width: 14%;
-    margin-left: 50%;
-    display: flex;
-    .el-input-group {
-      .el-input__inner {
-        height: 33px;
-        font-weight: 400;
-        font-size: 0.9rem;
-      }
+  @media screen and (min-width: 800px) {
+    .nav-logo {
+      height: 100%;
+      width: 10%;
+      margin-left: 20%;
 
-      .el-button {
-        padding: 10px 12px;
+      img {
+        object-fit: cover;
+        height: 97%;
+        width: 100%;
+        margin-top: 2%;
+      }
+    }
+    .nav-search {
+      width: 14%;
+      margin-left: 50%;
+      display: flex;
+      .el-input-group {
+        .el-input__inner {
+          height: 33px;
+          font-weight: 400;
+          font-size: 0.9rem;
+        }
+
+        .el-button {
+          padding: 10px 12px;
+        }
       }
     }
   }
