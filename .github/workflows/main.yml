@@ -35,9 +35,9 @@ jobs:
           args: git submodule update --init --recursive
       # 使用 node:10
       - name: use Node.js 10
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: 10
+          node-version: '14'
       # npm install
       - name: npm install and build
         run: |
