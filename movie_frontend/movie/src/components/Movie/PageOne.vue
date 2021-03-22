@@ -115,7 +115,7 @@ export default {
   },
   beforeMount() {
     this.getOptions();
-  },
+  }
 };
 </script>
 
