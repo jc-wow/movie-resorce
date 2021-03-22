@@ -34,8 +34,8 @@ jobs:
         with:
           args: git submodule update --init --recursive
       # 使用 node
-      - name: use Node.js
       - uses: actions/checkout@v2
+      - name: use Node.js
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
